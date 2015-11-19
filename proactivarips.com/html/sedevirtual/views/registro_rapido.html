@@ -1,0 +1,140 @@
+<div id="headline">
+    <div class="hoy">{{fecha}}</div>
+    <div class="logout"><a ng-click="cerrarSesion()">Cerrar Sesión</a></div>
+</div>
+<header>
+    <div class="header_imagen">
+        <div class="logo">
+            <a href=""><img src="../images/logo_neg.png" alt=""></a>
+        </div>
+        <div class="sede">{{seccion}}</div>
+        <div class="saludo">Bienvenid@</div>
+        <div class="soc_box">
+            <ul class="header_soc_list">
+                <li><a href="#" class="icon1"><span class="fa-facebook"></span></a></li>
+                <li><a href="#" class="icon2"><span class="fa-twitter"></span></a></li>
+                <li><a href="#" class="icon3"><span class="fa-google-plus"></span></a></li>
+                <li><a href="#" class="icon4"><span class="fa-linkedin"></span></a></li>
+                <li><a href="#" class="icon5"><span class="fa-envelope"></span></a></li>
+            </ul>
+        </div>  
+    </div>
+    <div class="header_border"></div>
+</header>
+<div class="col-md-offset-1 col-md-10">
+	<div class="bloque_titulo col-md-12">Registro Clientes Potenciales</div>
+	<div id="container_border">
+		<div class="subtitulo">Datos del Cliente</div>
+		<form class="form-horizontal">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Primer Apellido</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" placeholder="Primer Apellido" ng-model="formulario.primer_apellido">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Segundo Apellido</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" placeholder="Segundo Apellido" ng-model="formulario.segundo_apellido">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Primer Nombre</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" placeholder="Primer Nombre" ng-model="formulario.primer_nombre">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Segundo Nombre</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" placeholder="Segundo Nombre" ng-model="formulario.segundo_nombre">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Tipo de Identificación</label>
+				<div class="col-sm-8">
+					<div class="radio-inline">
+						<label>
+							<input type="radio" ng-model="formulario.tipo_identificacion" value="1">
+								CC
+						</label>
+					</div>
+					<div class="radio-inline">
+						<label>
+							<input type="radio" ng-model="formulario.tipo_identificacion" value="2">
+								CE
+						</label>
+					</div>
+					<div class="radio-inline">
+						<label>
+							<input type="radio" ng-model="formulario.tipo_identificacion" value="3">
+								TI
+						</label>
+					</div>
+					<div class="radio-inline">
+						<label>
+							<input type="radio" ng-model="formulario.tipo_identificacion" value="4">
+								NUIP
+						</label>
+					</div>
+					<div class="radio-inline">
+						<label>
+							<input type="radio" ng-model="formulario.tipo_identificacion" value="5">
+								RC
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Número de Identificación</label>
+				<div class="col-sm-8">
+					<input type="number" class="form-control" placeholder="Número de Identificación" ng-model="formulario.identificacion">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Correo Electrónico</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" placeholder="Correo Electrónico" ng-model="formulario.email">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Celular</label>
+				<div class="col-sm-8">
+					<input type="number" class="form-control" placeholder="Celular" ng-model="formulario.celular">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Teléfono Fijo</label>
+				<div class="col-sm-8">
+					<input type="number" class="form-control" placeholder="Teléfono Fijo" ng-model="formulario.telefono">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-4 col-sm-4">
+				<label>Acepto recibir información comercial desde:</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-5 col-sm-2">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" ng-model="formulario.bl_telefono" name="bl_telefono"> Teléfono
+						</label>
+					</div>
+				</div>
+				<div class="col-sm-offset-5 col-sm-2">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" ng-model="formulario.bl_email" name="bl_mail"> Correo Electrónico
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group" ng-show="formulario.telefono">
+				<div class="col-sm-offset-5 col-sm-2">
+					<button type="submit" class="btn btn-default btn-block" ng-click="registrar()">Registrar</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

@@ -1,0 +1,78 @@
+<div id="headline">
+    <div class="hoy">{{fecha}}</div>
+    <div class="logout"><a ng-click="cerrarSesion()">Cerrar Sesión</a></div>
+</div>
+<header>
+    <div class="header_imagen">
+        <div class="logo">
+            <a href=""><img src="../images/logo_neg.png" alt=""></a>
+        </div>
+        <div class="sede">{{seccion}}</div>
+        <div class="saludo">Bienvenid@</div>
+        <div class="soc_box">
+            <ul class="header_soc_list">
+                <li><a href="#" class="icon1"><span class="fa-facebook"></span></a></li>
+                <li><a href="#" class="icon2"><span class="fa-twitter"></span></a></li>
+                <li><a href="#" class="icon3"><span class="fa-google-plus"></span></a></li>
+                <li><a href="#" class="icon4"><span class="fa-linkedin"></span></a></li>
+                <li><a href="#" class="icon5"><span class="fa-envelope"></span></a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="header_border"></div>
+</header>
+<div class="col-md-offset-1 col-md-10">
+    <div class="bloque_titulo col-md-12">Proactivar I.P.S.</div>
+    <div id="container_border">
+    <div class="margen_clear"></div>
+
+    <div class="informacion col-md-12">
+        <div class="col-md-4">Profesional: Leonardo Bautista</div>
+        <div class="col-md-4">Agenda: Medicina Interna</div>
+        <div class="col-md-4">Hora: 00:00:00</div>
+    </div>
+    <div class="menu_lateral" ng-controller="menu_lateralCTRL">
+            <accordion close-others="true" class="col-md-2">
+                <accordion-group ng-repeat="menu in menu_lateral" heading="{{menu.nombre}}">
+                    <ul>
+                        <li ng-repeat="opcion in menu.opciones"><a ng-href="{{opcion.vinculo}}">{{opcion.nombre}}</a></li>
+                    </ul>
+                </accordion-group>
+            </accordion>
+        </div>
+    <div class="col-md-10">
+        <div class="titulo_seccion">Consultar Pacientes</div>
+        <form ng-submit="buscarPaciente()">
+            <div class="form-group col-md-offset-1 col-md-10">
+                <label>Número de Identificación</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Ingrese el número de identificación del paciente" ng-model="identificacion">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" ng-click="buscarPaciente()" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                    </span>
+                </div>
+            <alert class="alert alert-danger" ng-if="mensaje">{{mensaje}}</alert>
+            </div>
+        </form>
+        <div class="col-md-12" ng-if="mensaje==false"><!--Pendiente Corregir el salto que se presenta-->
+            <div class="col-md-12 titulo_azul centrado">Histórico de Citas</div>
+            <div class="col-md-12 subrayado centrado titulo_azul">{{informacion_paciente.nombre_completo}}</div>
+            <div class="col-md-6 titulo_azul centrado">Ocupación: {{informacion_paciente.ocupacion}}</div>
+            <div class="col-md-6 titulo_azul centrado">Edad: {{informacion_paciente.edad}} años</div>
+
+            <accordion close-others="true" class="col-xs-12 col-sm-12 col-md-12">
+                <accordion-group ng-repeat="especialidad in especialidades" heading="{{especialidad.nombre}}">
+                    <div class="btn-group cita agenda_profesional col-xs-12 col-md-12" ng-repeat="atendida in especialidad.atendidas" ng-click="verHC(atendida.especialidad, atendida.id)">
+                        <div class="col-md-6 flecha">{{atendida.fecha}}</div>
+                        <div class="col-md-5 flecha">{{atendida.profesional}}</div>
+                        <div class="col-md-1 mano"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></div>
+                    </div>
+                </accordion-group>
+            </accordion>
+        </div>
+    </div>
+    <div class="margen_clear"></div>
+    </div>
+</div>
+
+

@@ -1,0 +1,91 @@
+<div id="headline">
+    <div class="hoy">{{fecha}}</div>
+    <div class="logout"><a ng-click="cerrarSesion()">Cerrar Sesión</a></div>
+</div>
+<header>
+    <div class="header_imagen">
+        <div class="logo">
+            <a href=""><img src="../images/logo_neg.png" alt=""></a>
+        </div>
+        <div class="sede">{{seccion}}</div>
+        <div class="saludo">Bienvenid@</div>
+        <div class="soc_box">
+            <ul class="header_soc_list">
+                <li><a href="#" class="icon1"><span class="fa-facebook"></span></a></li>
+                <li><a href="#" class="icon2"><span class="fa-twitter"></span></a></li>
+                <li><a href="#" class="icon3"><span class="fa-google-plus"></span></a></li>
+                <li><a href="#" class="icon4"><span class="fa-linkedin"></span></a></li>
+                <li><a href="#" class="icon5"><span class="fa-envelope"></span></a></li>
+            </ul>
+        </div>  
+    </div>
+    <div class="header_border"></div>
+</header>
+<div class="col-md-offset-1 col-md-10">
+    <div class="bloque_titulo col-md-12">Proactivar I.P.S.</div>
+    <div id="container_border">
+    <div class="margen_clear"></div>
+        
+    <div class="informacion col-md-12">
+        <div class="col-md-4">Profesional: Leonardo Bautista</div>
+        <div class="col-md-4">Agenda: Medicina Interna</div>
+        <div class="col-md-4">Hora: 00:00:00</div>
+    </div>
+    <div class="menu_lateral" ng-controller="menu_lateralCTRL">
+            <accordion close-others="true" class="col-md-2">
+                <accordion-group ng-repeat="menu in menu_lateral" heading="{{menu.nombre}}">
+                    <ul>
+                        <li ng-repeat="opcion in menu.opciones"><a ng-href="{{opcion.vinculo}}">{{opcion.nombre}}</a></li>
+                    </ul>
+                </accordion-group>
+            </accordion>
+        </div>
+    <div class="col-md-10">
+        <div class="titulo_seccion">Seguimiento Telefónico al Paciente</div>
+        <form ng-submit="buscarPaciente()">
+            <div class="form-group col-md-offset-1 col-md-10">
+                <label>Número de Identificación</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Ingrese el número de identificación del paciente" ng-model="identificacion">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" ng-click="buscarPaciente()" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                    </span>
+                </div>
+            <alert class="alert alert-danger" ng-show="mensaje">{{mensaje}}</alert>
+            </div>
+        </form>
+        <form ng-show="paciente">
+            <div class="form-group col-md-offset-1 col-md-10">
+                <label>Paciente</label>
+                <input type="text" class="form-control" placeholder="Primer Apellido" ng-model="paciente.nombre" readonly>
+            </div>
+            <div class="form-group col-md-offset-1 col-md-10" ng-class="obligatorio">
+                <label>Motivo Llamada</label>
+                <textarea class="form-control" rows="3" ng-model="formulario.motivo"></textarea>
+            </div>
+            <div class="form-group col-md-offset-1 col-md-10">
+                <label>Síntomas</label>
+                <textarea class="form-control" rows="3" ng-model="formulario.sintomas"></textarea>
+            </div>
+            <div class="form-group col-md-offset-1 col-md-10">
+                <label>Antecedentes</label>
+                <textarea class="form-control" rows="3" ng-model="formulario.antecedentes"></textarea>
+            </div>
+            <div class="form-group col-md-offset-1 col-md-10">
+                <label>Medicamentos</label>
+               <textarea class="form-control" rows="3" ng-model="formulario.medicamentos"></textarea>
+            </div>
+            <div class="form-group col-md-offset-1 col-md-10">
+                <label>Observaciones</label>
+               <textarea class="form-control" rows="3" ng-model="formulario.observaciones"></textarea>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-5 col-sm-2">
+                    <button type="submit" class="btn btn-default btn-block" ng-click="registrar()" ng-disabled="inactivo">Registrar</button>
+                </div>
+            </div><br/>
+        </form>
+    </div>
+    <div class="margen_clear"></div>
+    </div>
+</div>

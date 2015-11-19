@@ -1,0 +1,988 @@
+<div id="headline">
+    <div class="hoy">{{fecha_hoy}}</div>
+    <div class="logout"><a ng-click="cerrarSesion()">Cerrar Sesión</a></div>
+</div>
+<header>
+    <div class="header_imagen">
+        <div class="logo">
+            <a href=""><img src="../images/logo_neg.png" alt=""></a>
+        </div>
+        <div class="sede">{{seccion}}</div>
+        <div class="saludo">Bienvenid@</div>
+        <div class="soc_box">
+            <ul class="header_soc_list">
+                <li><a href="#" class="icon1"><span class="fa-facebook"></span></a></li>
+                <li><a href="#" class="icon2"><span class="fa-twitter"></span></a></li>
+                <li><a href="#" class="icon3"><span class="fa-google-plus"></span></a></li>
+                <li><a href="#" class="icon4"><span class="fa-linkedin"></span></a></li>
+                <li><a href="#" class="icon5"><span class="fa-envelope"></span></a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="header_border"></div>
+</header>
+<div class="col-md-offset-1 col-md-10">
+    <div class="bloque_titulo col-md-12">Proactivar I.P.S.</div>
+    <div id="container_border">
+        <div class="margen_clear"></div>
+        <div class="informacion col-md-12">
+            <div class="col-md-4">Profesional: {{usuario.nombres}}</div>
+            <div class="col-md-4">Especialidad: {{usuario.especialidad}}</div>
+            <div class="col-md-4">Hora: 00:00:00</div>
+        </div>
+        <div class="menu_lateral" ng-controller="menu_lateralCTRL">
+            <accordion close-others="true" class="col-md-2">
+                <accordion-group ng-repeat="menu in menu_lateral" heading="{{menu.nombre}}">
+                    <ul>
+                        <li ng-repeat="opcion in menu.opciones"><a ng-href="{{opcion.vinculo}}">{{opcion.nombre}}</a></li>
+                    </ul>
+                </accordion-group>
+            </accordion>
+        </div>
+        <div class="col-md-10">
+            <div class="titulo_hc">Historia Clínica</div>
+            <tabset justified="true">
+                <tab heading="Datos Personales">
+                    <!--div id="datos_paciente"></div-->
+                    <form class="col-md-12">
+                        <div class="subtitulo">Datos Personales</div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Primer Nombre</label>
+                                <input type="text" class="form-control" ng-model="formulario.p_nombre" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Primer Apellido</label>
+                                <input type="text" class="form-control" ng-model="formulario.p_apellido" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Identificación</label>
+                                <input type="text" class="form-control" ng-model="formulario.identificacion" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Tipo de Identificación</label>
+                                <select class="form-control" ng-model="formulario.tipo_id" disabled>
+                                    <option value="-1" disabled>Selecciona una opción</option>
+                                    <option ng-repeat="tipo in tipos_id" value='{{tipo.id}}'>{{tipo.nombre}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Departamento Nacimiento</label>
+                                <select class="form-control" ng-model="formulario.sl_departamento" ng-options='departamento.id as departamento.nombre for departamento in departamentos' disabled>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Ciudad Nacimiento</label>
+                                <select class="form-control" ng-model="formulario.sl_municipio" ng-options='ciudad.id as ciudad.nombre for ciudad in ciudades' disabled>
+                                </select>
+                            </div>
+                            <label class="">Fecha de Nacimiento</label>
+                            <div class="form-group col-sm-12 col-md-12">
+
+                                <div class="col-sm-4 col-md-4">
+                                    <select class="form-control" ng-model="formulario.fecha_nac.anio" disabled>
+                                        <option value="-1" disabled>Año</option>
+                                        <option ng-repeat="anio in fecha.anios">{{anio}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-4 col-md-4">
+                                    <select class="form-control" ng-model='formulario.fecha_nac.mes' ng-options='mes.id as mes.nombre for mes in fecha.meses' disabled>
+                                    </select>
+                                </div>
+                                <div class="col-sm-4 col-md-4">
+                                    <select name="nac_dia" class="form-control" ng-model="formulario.fecha_nac.dia" disabled>
+                                        <option value="-1" disabled>Día</option>
+                                        <option ng-repeat="dia in fecha.dias">{{dia}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Edad</label>
+                                <input type="text" class="form-control" ng-model="formulario.edad" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label>Estado Civil</label>
+                                <select class="form-control" ng-model='formulario.estado_civil' ng-options='estado_civil.id as estado_civil.nombre for estado_civil in estados_civiles' ng-disabled="vista">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Ocupación</label>
+                                <input type="text" class="form-control" ng-model="formulario.ocupacion" ng-disabled="vista">
+                            </div>
+                            <div class="form-group">
+                                <label>Nivel de Escolaridad</label>
+                                <select class="form-control" ng-model='formulario.escolaridad' ng-options='nivel_escolaridad.id as nivel_escolaridad.nombre for nivel_escolaridad in niveles_escolaridad' ng-disabled="vista">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Género</label>
+                                <div class="radio col-md-12">
+                                    <label class="col-md-6 centrado" ng-repeat="genero in generos"><span>{{genero.nombre}}</span>
+                                        <input type="radio" ng-model="formulario.genero" name="genero" value="{{genero.id}}" disabled required/>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Segundo Nombre</label>
+                                <input type="text" class="form-control" ng-model="formulario.s_nombre" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Segundo Apellido</label>
+                                <input type="text" class="form-control" ng-model="formulario.s_apellido" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Dirección</label>
+                                <input type="text" class="form-control" ng-model="formulario.direccion" ng-disabled="vista">
+                            </div>
+                            <div class="form-group">
+                                <label>Teléfono Fijo</label>
+                                <input type="text" class="form-control" ng-model="formulario.telefono" ng-disabled="vista">
+                            </div>
+                            <div class="form-group">
+                                <label>Celular</label>
+                                <input type="text" class="form-control" ng-model="formulario.celular" ng-disabled="vista">
+                            </div>
+                            <div class="form-group">
+                                <label>Acudiente</label>
+                                <input type="text" class="form-control" ng-model="formulario.acudiente" ng-disabled="vista">
+                            </div>
+                            <div class="form-group">
+                                <label>Parentesco Acudiente</label>
+                                <input type="text" class="form-control" ng-model="formulario.acu_parentesco" ng-disabled="vista">
+                            </div>
+                            <div class="form-group">
+                                <label>Celular Acudiente</label>
+                                <input type="text" class="form-control" ng-model="formulario.cel_acudiente" ng-disabled="vista">
+                            </div>
+                            <div class="form-group">
+                                <label>EPS / Aseguradora</label>
+                                <select class="form-control" ng-model="formulario.eps" ng-options='eps.id as eps.nombre for eps in epss' ng-disabled="vista">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Tipo de Vinculación</label>
+                                <select class="form-control" ng-model="formulario.vinculacion" ng-options='tipo_vinculacion.id as tipo_vinculacion.nombre for tipo_vinculacion in tipos_vinculacion' ng-disabled="vista">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Paquete de Servicios</label>
+                                <select class="form-control" ng-model="formulario.paquete" ng-options='paquete.id as paquete.nombre for paquete in paquetes' ng-disabled="vista">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Estado de Afiliación</label>
+                                <select class="form-control" ng-model="formulario.afiliacion" ng-options='afiliacion.id as afiliacion.nombre for afiliacion in afiliaciones' ng-disabled="vista">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="subtitulo">Acompañante</div>
+                        <div class="form-group col-md-12">
+                            <label>Nombre Completo</label>
+                            <input type="text" class="form-control" ng-model="motivo.acompanante" ng-disabled="vista">
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label>Celular</label>
+                            <input type="text" class="form-control" ng-model="motivo.cel_acompanante" ng-disabled="vista">
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label>Parentesco</label>
+                            <input type="text" class="form-control" ng-model="motivo.acom_parentesco" ng-disabled="vista">
+                        </div>
+                        <div class="subtitulo">Motivo de Consulta</div>
+                        <div class="form-group col-md-12">
+                            <textarea class="form-control" rows="3" ng-model="motivo.motivo" ng-disabled="vista"></textarea>
+                        </div>
+                        <div class="subtitulo">Enfermedad Actual</div>
+                        <div class="form-group col-md-12">
+                            <textarea class="form-control" rows="3" ng-model="motivo.enfermedad" ng-disabled="vista"></textarea>
+                        </div>
+                        <div class="subtitulo">Finalidad de la Consulta</div>
+                        <div class="form-group col-md-12">
+                            <select class="form-control" ng-model="motivo.finalidad" ng-options='finalidad.id as finalidad.nombre for finalidad in finalidades' ng-disabled="vista">
+                            </select>
+                        </div>
+                        <div class="subtitulo">Causa Externa</div>
+                        <div class="form-group col-md-12">
+                            <select class="form-control" ng-model="motivo.causa_ext" ng-options='causa_ext.id as causa_ext.nombre for causa_ext in causas_ext' ng-disabled="vista">
+                            </select>
+                        </div>
+                        <div class="subtitulo">Tipo de Evento</div>
+                        <div class="form-group col-md-12">
+                            <select class="form-control" ng-model="motivo.evento" ng-options='evento.id as evento.nombre for evento in eventos' ng-disabled="vista">
+                            </select>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <div class="alert alert-danger"  ng-if="mensaje_motivo=='error'">warning</div>
+                            <div class="alert alert-success" ng-if="mensaje_motivo=='ok'">Se ha guardado exitosamente!</div>
+                        </div>
+                        <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
+                            <button type="button" class="btn btn-default" ng-click="enviarMotivo()" ng-disabled="vista"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
+                            <!--button type="button" class="btn btn-default" ng-click="siguiente()" ng-disabled="vista">Continuar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button-->
+                        </div>
+                        <!--div class="col-md-12">{{motivo | json}}-{{mensaje_antecedentes | json}}-</div-->
+                    </form>
+                </tab><!--FIN TAB 1 UNO-->
+                <tab heading="Antecedentes">
+                    <div id="datos_paciente"></div>
+                    <!--div class="subtitulo">Antecedentes</div-->
+                    <form class="col-md-12">
+                        <div class="col-md-6 separador">
+                            <div class="subtitulo">Antecedentes Familiares</div>
+                            <div class="form-group col-md-12">
+                                <textarea class="form-control" rows="3" ng-model="antecedentes.ant_familiares" ng-disabled="vista"></textarea>
+                            </div>
+                            <div class="subtitulo">Antecedentes Personales</div>
+                            <div class="sombreado">Psicosociales</div>
+                            <div class="col-md-12">
+                                <textarea class="form-control" rows="3" ng-model="antecedentes.psicosociales" ng-disabled="vista"></textarea>
+                            </div>
+                            <div class="sombreado">Patológicos</div>
+                            <div class="col-md-12">
+                                <textarea class="form-control" rows="3" ng-model="antecedentes.patologicos" ng-disabled="vista"></textarea>
+                            </div>
+                            <div class="sombreado">Quirúrgicos</div>
+                            <div class="col-md-12">
+                                <textarea class="form-control" rows="3" ng-model="antecedentes.quirurgicos" ng-disabled="vista"></textarea>
+                            </div>
+                            <div class="sombreado">Traumáticos</div>
+                            <div class="col-md-12">
+                                <textarea class="form-control" rows="3" ng-model="antecedentes.traumaticos" ng-disabled="vista"></textarea>
+                            </div>
+                            <div class="sombreado">Tóxico-alérgicos</div>
+                            <div class="col-md-12">
+                                <textarea class="form-control" rows="3" ng-model="antecedentes.alergicos" ng-disabled="vista"></textarea>
+                            </div>
+                            <div class="sombreado">Farmacológicos</div>
+                            <div class="col-md-12">
+                                <textarea class="form-control" rows="3" ng-model="antecedentes.farmacologicos" ng-disabled="vista"></textarea>
+                            </div>
+                            <div class="sombreado">Gineco-obstétricos</div>
+                            <div class="col-md-12">
+                                <textarea class="form-control" rows="3" ng-model="antecedentes.gineco" ng-disabled="vista"></textarea>
+                            </div>
+                            <div class="sombreado">Transfusionales</div>
+                            <div class="col-md-12">
+                                <textarea class="form-control" rows="3" ng-model="antecedentes.transfusionales" ng-disabled="vista"></textarea>
+                            </div>
+                            <div class="sombreado">Enfermedades con factor hereditario</div>
+                            <div class="col-md-12">
+                                <textarea class="form-control" rows="3" ng-model="antecedentes.hereditarios" ng-disabled="vista"></textarea>
+                            </div>
+                            <div class="sombreado">Otros</div>
+                            <div class="col-md-12">
+                                <textarea class="form-control" rows="3" ng-model="antecedentes.otros_ant" ng-disabled="vista"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="subtitulo">Revisión por Sistemas</div>
+                            <div class="sombreado">Cabeza</div>
+                            <div class="col-md-12">
+                                <textarea class="form-control" rows="2" ng-model="antecedentes.cabeza_sist" ng-disabled="vista"></textarea>
+                            </div>
+                            <div class="sombreado">Órganos de los sentidos</div>
+                            <div class="col-md-12">
+                                <textarea class="form-control" rows="2" ng-model="antecedentes.sentidos_sist" ng-disabled="vista"></textarea>
+                            </div>
+                            <div class="sombreado">Cuello</div>
+                            <div class="col-md-12">
+                                <textarea class="form-control" rows="2" ng-model="antecedentes.cuello_sist" ng-disabled="vista"></textarea>
+                            </div>
+                            <div class="sombreado">Cardiovascular</div>
+                            <div class="col-md-12">
+                                <textarea class="form-control" rows="2" ng-model="antecedentes.cardiovascular_sist" ng-disabled="vista"></textarea>
+                            </div>
+                            <div class="sombreado">Respiratorio</div>
+                            <div class="col-md-12">
+                                <textarea class="form-control" rows="2" ng-model="antecedentes.respiratorio_sist" ng-disabled="vista"></textarea>
+                            </div>
+                            <div class="sombreado">Gastro-intestinal</div>
+                            <div class="col-md-12">
+                                <textarea class="form-control" rows="2" ng-model="antecedentes.gastro_sist" ng-disabled="vista"></textarea>
+                            </div>
+                            <div class="sombreado">Genito-urinario</div>
+                            <div class="col-md-12">
+                                <textarea class="form-control" rows="2" ng-model="antecedentes.genito_sist" ng-disabled="vista"></textarea>
+                            </div>
+                            <div class="sombreado">Osteo-músculo-articular</div>
+                            <div class="col-md-12">
+                                <textarea class="form-control" rows="2" ng-model="antecedentes.osteomuscular_sist" ng-disabled="vista"></textarea>
+                            </div>
+                            <div class="sombreado">Sistema nervioso</div>
+                            <div class="col-md-12">
+                                <textarea class="form-control" rows="2" ng-model="antecedentes.nervioso_sist" ng-disabled="vista"></textarea>
+                            </div>
+                            <div class="sombreado">Endocrinológicos</div>
+                            <div class="col-md-12">
+                                <textarea class="form-control" rows="2" ng-model="antecedentes.endocrinologico_sist" ng-disabled="vista"></textarea>
+                            </div>
+                            <div class="sombreado">Psiquiátricos</div>
+                            <div class="col-md-12">
+                                <textarea class="form-control" rows="2" ng-model="antecedentes.psiquiatricos_sist" ng-disabled="vista"></textarea>
+                            </div>
+                            <div class="sombreado">Hematológicos</div>
+                            <div class="col-md-12">
+                                <textarea class="form-control" rows="2" ng-model="antecedentes.hematologicos_sist" ng-disabled="vista"></textarea>
+                            </div>
+                            <div class="sombreado">Piel-faneras</div>
+                            <div class="col-md-12">
+                                <textarea class="form-control" rows="2" ng-model="antecedentes.piel_faneras_sist" ng-disabled="vista"></textarea>
+                            </div>
+                            <div class="sombreado">Cavidad oral</div>
+                            <div class="col-md-12">
+                                <textarea class="form-control" rows="2" ng-model="antecedentes.oral_sist" ng-disabled="vista"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <div class="alert alert-danger"  ng-if="mensaje_antecedentes=='error'">warning</div>
+                            <div class="alert alert-success" ng-if="mensaje_antecedentes=='ok'">Se ha guardado exitosamente!</div>
+                        </div>
+                        <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
+                            <button type="button" class="btn btn-default" ng-click="enviarAntecedentes()" ng-disabled="vista"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
+                            <!--button type="button" class="btn btn-default" ng-click="" ng-disabled="vista">Continuar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button-->
+                        </div>
+                        <!--div class="col-md-12">{{antecedentes | json}}</div-->
+                    </form>
+                </tab><!--FIN TAB 2 DOS-->
+                <tab heading="Exámen Físico">
+                    <!--div id="datos_paciente"></div-->
+                    <form class="col-md-12">
+                        <div class="subtitulo">Módulo de Examen Físico</div>
+                        <div class="col-md-4">
+                            <div class="form-group col-md-12">
+                                <label>Estado General</label>
+                                <select class="form-control" ng-model="examenfisico.est_general" ng-options='est_general.id as est_general.nombre for est_general in est_generales' ng-disabled="vista">
+                                </select>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label>Estado Respiratorio</label>
+                                <select class="form-control" ng-model="examenfisico.est_resp" ng-options='est_resp.id as est_resp.nombre for est_resp in estados_resp' ng-disabled="vista">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group col-md-12">
+                                <label>Estado Hidratación</label>
+                                <select class="form-control" ng-model="examenfisico.est_hidratacion" ng-options='est_hidratacion.id as est_hidratacion.nombre for est_hidratacion in estados_hidratacion' ng-disabled="vista">
+                                </select>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label>Tanner</label>
+                                <select class="form-control" ng-model="examenfisico.tanner" ng-disabled="vista">
+                                    <option value="-1">Seleccione una opción</option>
+                                    <option ng-repeat="tanner in tanners" value="{{tanner.id}}">{{tanner.nombre}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group col-md-12">
+                                <label>Estado de Conciencia</label>
+                                <select class="form-control" ng-model="examenfisico.est_conciencia" ng-model="examenfisico.est_hidratacion" ng-options='est_conciencia.id as est_conciencia.nombre for est_conciencia in estados_conciencia' ng-disabled="vista">
+                                </select>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label>Escala de Glasgow</label>
+                                <select class="form-control" ng-model="examenfisico.glasgow" ng-model="examenfisico.est_hidratacion" ng-options='glasgow.id as glasgow.nombre for glasgow in glasgows' ng-disabled="vista">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6 separador">
+                            <div class="subtitulo">Constantes Vitales</div>
+                            <div class="form-group col-md-12">
+                                <label class="col-md-5 no-padding">Presión arterial (Sentado)</label>
+                                <div class="col-md-7 no-padding">
+                                    <input type="text" class="form-control sentado" ng-model="examenfisico.pa_sistolica" ng-disabled="vista">
+                                    <label class="divisor">/</label>
+                                    <input type="text" class="form-control sentado" ng-model="examenfisico.pa_diastolica" ng-disabled="vista">
+                                    <label class="unidades"> mmHg.</label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="col-md-5 no-padding">Presión arterial (Decúbito)</label>
+                                <div class="col-md-7 no-padding">
+                                    <input type="text" class="form-control campo_medio" ng-model="examenfisico.pa_decubito" ng-disabled="vista">
+                                    <label class="unidades">mmHg.</label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="col-md-5 no-padding">Presión arterial media</label>
+                                <div class="col-md-7 no-padding">
+                                    <input type="text" class="form-control campo_medio" ng-model="examenfisico.pa_media" ng-disabled="vista">
+                                    <label class="unidades">mmHg.</label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="col-md-5 no-padding">Frecuencia cardiaca</label>
+                                <div class="col-md-7 no-padding">
+                                    <input type="text" class="form-control campo_medio" ng-model="examenfisico.fa_cardiaca" ng-disabled="vista">
+                                    <label class="unidades">x min.</label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="col-md-5 no-padding">Frecuencia respiratoria</label>
+                                <div class="col-md-7 no-padding">
+                                    <input type="text" class="form-control campo_medio" ng-model="examenfisico.fa_resp" ng-disabled="vista">
+                                    <label class="unidades">x min.</label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="col-md-5 no-padding">Presión de pulso</label>
+                                <div class="col-md-7 no-padding">
+                                    <input type="text" class="form-control campo_medio" ng-model="examenfisico.presion" ng-disabled="vista">
+                                    <label class="unidades">mmHg.</label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="col-md-5 no-padding">Temperatura</label>
+                                <div class="col-md-7 no-padding">
+                                    <input type="text" class="form-control campo_medio" ng-model="examenfisico.temperatura" ng-disabled="vista">
+                                    <label class="unidades">ºC</label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="col-md-5 no-padding">Temperatura rectal</label>
+                                <div class="col-md-7 no-padding">
+                                    <input type="text" class="form-control campo_medio" ng-model="examenfisico.temperatura_rectal" ng-disabled="vista">
+                                    <label class="unidades">ºC</label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="col-md-5 no-padding">Temperatura ambiental</label>
+                                <div class="col-md-7 no-padding">
+                                    <input type="text" class="form-control campo_medio" ng-model="examenfisico.temperatura_amb" ng-disabled="vista">
+                                    <label class="unidades">ºC</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="subtitulo">Medidas Antropométricas</div>
+                            <div class="form-group col-md-12">
+                                <label class="col-md-5 no-padding">Peso</label>
+                                <div class="col-md-7 no-padding">
+                                    <input type="text" class="form-control campo_medio" ng-model="examenfisico.peso" ng-change="calculoIMC()" ng-disabled="vista">
+                                    <label class="unidades">Kg.</label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="col-md-5 no-padding">Talla</label>
+                                <div class="col-md-7 no-padding">
+                                    <input type="text" class="form-control campo_medio" ng-model="examenfisico.talla" ng-change="calculoIMC()" ng-disabled="vista">
+                                    <label class="unidades">cms.</label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="col-md-5 no-padding">Perímetro torácico</label>
+                                <div class="col-md-7 no-padding">
+                                    <input type="text" class="form-control campo_medio" ng-model="examenfisico.perimetro_tor" ng-disabled="vista">
+                                    <label class="unidades">cms.</label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="col-md-5 no-padding">Perímetro abdominal</label>
+                                <div class="col-md-7 no-padding">
+                                    <input type="text" class="form-control campo_medio" ng-model="examenfisico.perimetro_abd" ng-disabled="vista">
+                                    <label class="unidades">cms.</label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="col-md-5 no-padding">Perímetro cadera</label>
+                                <div class="col-md-7 no-padding">
+                                    <input type="text" class="form-control campo_medio" ng-model="examenfisico.perimetro_cadera" ng-disabled="vista">
+                                    <label class="unidades">cms.</label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="col-md-5 no-padding">Relación Cintura/Cadera</label>
+                                <div class="col-md-7 no-padding">
+                                    <input type="text" class="form-control campo_medio" ng-model="examenfisico.relacion" ng-disabled="vista">
+                                    <label class="unidades">cms.</label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="col-md-5 no-padding">Creatinina</label>
+                                <div class="col-md-7 no-padding">
+                                    <input type="text" class="form-control campo_medio" ng-model="examenfisico.creatinina" ng-disabled="vista">
+                                    <label class="unidades">mg/dL</label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="col-md-5 no-padding">TFG</label>
+                                <div class="col-md-7 no-padding">
+                                    <input type="text" class="form-control campo_medio" ng-model="examenfisico.tfg" ng-disabled="vista">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="col-md-5 no-padding">IMC</label>
+                                <div class="col-md-7 no-padding">
+                                    <div class="form-group col-md-7">
+                                        <select class="form-control" ng-model="examenfisico.imc_clasificacion" ng-options='imc_clasificacion.id as imc_clasificacion.nombre for imc_clasificacion in imc_clasificaciones' disabled>
+                                        </select>
+                                    </div>
+                                    <input type="text" class="form-control campo_imc" ng-model="examenfisico.imc" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="subtitulo">Examen Físico</div>
+                        <div class="col-md-4">
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" value="" ng-change="examenFisicoCheck('cabeza')" ng-model="examenfisico.ch_cabeza" ng-disabled="vista">
+                                    Cabeza
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" value="" ng-change="examenFisicoCheck('ojos')" ng-model="examenfisico.ch_ojos" ng-disabled="vista">
+                                    Ojos
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" value="" ng-change="examenFisicoCheck('oido')" ng-model="examenfisico.ch_oido" ng-disabled="vista">
+                                    Oído
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" value="" ng-change="examenFisicoCheck('nariz')" ng-model="examenfisico.ch_nariz" ng-disabled="vista">
+                                    Nariz
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" value="" ng-change="examenFisicoCheck('boca')" ng-model="examenfisico.ch_boca" ng-disabled="vista">
+                                    Boca
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" value="" ng-change="examenFisicoCheck('faringe')" ng-model="examenfisico.ch_faringe" ng-disabled="vista">
+                                    Faringe
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" value="" ng-change="examenFisicoCheck('laringe')" ng-model="examenfisico.ch_laringe" ng-disabled="vista">
+                                    Laringe
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" value="" ng-change="examenFisicoCheck('cuello')" ng-model="examenfisico.ch_cuello" ng-disabled="vista">
+                                    Cuello
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" value="" ng-change="examenFisicoCheck('torax')" ng-model="examenfisico.ch_torax" ng-disabled="vista">
+                                    Tórax
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" value="" ng-change="examenFisicoCheck('senos')" ng-model="examenfisico.ch_senos" ng-disabled="vista">
+                                    Senos *Si Corresponde*
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" value="" ng-change="examenFisicoCheck('corazon')" ng-model="examenfisico.ch_corazon" ng-disabled="vista">
+                                    Corazón
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" value="" ng-change="examenFisicoCheck('pulmon')" ng-model="examenfisico.ch_pulmon" ng-disabled="vista">
+                                    Pulmón
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" value="" ng-change="examenFisicoCheck('abdomen')" ng-model="examenfisico.ch_abdomen" ng-disabled="vista">
+                                    Abdomen
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" value="" ng-change="examenFisicoCheck('genitales')" ng-model="examenfisico.ch_genitales" ng-disabled="vista">
+                                    Genitales Externos
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" value="" ng-change="examenFisicoCheck('ginecologico')" ng-model="examenfisico.ch_ginecologico" ng-disabled="vista">
+                                    Exámen Ginecológico *Si Corresponde*
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" value="" ng-change="examenFisicoCheck('rectal')" ng-model="examenfisico.ch_rectal" ng-disabled="vista">
+                                    Tacto Rectal
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" value="" ng-change="examenFisicoCheck('miembros_sup')" ng-model="examenfisico.ch_miembros_sup" ng-disabled="vista">
+                                    Miembros Superiores
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" value="" ng-change="examenFisicoCheck('miembros_inf')" ng-model="examenfisico.ch_miembros_inf" ng-disabled="vista">
+                                    Miembros Inferiores
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" value="" ng-change="examenFisicoCheck('columna')" ng-model="examenfisico.ch_columna" ng-disabled="vista">
+                                    Columna
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" value="" ng-change="examenFisicoCheck('reflejos')" ng-model="examenfisico.ch_reflejos" ng-disabled="vista">
+                                    Reflejos
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" value="" ng-change="examenFisicoCheck('marcha')" ng-model="examenfisico.ch_marcha" ng-disabled="vista">
+                                    Marcha
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" value="" ng-change="examenFisicoCheck('postura')" ng-model="examenfisico.ch_postura" ng-disabled="vista">
+                                    Postura
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" value="" ng-change="examenFisicoCheck('piel_faneras')" ng-model="examenfisico.ch_piel_faneras" ng-disabled="vista">
+                                    Piel y Faneras
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" value="" ng-change="examenFisicoCheck('ganglios')" ng-model="examenfisico.ch_ganglios" ng-disabled="vista">
+                                    Ganglios
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" value="" ng-change="examenFisicoCheck('pulsos')" ng-model="examenfisico.ch_pulsos" ng-disabled="vista">
+                                    Pulsos
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" value="" ng-change="examenFisicoCheck('mental')" ng-model="examenfisico.ch_mental" ng-disabled="vista">
+                                    Examen Mental
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" value="" ng-change="examenFisicoCheck('craneanos')" ng-model="examenfisico.ch_craneanos" ng-disabled="vista">
+                                    Pares Craneanos
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" value="" ng-change="examenFisicoCheck('pruebas')" ng-model="examenfisico.ch_pruebas" ng-disabled="vista">
+                                    Pruebas Cerebelos
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" value="" ng-change="examenFisicoCheck('general')" ng-model="examenfisico.ch_asp_general" ng-disabled="vista">
+                                    Aspecto General
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" value="" ng-change="examenFisicoCheck('motor')" ng-model="examenfisico.ch_motor" ng-disabled="vista">
+                                    Motor Sensitivo
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" value="" ng-change="examenFisicoCheck('neurologico')" ng-model="examenfisico.ch_neurologico" ng-disabled="vista">
+                                    Exámen Neurológico
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="subrayado">Observaciones del Examen Físico</label>
+                            <textarea class="form-control" rows="3" ng-model="examenfisico.observaciones_ef" ng-disabled="vista"></textarea>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label class="subrayado">Observaciones Adicionales del Examen Físico</label>
+                            <textarea class="form-control" rows="3" ng-model='examenfisico.adicionales_ef' ng-disabled="vista"></textarea>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <div class="alert alert-danger"  ng-if="mensaje_examenfisico=='error'">warning</div>
+                            <div class="alert alert-success" ng-if="mensaje_examenfisico=='ok'">Se ha guardado exitosamente!</div>
+                        </div>
+                        <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
+                            <button type="button" class="btn btn-default" ng-click="enviarExamenFisico()" ng-disabled="vista"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
+                            <!--button type="button" class="btn btn-default" ng-click="" ng-disabled="vista">Continuar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button-->
+                        </div>
+                    </form>
+                    <!--div class="col-md-12">{{examenfisico | json}}</div-->
+                </tab><!--FIN TAB 3 TRES-->
+                <tab heading="Diagnósticos">
+                    <!--div id="datos_paciente"></div-->
+                    <form class="col-md-12">
+                        <div class="subtitulo">Diagnósticos</div>
+                        <div ng-hide="vista">
+                            <form class="col-md-12">
+                                <label class="subrayado">Agregar Diagnóstico</label>
+                                <div class="form-group">
+                                    <label class="titulo">Buscar Diagnóstico</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" my-enter="buscarCies(diagnostico.buscar)" placeholder="Nombre o código" ng-model="diagnostico.buscar" ng-disabled="vista">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" ng-click="buscarCies(diagnostico.buscar)" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-show="bl_buscado">
+                                    <label class="titulo">Seleccione el diagnóstico</label>
+                                    <!--input type="text" class="form-control" placeholder="Nombre o código" ng-model="diagnostico.nombre" typeahead="cie as cie.nombre for cie in cies | filter:$viewValue" typeahead-on-select=""-->
+                                    <select class="form-control" ng-model="diagnostico.nombre" ng-options='cie as cie.nombre for cie in cies'></select>
+                                </div>
+                                <div class="form-group" ng-show="bl_buscado">
+                                    <label class="titulo">Tipo</label>
+                                    <select class="form-control" ng-model="diagnostico.tipo" ng-options='tipo as tipo.nombre for tipo in tipos_diagnostico'>
+                                    </select>
+                                </div>
+                                <div class="form-group" ng-show="bl_buscado">
+                                    <label class="titulo">Contingencia</label>
+                                    <select class="form-control" ng-model="diagnostico.tipo_contingencia" ng-options='tipo_contingencia as tipo_contingencia.nombre for tipo_contingencia in tipos_contingencia'></select>
+                                    <!--textarea class="form-control" ng-model="diagnostico.contingencia" rows="3"></textarea-->
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <div class="alert alert-danger"  ng-if="mensaje_diagnostico=='error'">warning</div>
+                                    <div class="alert alert-success" ng-if="mensaje_diagnostico=='ok'">Se ha guardado exitosamente!</div>
+                                </div>
+                                <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4" ng-show="bl_buscado">
+                                    <button type="button" class="btn btn-default" ng-click="agregarDiagnostico()" ng-disabled="vista"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Agregar</button>
+                                    <button type="button" class="btn btn-default" ng-click="limpiarDiagnostico()" ng-disabled="vista"><span class="glyphicon glyphicon-erase" aria-hidden="true"></span> Limpiar</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="subrayado">Diagnósticos Actuales</label>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <tr class="info">
+                                        <th>Principal</th>
+                                        <th>Código</th>
+                                        <th>Diagnóstico</th>
+                                        <th>Tipo</th>
+                                        <th>Contingencia</th>
+                                        <th ng-hide="vista"><span class="glyphicon glyphicon-remove suave"></span></th>
+                                    </tr>
+                                    <tr ng-repeat="diagnostico_cita in diagnosticos_cita">
+                                        <td>
+                                            <div class="checkbox_table">
+                                                <input type="checkbox" ng-click="diagnosticoPrincipal()" ng-model="diagnostico_cita.ppal">
+                                            </div>
+                                        </td>
+                                        <td class="centrado_vertical">{{diagnostico_cita.codigo}}</td>
+                                        <td class="centrado_vertical">{{diagnostico_cita.diagnostico}}</td>
+                                        <td class="centrado_vertical">{{diagnostico_cita.tipo.nombre}}</td>
+                                        <td class="centrado_vertical">{{diagnostico_cita.contingencia.nombre}}</td>
+                                        <td class="centrado_vertical" ng-hide="vista"><span class="glyphicon glyphicon-remove suave" ng-click="eliminarDiagnostico($index)"></span></td>
+                                    </tr>
+                                </table>
+                                <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
+                                    <button type="button" class="btn btn-default" ng-click="enviarDiagnosticos()" ng-disabled="vista"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
+                                    <!--button type="button" class="btn btn-default" ng-click="" ng-disabled="vista">Continuar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button-->
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </tab><!--FIN TAB 4 CUATRO-->
+                <tab heading="Evoluciones">
+                    <form class="col-md-12">
+                        <div class="subtitulo">Evoluciones</div>
+                        <div ng-hide="vista">
+                            <form class="col-md-12">
+                                <label class="subrayado">Agregar Evolución</label>
+                                <div class="form-group">
+                                    <textarea class="form-control" ng-model="evolucion.descripcion" rows="3" ng-change="verificarEvolucion()" ng-disabled="vista"></textarea>
+                                </div>
+                                <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4">
+                                    <button type="button" class="btn btn-default" ng-click="crearEvolucion()" ng-disabled="evolucion_invalida"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Agregar</button>
+                                    <button type="button" class="btn btn-default" ng-click="limpiarEvolucion()"><span class="glyphicon glyphicon-erase" aria-hidden="true"></span> Limpiar</button>
+                                </div>
+                            </form>
+                        </div>
+                        <form class="col-md-12">
+                            <label class="subrayado">Evoluciones Actuales</label>
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <tr class="info">
+                                            <th>Número</th>
+                                            <th>Descripción</th>
+                                            <th ng-hide="vista"><span class="glyphicon glyphicon-remove suave"></span></th>
+                                        </tr>
+                                        <tr ng-repeat="evolucion_cita in evoluciones_cita">
+                                            <td class="centrado_vertical">{{evolucion_cita.numero}}</td>
+                                            <td class="centrado_vertical">{{evolucion_cita.descripcion}}</td>
+                                            <td class="centrado_vertical" ng-hide="vista"><span class="glyphicon glyphicon-remove suave" ng-click="eliminarEvolucion($index)"></span></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <!--pre class="col-md-12">{{evolucion|json}}{{evoluciones_cita|json}}</pre-->
+                        </form>
+                    </form>
+                </tab><!--FIN TAB 5 CINCO-->
+                <tab heading="Medicamentos">
+                    <!--div id="datos_paciente"></div-->
+                    <form class="col-md-12">
+                        <div class="subtitulo">Medicamentos</div>
+                        <div class="col-md-12">
+                            <div class="form-inline col-xs-12 col-sm-12 col-md-6 col-md-offset-3" ng-hide="vista">
+                                <label class="titulo">Filtro de búsqueda:</label>
+                                <div class="radio">
+                                    <label class="titulo">
+                                        <input type="radio" name="filtro_pos" value="1" ng-model="filtro_pos" ng-click="limpiarMedicamento()" ng-disabled="vista">
+                                        P.O.S.
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label class="titulo">
+                                        <input type="radio" name="filtro_pos" value="0" ng-model="filtro_pos" ng-click="limpiarMedicamento()" ng-disabled="vista">
+                                        No P.O.S.
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-if="filtro_pos!=2" ng-hide="vista">
+                                <label class="subrayado">Buscar Medicamentos</label>
+                                <input type="text" class="form-control" placeholder="Buscar Medicamento" ng-model="actual" typeahead="medicamento as medicamento.nombre for medicamento in medicamentos | filter:$viewValue | filter:{pos:filtro_pos}" ng-disabled="vista"/>
+                                <div ng-if="actual" ng-show="">
+                                    <label class="subrayado">Medicamento seleccionado</label>
+                                    <label class="col-md-12">Descripcion: {{actual.descripcion}}</label>
+                                    <label class="col-md-12">Principio activo: {{actual.principio_activo}}</label>
+                                    <label class="col-md-12">Concentración: {{actual.concentracion}}</label>
+                                    <label class="col-md-12">Forma Farmaceutica: {{actual.forma_farmaceutica}}</label>
+                                    <label class="col-md-12" ng-if="actual.aclaracion">Aclaración: {{actual.aclaracion}}</label>
+                                    <label class="col-md-12" >Verificar:</label>
+                                    <div class="col-md-offset-2 col-md-4">
+                                        <div class="radio">
+                                            <input type="radio" value="1" ng-model="actual.verificar"><label>Sí</label>
+                                        </div>
+                                        <div class="radio">
+                                            <input type="radio" value="0" ng-model="actual.verificar"><label>No</label>
+                                        </div>
+                                    </div>
+                                    <label class="col-md-12" >Cantidad</label>
+                                    <input type="text" class="form-control" ng-model="actual.cantidad">
+                                    <label class="col-md-12">Dosis</label>
+                                    <input type="text" class="form-control" ng-model="actual.dosis">
+                                    <label class="col-md-12">Salidas</label>
+                                    <input type="text" class="form-control" ng-model="actual.salidas">
+                                </div>
+                                <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4" ng-if="actual" style="margin: 10px 0px 10px 0px">
+                                    <button type="button" class="btn btn-default" ng-click="agregarMedicamento(actual)" ng-disabled="vista"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Agregar</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <tr class="info">
+                                        <th class="centrado_vertical">Nº Fórmula</th>
+                                        <th class="centrado_vertical">Medicamento</th>
+                                        <th class="centrado_vertical">Clase</th>
+                                        <th class="centrado_vertical">Verificar</th>
+                                        <th class="centrado_vertical">Presentación</th>
+                                        <th class="centrado_vertical">Cant.</th>
+                                        <th class="centrado_vertical">Dosis</th>
+                                        <th class="centrado_vertical">Salidas</th>
+                                        <th class="centrado_vertical" ng-hide="vista">Eliminar</th>
+                                    </tr>
+                                    <tr ng-repeat="medicamento_formula in medicamentos_formula">
+                                        <td class="centrado_vertical">111</td>
+                                        <td class="centrado_vertical">{{medicamento_formula.nombre}}</td>
+                                        <td class="centrado_vertical"><span ng-if="medicamento_formula.pos==1">Pos</span><span ng-if="medicamento_formula.pos==0">No Pos</span></td>
+                                        <td class="centrado_vertical"><span ng-if="medicamento_formula.verificar==1">Si</span><span ng-if="medicamento_formula.verificar==0">No</span></td>
+                                        <td class="centrado_vertical">{{medicamento_formula.forma_farmaceutica}}</td>
+                                        <td class="centrado_vertical">{{medicamento_formula.cantidad}}</td>
+                                        <td class="centrado_vertical">{{medicamento_formula.dosis}}</td>
+                                        <td class="centrado_vertical">{{medicamento_formula.salidas}}</td>
+                                        <td class="centrado_vertical" ng-hide="vista"><span class="glyphicon glyphicon-remove suave"></span></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="btn-group col-xs-12 col-md-offset-4 col-md-4">
+                                <label class="col-xs-4 btn btn-default" ng-model="radioModel" btn-radio="'Left'" uncheckable><span class="glyphicon glyphicon-save" style="cursor: pointer;"></span></label>
+                                <label class="col-xs-4 btn btn-default" ng-model="radioModel" btn-radio="'Middle'" uncheckable><span class="glyphicon glyphicon-refresh" style="cursor: pointer;"></span></label>
+                                <label class="col-xs-4 btn btn-default" ng-model="radioModel" btn-radio="'Right'" uncheckable><span class="glyphicon glyphicon-print" style="cursor: pointer;"></span></label>
+                            </div>
+                        </div>
+                        <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones" ng-hide="vista">
+                            <button type="button" class="btn btn-default" ng-disabled="vista"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
+                            <!--button type="button" class="btn btn-default" ng-disabled="vista">Continuar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button-->
+                        </div>
+                    </form>
+                </tab><!--FIN TAB 6 SEIS-->
+                <tab heading="Órdenes">
+                    <!--div id="datos_paciente"></div-->
+                    <form class="col-md-12">
+                        <div class="subtitulo">Órdenes Médicas</div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="subrayado">Tipo de Orden</label>
+                                <input type="text" class="form-control" placeholder="AUTOCOMPLETAR Tipo de Orden">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <tr class="info">
+                                        <th class="centrado_vertical">Nº Fórmula</th>
+                                        <th class="centrado_vertical">Medicamento</th>
+                                        <th class="centrado_vertical">Clase</th>
+                                        <th class="centrado_vertical" ng-hide="vista">Eliminar</th>
+                                    </tr>
+                                    <tr>
+                                        <td class="centrado_vertical">111</td>
+                                        <td class="centrado_vertical">PIROXICAM GEL</td>
+                                        <td class="centrado_vertical">NO POS</td>
+                                        <td class="centrado_vertical" ng-hide="vista"><span class="glyphicon glyphicon-remove suave"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="centrado_vertical">222</td>
+                                        <td class="centrado_vertical">METOCARBAMOL 750MG</td>
+                                        <td class="centrado_vertical">POS</td>
+                                        <td class="centrado_vertical" ng-hide="vista"><span class="glyphicon glyphicon-remove suave"></span></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="btn-group col-xs-12 col-md-offset-4 col-md-4">
+                                <label class="col-xs-4 btn btn-default" ng-model="radioModel" btn-radio="'Left'" uncheckable><span class="glyphicon glyphicon-save" style="cursor: pointer;"></span></label>
+                                <label class="col-xs-4 btn btn-default" ng-model="radioModel" btn-radio="'Middle'" uncheckable><span class="glyphicon glyphicon-refresh" style="cursor: pointer;"></span></label>
+                                <label class="col-xs-4 btn btn-default" ng-model="radioModel" btn-radio="'Right'" uncheckable><span class="glyphicon glyphicon-print" style="cursor: pointer;"></span></label>
+                            </div>
+                        </div>
+                        <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones" ng-hide="vista">
+                            <button type="button" class="btn btn-default" ng-disabled="vista"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
+                            <button type="button" class="btn btn-default" ng-disabled="vista">Finalizar <span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span></button>
+                        </div>
+                    </form>
+                </tab><!--FIN TAB 7 SIETE-->
+            </tabset>
+        </div>
+    <div class="margen_clear"></div>
+    </div><!--FIN container_border-->
+</div><!--FIN col-md-offset-1 col-md-10-->

@@ -1,0 +1,77 @@
+<div id="headline">
+    <div class="hoy">{{fecha}}</div>
+    <div class="logout"><a ng-click="cerrarSesion()">Cerrar Sesión</a></div>
+</div>
+<header>
+    <div class="header_imagen">
+        <div class="logo">
+            <a href=""><img src="../images/logo_neg.png" alt=""></a>
+        </div>
+        <div class="sede">{{seccion}}</div>
+        <div class="saludo">Bienvenid@</div>
+        <div class="soc_box">
+            <ul class="header_soc_list">
+                <li><a href="#" class="icon1"><span class="fa-facebook"></span></a></li>
+                <li><a href="#" class="icon2"><span class="fa-twitter"></span></a></li>
+                <li><a href="#" class="icon3"><span class="fa-google-plus"></span></a></li>
+                <li><a href="#" class="icon4"><span class="fa-linkedin"></span></a></li>
+                <li><a href="#" class="icon5"><span class="fa-envelope"></span></a></li>
+            </ul>
+        </div>  
+    </div>
+    <div class="header_border"></div>
+</header>
+<div class="col-md-offset-1 col-md-10">
+    <div class="bloque_titulo col-md-12">Proactivar I.P.S.</div>
+    <div id="container_border">
+        <div class="margen_clear"></div>
+        <div class="informacion col-md-12" ng-controller="barraUsuarioCTRL">
+            <div class="col-md-3">{{barra_usuario.tipo_usuario}}: {{barra_usuario.nombres}}</div>
+            <div class="col-md-3">Ocupación: {{barra_usuario.ocupacion}}</div>
+            <div class="col-md-3">Edad: {{barra_usuario.edad}} años</div>
+            <div class="col-md-3">Hora: 00:00:00</div>
+        </div>
+        <div class="menu_lateral" ng-controller="menu_lateralCTRL">
+            <accordion close-others="true" class="col-md-2">
+                <accordion-group ng-repeat="menu in menu_lateral" heading="{{menu.nombre}}">
+                <ul>
+                    <li ng-repeat="opcion in menu.opciones"><a ng-href="{{opcion.vinculo}}">{{opcion.nombre}}</a></li>
+                </ul>
+            </accordion-group>
+        </accordion>
+    </div>
+    <div class="col-md-10">
+        <div class="titulo_seccion">Mis Citas</div>
+        <div class="col-md-offset-1 col-md-10">
+            <div class="subrayado col-md-12">Mi Próxima Cita</div>
+            <div class="col-md-offset-2 col-md-8 mi_cita">
+                <div class="col-md-2 separador_cita hora"><p>{{proxima_cita.hora}}</p><p>{{proxima_cita.ampm}}</p></div>
+                <div class="col-md-5 separador_cita fecha">
+                    <p>{{proxima_cita.fecha.dia}} {{proxima_cita.fecha.nombre_dia}}</p>
+                    <p>{{proxima_cita.fecha.mes}} {{proxima_cita.fecha.anio}}</p>
+                </div>
+                <div class="col-md-4 separador_cita datos">
+                    <p>{{proxima_cita.profesional}}</p>
+                    <p>{{proxima_cita.especialidad}}</p>
+                </div>
+                <div class="col-md-1 eliminar"><span class="glyphicon glyphicon-remove remove"></span></div>
+            </div>
+        </div>
+        <div class="col-md-offset-1 col-md-10">
+            <div class="subrayado col-md-12">Mis Citas Agendadas</div>
+        </div>
+        <div class="col-md-offset-1 col-md-10 cita" ng-repeat="cita in citas">
+            <div class="col-md-1 separador_cita">{{cita.hora}} {{cita.ampm}}</div>
+            <div class="col-md-4 separador_cita fecha">
+                <p>{{cita.fecha.nombre_dia}} {{cita.fecha.dia}} de {{cita.fecha.mes}} {{cita.fecha.anio}}</p>
+            </div>
+            <div class="col-md-3 separador_cita especialidad">{{cita.especialidad}}</div>
+            <div class="col-md-3 separador_cita doctor">{{cita.profesional}}</div>
+            <div class="col-md-1 eliminar"><span class="glyphicon glyphicon-remove remove"></span></div>
+        </div>
+        <div class="form-group col-md-offset-1 col-md-10 alert alert-success" role="alert" ng-show="mensaje">{{mensaje}}</div>
+    </div>
+    <div class="col-md-12"><pre>{{formulario | json}}</pre></div>
+    <div class="margen_clear"></div>
+</div>
+</div>

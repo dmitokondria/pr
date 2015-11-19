@@ -1,0 +1,278 @@
+<div id="headline">
+    <div class="hoy">{{fecha}}</div>
+    <div class="logout"><a ng-click="cerrarSesion()">Cerrar Sesión</a></div>
+</div>
+<header>
+    <div class="header_imagen">
+        <div class="logo">
+            <a href=""><img src="../images/logo_neg.png" alt=""></a>
+        </div>
+        <div class="sede">{{seccion}}</div>
+        <div class="saludo">Bienvenid@</div>
+        <div class="soc_box">
+            <ul class="header_soc_list">
+                <li><a href="#" class="icon1"><span class="fa-facebook"></span></a></li>
+                <li><a href="#" class="icon2"><span class="fa-twitter"></span></a></li>
+                <li><a href="#" class="icon3"><span class="fa-google-plus"></span></a></li>
+                <li><a href="#" class="icon4"><span class="fa-linkedin"></span></a></li>
+                <li><a href="#" class="icon5"><span class="fa-envelope"></span></a></li>
+            </ul>
+        </div>  
+    </div>
+    <div class="header_border"></div>
+</header>
+<div class="col-md-offset-1 col-md-10">
+    <div class="bloque_titulo col-md-12">Proactivar I.P.S.</div>
+    <div id="container_border">
+    <div class="margen_clear"></div>
+        
+    <div class="informacion col-md-12">
+        <div class="col-md-4">Profesional: Leonardo Bautista</div>
+        <div class="col-md-4">Agenda: Medicina Interna</div>
+        <div class="col-md-4">Hora: 00:00:00</div>
+    </div>
+    <div class="menu_lateral" ng-controller="menu_lateralCTRL">
+        <accordion close-others="true" class="col-md-2">
+            <accordion-group ng-repeat="menu in menu_lateral" heading="{{menu.nombre}}">
+                <ul>
+                    <li ng-repeat="opcion in menu.opciones"><a ng-href="{{opcion.vinculo}}">{{opcion.nombre}}</a></li>
+                </ul>
+            </accordion-group>
+        </accordion>
+    </div>
+    <div class="col-md-10">
+        <div class="titulo_seccion">Nueva Afiliación</div>
+
+        <form class="form-horizontal" ng-submit="crear()" ng-hide="paciente_creado">
+            <div class="subrayado col-md-12">Datos Básicos</div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Primer Apellido</label>
+                <div class="col-sm-8">
+                    <input required type="text" class="form-control" placeholder="Primer Apellido" ng-model="formulario.primer_apellido">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Segundo Apellido</label>
+                <div class="col-sm-8">
+                    <input required type="text" class="form-control" placeholder="Segundo Apellido" ng-model="formulario.segundo_apellido">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Primer Nombre</label>
+                <div class="col-sm-8">
+                    <input required type="text" class="form-control" placeholder="Primer Nombre" ng-model="formulario.primer_nombre">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Segundo Nombre</label>
+                <div class="col-sm-8">
+                    <input required type="text" class="form-control" placeholder="Segundo Nombre" ng-model="formulario.segundo_nombre">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Tipo de Identificación</label>
+                <div class="col-sm-8">
+                    <select class="form-control" ng-model="formulario.tipo_identificacion">
+                        <option value="-1" disabled>Selecciona una opción</option>
+                        <option ng-repeat="tipo in tipos_identificacion" value='{{tipo.id}}'>{{tipo.nombre}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Número de Identificación</label>
+                <div class="col-sm-8">
+                    <input required type="number" class="form-control" placeholder="Número de Identificación" ng-model="formulario.identificacion">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Correo Electrónico</label>
+                <div class="col-sm-8">
+                    <input required type="text" class="form-control" placeholder="Correo Electrónico" ng-model="formulario.email">
+                </div>
+            </div>
+            
+            <div class="subrayado col-md-12">Datos de Nacimiento</div>
+            
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Departamento</label>
+                <div class="col-sm-8">
+                    <select class="form-control" ng-model="formulario.departamento">
+                        <option value="-1" disabled>Seleccione el departamento</option>     
+                        <option ng-repeat="departamento in departamentos" value="{{departamento.id}}">{{departamento.nombre}}</option>     
+                    </select>
+                </div>
+            </div>   
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Ciudad</label>
+                <div class="col-sm-8">
+                    <select class="form-control" ng-model="formulario.ciudad">
+                        <option value="-1" disabled>Seleccione la ciudad</option>     
+                        <option ng-repeat="ciudad in ciudades | filter: sl_departamento=formulario.departamento:true" value="{{ciudad.id}}">{{ciudad.nombre}}</option>     
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Fecha de Nacimiento</label>
+                <div class="col-sm-2">
+                    <select class="form-control" ng-model="formulario.anio">
+                        <option value="-1" disabled>Año</option> 
+                        <option ng-repeat="anio in anios" value="{{anio}}">{{anio}}</option> 
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <select class="form-control" ng-model="formulario.mes">
+                        <option value="-1" disabled>Mes</option> 
+                        <option ng-repeat="mes in meses" value="{{mes.id}}">{{mes.nombre}}</option> 
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <select name="nac_dia" class="form-control" ng-model="formulario.dia">
+                        <option value="-1" disabled>Día</option>
+                        <option ng-repeat="dia in dias" value="{{dia}}">{{dia}}</option> 
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Género</label>
+                <div class="col-sm-8">
+                    <div class="radio-inline">
+                        <label>
+                            <input type="radio" value="1" ng-model="formulario.genero">
+                                Femenino
+                        </label>
+                    </div>
+                    <div class="radio-inline">
+                        <label>
+                            <input type="radio" value="2" ng-model="formulario.genero">
+                                Masculino
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="subrayado col-md-12">Datos Personales</div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Estado Civil</label>
+                <div class="col-sm-8">
+                    <select class="form-control" ng-model="formulario.estadocivil">
+                        <option value="-1" name="estado_civil" disabled>Seleccione su estado civil</option>
+                        <option ng-repeat="estado in estados_civiles" value="{{estado.id}}">{{estado.nombre}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Ocupación</label>
+                <div class="col-sm-8">
+                    <input required class="form-control" placeholder="Ocupación" type="text" ng-model="formulario.ocupacion">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Dirección</label>
+                <div class="col-sm-8">
+                    <input required class="form-control" placeholder="Dirección" type="text" ng-model="formulario.direccion">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Teléfono</label>
+                <div class="col-sm-8">
+                    <input required class="form-control" placeholder="Teléfono" type="text" ng-model="formulario.telefono">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Celular</label>
+                <div class="col-sm-8">
+                    <input required class="form-control" placeholder="Celular" type="text" ng-model="formulario.celular">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">EPS</label>
+                <div class="col-sm-8">
+                    <select class="form-control" ng-model="formulario.entidad">
+                        <option value="-1" disabled>Seleccione la entidad</option>
+                        <option ng-repeat="eps in epss" value="{{eps.id}}">{{eps.nombre}}</option>           
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">IPS</label>
+                <div class="col-sm-8">
+                    <input required class="form-control" placeholder="IPS" type="text" ng-model="formulario.ips">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Tipo de Vinculación</label>
+                <div class="col-sm-8">
+                    <select class="form-control" ng-model="formulario.tipovinculacion">
+                        <option value="0" name="vinculacion" disabled>Seleccione Tipo de Vinculación</option>
+                        <option ng-repeat="tipo in tipos_vinculacion" value="{{tipo.id}}">{{tipo.nombre}}</option>  
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Nivel de Escolaridad</label>
+                <div class="col-sm-8">
+                    <select class="form-control" ng-model="formulario.escolaridad"> 
+                        <option value="0" name="escolaridad" disabled>Seleccione Nivel de Estudios</option>
+                        <option ng-repeat="nivel in niveles_escolaridad" value="{{nivel.id}}">{{nivel.nombre}}</option>  
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Acudiente</label>
+                <div class="col-sm-8">
+                    <input required class="form-control" placeholder="Acudiente" type="text" ng-model="formulario.acudiente">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Parentesco Acudiente</label>
+                <div class="col-sm-8">
+                    <input required class="form-control" placeholder="Parentesco Acudiente" type="text" ng-model="formulario.parentesco">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Celular Acudiente</label>
+                <div class="col-sm-8">
+                    <input required class="form-control" placeholder="Celular Acudiente" type="text" ng-model="formulario.celacudiente">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Paquete de Servicios</label>
+                <div class="col-sm-8">
+                    <select class="form-control" ng-model="formulario.paquete">
+                        <option value="-1" name="paquete" disabled>Seleccione Paquete de Servicios</option>
+                        <option ng-repeat="paquete in paquetes" value="{{paquete.id}}">{{paquete.nombre}}</option>  
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Estado de Afiliación</label>
+                <div class="col-sm-8">
+                    <select class="form-control" ng-model="formulario.afiliacion">
+                        <option value="0" name="estado_afiliacion" disabled>Seleccione Estado de Afiliación</option>
+                        <option ng-repeat="estado in estados_afiliacion" value="{{estado.id}}">{{estado.nombre}}</option>  
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-5 col-sm-2">
+                    <button type="submit" class="btn btn-default btn-block" ng-click="crear()" ng-disabled="inactivo">Registrar</button>
+                </div>
+            </div>
+        </form>
+        <div class="col-md-12">
+            <div class="alert alert-success" role="alert" ng-show="paciente_creado">{{paciente_mensaje}}</div>
+            <div class="form-group" >
+                <div class="col-sm-offset-4 col-sm-4" ng-show="paciente_creado">
+                    <button class="btn btn-default btn-block" ng-click="citaPaciente()" >Asignar Cita</button>
+                    <button class="btn btn-default btn-block" ng-click="otroPaciente()" >Crear otro paciente</button>
+                </div>
+            </div>
+            <div class="alert alert-danger" role="alert" ng-show="paciente_no_creado">{{paciente_mensaje}}</div>
+        </div>
+    </div>
+    <div class="margen_clear"></div>
+    </div>
+</div>

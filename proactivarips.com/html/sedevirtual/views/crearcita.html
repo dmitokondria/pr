@@ -1,0 +1,107 @@
+<div id="headline">
+    <div class="hoy">{{fecha}}</div>
+    <div class="logout"><a ng-click="cerrarSesion()">Cerrar Sesión</a></div>
+</div>
+<header>
+    <div class="header_imagen">
+        <div class="logo">
+            <a href=""><img src="../images/logo_neg.png" alt=""></a>
+        </div>
+        <div class="sede">{{seccion}}</div>
+        <div class="saludo">Bienvenid@</div>
+        <div class="soc_box">
+            <ul class="header_soc_list">
+                <li><a href="#" class="icon1"><span class="fa-facebook"></span></a></li>
+                <li><a href="#" class="icon2"><span class="fa-twitter"></span></a></li>
+                <li><a href="#" class="icon3"><span class="fa-google-plus"></span></a></li>
+                <li><a href="#" class="icon4"><span class="fa-linkedin"></span></a></li>
+                <li><a href="#" class="icon5"><span class="fa-envelope"></span></a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="header_border"></div>
+</header>
+<div class="col-md-offset-1 col-md-10">
+    <div class="bloque_titulo col-md-12">Proactivar I.P.S.</div>
+    <div id="container_border">
+        <div class="margen_clear"></div>
+        <div class="informacion col-md-12" ng-controller="barraUsuarioCTRL">
+            <div class="col-md-3">{{barra_usuario.tipo_usuario}}: {{barra_usuario.nombres}}</div>
+            <div class="col-md-3">Ocupación: {{barra_usuario.ocupacion}}</div>
+            <div class="col-md-3">Edad: {{barra_usuario.edad}} años</div>
+            <div class="col-md-3">Hora: 00:00:00</div>
+        </div>
+    <div class="menu_lateral" ng-controller="menu_lateralCTRL">
+        <accordion close-others="true" class="col-md-2">
+            <accordion-group ng-repeat="menu in menu_lateral" heading="{{menu.nombre}}">
+                <ul>
+                    <li ng-repeat="opcion in menu.opciones"><a ng-href="{{opcion.vinculo}}">{{opcion.nombre}}</a></li>
+                </ul>
+            </accordion-group>
+        </accordion>
+    </div>
+    <div class="col-md-10">
+        <div class="titulo_seccion">{{titulo_seccion}}</div>
+        <!--SI SOY RECEPCION Y NO TENGO MI ID PARA PODER PEDIR CITA.... -->
+        <form ng-if="!usuario" ng-submit="buscarPaciente()" >
+            <div class="form-group col-md-offset-1 col-md-10">
+                <label>Número de Identificación</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Ingrese el número de identificación del paciente" ng-model="formulario.identificacion">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" ng-click="buscarPaciente()" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                    </span>
+                </div>
+            <alert class="alert alert-danger" ng-show="mensaje">{{mensaje}}</alert>
+            </div>
+        </form>
+        <div class="col-md-12" ng-if="informacion_paciente">
+            <div class="col-md-12 titulo_azul centrado">Paciente</div>
+            <div class="col-md-12 subrayado centrado titulo_azul"><span>{{primer_nombre}}</span> <span>{{segundo_nombre}}</span> <span>{{primer_apellido}}</span> <span>{{segundo_apellido}}</span></div>
+            <div class="col-md-6 titulo_azul centrado">Ocupación: {{ocupacion}}</div>
+            <div class="col-md-6 titulo_azul centrado">Edad: {{edad}} años</div>
+        </div>
+
+        <!--SI SOY PACIENTE Y YA TENGO MI ID PARA PODER PEDIR CITA.... -->
+        <form ng-if="usuario">
+            <div class="form-group col-md-offset-1 col-md-10">
+            <div class="subrayado">Crear Cita</div>
+                <label>1. Seleccione la especialidad para su cita.</label>
+                    <select ng-disabled="agendada" class="form-control" ng-model="formulario.especialidad">
+                        <option ng-repeat="especialidad in especialidades" value="{{especialidad.id}}">{{especialidad.nombre}}</option>
+                    </select>
+            </div>
+            <div ng-if="formulario.especialidad" class="form-group col-md-offset-1 col-md-10">
+                <label>2. Seleccione el profesional con quien desea su cita.</label>
+                    <select ng-disabled="agendada" class="form-control" ng-model="formulario.profesional">
+                        <option ng-repeat="profesional in profesionales | filter:profesional.sl_profesional = formulario.especialidad" value="{{profesional.id}}">{{profesional.nombre}}</option>
+                    </select>
+            </div>
+            <div ng-if="formulario.profesional" class="form-group col-md-offset-1 col-md-10">
+                <label>3. Seleccione el día que desea su cita.</label>
+                <div ng-controller='dateCTRL' class='input-group one'>
+                    <input ng-disabled="agendada" type='text' class="form-control input-sm" ng-model='formulario.fecha' datepicker-popup='dd-MM-yyyy' is-open='opened' show-weeks='false' readonly placeholder=''/>
+                    <a ng-click='open($event)' class='input-group-addon'><i class='glyphicon glyphicon-calendar'></i></a>
+                </div>
+                <!--input id="datepicker" type="text" data-ng-datepicker data-ng-options="datepickerOptions" data-ng-model="date"-->
+            </div>
+            <div ng-if="formulario.fecha" class="form-group col-md-offset-1 col-md-10">
+                <label>4. Seleccione la hora en que desea su cita.</label>
+                <select ng-disabled="agendada" class="form-control" ng-model="formulario.cita">
+                    <option ng-repeat="cita in citas">Hora: {{cita}}</option>
+                </select>
+                <!--input id="datepicker" type="text" data-ng-datepicker data-ng-options="datepickerOptions" data-ng-model="date"-->
+            </div>
+            <div ng-if="formulario.cita" class="form-group col-md-offset-3 col-md-4">
+                <button ng-disabled="agendada" class="btn btn-default" type="submit" ng-click="agendar()">Agendar Cita</button>
+                <button class="btn btn-default" type="submit" ng-click="reiniciar()">Reiniciar</button>
+            </div>
+        </form>
+
+        <div class="form-group col-md-offset-1 col-md-10 alert alert-success" role="alert" ng-show="mensaje">{{mensaje}}</div>
+    </div>
+    <!--div class="col-md-12">Agendada: <pre>{{agendad | json}}</pre></div>
+    <div class="col-md-12">Model: <pre>{{formulario | json}} - {{usuario | json}}</pre></div-->
+    <div class="margen_clear"></div>
+    </div>
+</div>

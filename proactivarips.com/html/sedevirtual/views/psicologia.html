@@ -1,0 +1,398 @@
+<div id="headline">
+    <div class="hoy">{{fecha_hoy}}</div>
+    <div class="logout"><a ng-click="cerrarSesion()">Cerrar Sesión</a></div>
+</div>
+<header>
+    <div class="header_imagen">
+        <div class="logo">
+            <a href=""><img src="../images/logo_neg.png" alt=""></a>
+        </div>
+        <div class="sede">{{seccion}}</div>
+        <div class="saludo">Bienvenid@</div>
+        <div class="soc_box">
+            <ul class="header_soc_list">
+                <li><a href="#" class="icon1"><span class="fa-facebook"></span></a></li>
+                <li><a href="#" class="icon2"><span class="fa-twitter"></span></a></li>
+                <li><a href="#" class="icon3"><span class="fa-google-plus"></span></a></li>
+                <li><a href="#" class="icon4"><span class="fa-linkedin"></span></a></li>
+                <li><a href="#" class="icon5"><span class="fa-envelope"></span></a></li>
+            </ul>
+        </div>  
+    </div>
+    <div class="header_border"></div>
+</header>
+<div class="col-md-offset-1 col-md-10">
+    <div class="bloque_titulo col-md-12">Proactivar I.P.S.</div>
+    <div id="container_border">
+        <div class="margen_clear"></div>
+        <div class="informacion col-md-12">
+            <div class="col-md-4">Profesional: {{usuario.nombres}}</div>
+            <div class="col-md-4">Especialidad: {{usuario.especialidad}}</div>
+            <div class="col-md-4">Hora: 00:00:00</div>
+        </div>
+        <div class="menu_lateral" ng-controller="menu_lateralCTRL">
+            <accordion close-others="true" class="col-md-2">
+                <accordion-group ng-repeat="menu in menu_lateral" heading="{{menu.nombre}}">
+                    <ul>
+                        <li ng-repeat="opcion in menu.opciones"><a ng-href="{{opcion.vinculo}}">{{opcion.nombre}}</a></li>
+                    </ul>
+                </accordion-group>
+            </accordion>
+        </div>
+        <div class="col-md-10">
+            <div class="titulo_hc">Historia Clínica Psicología</div>
+            <tabset justified="true">
+                <tab heading="Datos Básicos">  
+                    <form class="col-md-12">
+                        <div class="subtitulo">Datos Personales</div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Primer Nombre</label>
+                                <input type="text" class="form-control" ng-model="formulario.p_nombre" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label>Primer Apellido</label>
+                                <input type="text" class="form-control" ng-model="formulario.p_apellido" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label>Identificación</label>
+                                <input type="text" class="form-control" ng-model="formulario.identificacion" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label>Tipo de Identificación</label>
+                                <select class="form-control" ng-model="formulario.tipo_id" disabled>
+                                    <option ng-repeat="tipo in tipos_id" value='{{tipo.id}}'>{{tipo.nombre}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Departamento Nacimiento</label>
+                                <select class="form-control" ng-model="formulario.sl_departamento" ng-options='departamento.id as departamento.nombre for departamento in departamentos' disabled>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Ciudad Nacimiento</label>
+                                <select class="form-control" ng-model="formulario.sl_municipio" ng-options='ciudad.id as ciudad.nombre for ciudad in ciudades' disabled>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-12 col-md-12">
+                                <label class="col-md-12">Fecha de Nacimiento</label>
+                                <div class="col-sm-4 col-md-4">
+                                    <select class="form-control" ng-model="formulario.fecha_nac.anio" disabled>
+                                        <option ng-repeat="anio in fecha.anios">{{anio}}</option> 
+                                    </select>
+                                </div>
+                                <div class="col-sm-4 col-md-4">
+                                    <select class="form-control" ng-model='formulario.fecha_nac.mes' ng-options='mes.id as mes.nombre for mes in fecha.meses' disabled>
+                                    </select>
+                                </div>
+                                <div class="col-sm-4 col-md-4">
+                                    <select name="nac_dia" class="form-control" ng-model="formulario.fecha_nac.dia" disabled>
+                                        <option ng-repeat="dia in fecha.dias">{{dia}}</option> 
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Edad</label>
+                                <input type="text" class="form-control" ng-model="formulario.edad" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label>Estado Civil</label>
+                                <select class="form-control" ng-model='formulario.estado_civil' ng-options='estado_civil.id as estado_civil.nombre for estado_civil in estados_civiles' ng-disabled="vista">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Ocupación</label>
+                                <input type="text" class="form-control" ng-model="formulario.ocupacion" ng-disabled="vista">
+                            </div>
+                            <div class="form-group">
+                                <label>Nivel de Escolaridad</label>
+                                <select class="form-control" ng-model='formulario.escolaridad' ng-options='nivel_escolaridad.id as nivel_escolaridad.nombre for nivel_escolaridad in niveles_escolaridad' ng-disabled="vista">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Género</label>
+                                <div class="radio col-md-12">
+                                    <label class="col-md-6 centrado" ng-repeat="genero in generos"><span>{{genero.nombre}}</span>
+                                        <input type="radio" ng-model="formulario.genero" name="genero" value="{{genero.id}}" disabled/>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Segundo Nombre</label>
+                                <input type="text" class="form-control" ng-model="formulario.s_nombre" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label>Segundo Apellido</label>
+                                <input type="text" class="form-control" ng-model="formulario.s_apellido" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label>Dirección</label>
+                                <input type="text" class="form-control" ng-model="formulario.direccion" ng-disabled="vista">
+                            </div>
+                            <div class="form-group">
+                                <label>Teléfono Fijo</label>
+                                <input type="text" class="form-control" ng-model="formulario.telefono" ng-disabled="vista">
+                            </div>
+                            <div class="form-group">
+                                <label>Celular</label>
+                                <input type="text" class="form-control" ng-model="formulario.celular" ng-disabled="vista">
+                            </div>
+                            <div class="form-group">
+                                <label>Acudiente</label>
+                                <input type="text" class="form-control" ng-model="formulario.acudiente" ng-disabled="vista">
+                            </div>
+                            <div class="form-group">
+                                <label>Parentesco Acudiente</label>
+                                <input type="text" class="form-control" ng-model="formulario.acu_parentesco" ng-disabled="vista">
+                            </div>
+                            <div class="form-group">
+                                <label>Celular Acudiente</label>
+                                <input type="text" class="form-control" ng-model="formulario.cel_acudiente" ng-disabled="vista">
+                            </div>
+                            <div class="form-group">
+                                <label>EPS / Aseguradora</label>
+                                <select class="form-control" ng-model="formulario.eps" ng-options='eps.id as eps.nombre for eps in epss' ng-disabled="vista">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Tipo de Vinculación</label>
+                                <select class="form-control" ng-model="formulario.vinculacion" ng-options='tipo_vinculacion.id as tipo_vinculacion.nombre for tipo_vinculacion in tipos_vinculacion' ng-disabled="vista">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Paquete de Servicios</label>
+                                <select class="form-control" ng-model="formulario.paquete" ng-options='paquete.id as paquete.nombre for paquete in paquetes' ng-disabled="vista">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Estado de Afiliación</label>
+                                <select class="form-control" ng-model="formulario.afiliacion" ng-options='afiliacion.id as afiliacion.nombre for afiliacion in afiliaciones' ng-disabled="vista">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="subtitulo">Acompañante</div>
+                        <div class="form-group col-md-12">
+                            <label>Nombre Completo</label>
+                            <input type="text" class="form-control" ng-model="basicos.acompanante.nombre" ng-disabled="vista">
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label>Celular</label>
+                            <input type="text" class="form-control" ng-model="basicos.acompanante.celular" ng-disabled="vista">
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label>Parentesco</label>
+                            <input type="text" class="form-control" ng-model="basicos.acompanante.parentesco" ng-disabled="vista">
+                        </div>
+                        <div class="subtitulo">Motivo de Consulta</div>
+                        <div class="form-group col-md-12">
+                            <textarea class="form-control" rows="3" ng-model="basicos.motivo" ng-disabled="vista"></textarea>
+                        </div>
+                        <div class="subtitulo">Observaciones</div>
+                        <div class="form-group col-md-12">
+                            <textarea class="form-control" rows="3" ng-model="basicos.observaciones" ng-disabled="vista"></textarea>
+                        </div>
+                        <!--div class="col-md-12"><pre>{{ basicos | json}}</pre></div-->
+                        <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
+                            <button type="button" class="btn btn-default" ng-disabled="vista"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
+                            <!--button type="button" class="btn btn-default" ng-disabled="vista">Continuar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button-->
+                        </div>
+                    </form>
+                </tab><!--FIN TAB 1 UNO-->
+                <tab heading="Emocionalidad">
+                    <form class="col-md-12">
+                        <div class="subtitulo">Niveles de Emocionalidad y Dolor</div>
+                            <div class="form-group col-md-3">
+                                <label class="subrayado">Ansiedad</label>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" value="1" ng-model="emocionalidad.ansiedad" ng-disabled="vista">Bueno
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" value="2" ng-model="emocionalidad.ansiedad" ng-disabled="vista">Regular
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" value="3" ng-model="emocionalidad.ansiedad" ng-disabled="vista">Malo
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="subrayado">Tristeza</label>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" value="1" ng-model="emocionalidad.tristeza" ng-disabled="vista">Bueno
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" value="2" ng-model="emocionalidad.tristeza" ng-disabled="vista">Regular
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" value="3" ng-model="emocionalidad.tristeza" ng-disabled="vista">Malo
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="subrayado">Irritabilidad</label>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" value="1" ng-model="emocionalidad.irritabilidad" ng-disabled="vista">Bueno
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" value="2" ng-model="emocionalidad.irritabilidad" ng-disabled="vista">Regular
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" value="3" ng-model="emocionalidad.irritabilidad" ng-disabled="vista">Malo
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="subrayado">Dolor</label>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" value="1" ng-model="emocionalidad.dolor" ng-disabled="vista">Sin Dolor
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" value="2" ng-model="emocionalidad.dolor" ng-disabled="vista">Dolor Soportable
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" value="3" ng-model="emocionalidad.dolor" ng-disabled="vista">Dolor Insoportable
+                                    </label>
+                                </div>
+                            </div>
+                        <div class="subtitulo">Áreas de Ajuste</div>
+                        <div class="form-group col-md-12">
+                            <div class="col-md-6 separador">
+                                <div class="sombreado">Área Familiar</div>
+                                <div class="col-md-12">
+                                    <textarea class="form-control" rows="3" ng-model="emocionalidad.ajuste.familiar" ng-disabled="vista"></textarea>
+                                </div>
+                                <div class="sombreado">Área Social</div>
+                                <div class="col-md-12">
+                                    <textarea class="form-control" rows="3" ng-model="emocionalidad.ajuste.social" ng-disabled="vista"></textarea>
+                                </div>
+                                <div class="sombreado">Área Laboral</div>
+                                <div class="col-md-12">
+                                    <textarea class="form-control" rows="3" ng-model="emocionalidad.ajuste.laboral" ng-disabled="vista"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="sombreado">Área Académica</div>
+                                <div class="col-md-12">
+                                    <textarea class="form-control" rows="3" ng-model="emocionalidad.ajuste.academica" ng-disabled="vista"></textarea>
+                                </div>
+                                <div class="sombreado">Área Afectiva</div>
+                                <div class="col-md-12">
+                                    <textarea class="form-control" rows="3" ng-model="emocionalidad.ajuste.afectiva" ng-disabled="vista"></textarea>
+                                </div>
+                                <div class="sombreado">Área Recreación</div>
+                                <div class="col-md-12">
+                                    <textarea class="form-control" rows="3" ng-model="emocionalidad.ajuste.recreacion" ng-disabled="vista"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="subtitulo">Análisis Profesional</div>
+                        <div class="form-group col-md-12">
+                            <textarea class="form-control" rows="3" ng-model="emocionalidad.analisis" ng-disabled="vista"></textarea>
+                        </div>
+                        <!--div class="col-md-12"><pre>{{ emocionalidad | json}}</pre></div-->
+                        <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
+                            <button type="button" class="btn btn-default" ng-disabled="vista"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
+                            <!--button type="button" class="btn btn-default" ng-disabled="vista">Continuar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button-->
+                        </div>
+                    </form>
+                </tab><!--FIN TAB 2 DOS-->
+                <tab heading="Diagnósticos">
+                    <form class="col-md-12">
+                        <div class="subtitulo">Diagnósticos</div>
+                        <div class="form-group col-md-12" ng-hide="vista">
+                            <label class="subrayado">Buscar Diagnóstico</label>
+                            <input type="text" class="form-control" ng-disabled="vista">
+                        </div>
+                        <label class="subrayado">Diagnósticos Actuales</label>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <tr class="info">
+                                    <th>Principal</th>
+                                    <th>Código</th>
+                                    <th>Diagnóstico</th>
+                                    <th>Tipo</th>
+                                    <th>Contingencia</th>
+                                    <th><span class="glyphicon glyphicon-remove suave" ng-hide="vista"></th>
+                                </tr>
+                                <!--tr>
+                                    <td>
+                                        <div class="checkbox_table">
+                                            <input type="checkbox" value="">
+                                        </div>
+                                    </td>
+                                    <td class="centrado_vertical">Código</td>
+                                    <td class="centrado_vertical">Diagnóstico</td>
+                                    <td class="centrado_vertical">Tipo</td>
+                                    <td class="centrado_vertical">Contingencia</td>
+                                    <td class="centrado_vertical" ng-hide="vista"><span class="glyphicon glyphicon-remove suave"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="checkbox_table">
+                                            <input type="checkbox" value="">
+                                        </div>
+                                    </td>
+                                    <td class="centrado_vertical">Código</td>
+                                    <td class="centrado_vertical">Diagnóstico</td>
+                                    <td class="centrado_vertical">Tipo</td>
+                                    <td class="centrado_vertical">Contingencia</td>
+                                    <td class="centrado_vertical" ng-hide="vista"><span class="glyphicon glyphicon-remove suave"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="checkbox_table">
+                                            <input type="checkbox" value="">
+                                        </div>
+                                    </td>
+                                    <td class="centrado_vertical">Código</td>
+                                    <td class="centrado_vertical">Diagnóstico</td>
+                                    <td class="centrado_vertical">Tipo</td>
+                                    <td class="centrado_vertical">Contingencia</td>
+                                    <td class="centrado_vertical" ng-hide="vista"><span class="glyphicon glyphicon-remove suave"></span></td>
+                                </tr-->
+                            </table>
+                        </div>
+                        <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
+                            <button type="button" class="btn btn-default" ng-disabled="vista"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
+                            <!--button type="button" class="btn btn-default" ng-disabled="vista">Continuar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button-->
+                        </div>
+                    </form>
+                </tab><!--FIN TAB 3 TRES-->
+                <tab heading="Recomendaciones">
+                    <form class="col-md-12">
+                        <div class="subtitulo">Recomendaciones</div>
+                        <div class="form-group col-md-12">
+                            <textarea class="form-control" rows="3" ng-model="recomendaciones" ng-disabled="vista"></textarea>
+                        </div>
+                        <!--div class="col-md-12"><pre>{{ recomendaciones | json}}</pre></div-->
+                        <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
+                            <button type="button" class="btn btn-default" ng-disabled="vista"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
+                            <button type="button" class="btn btn-default" ng-disabled="vista">Finalizar <span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span></button>
+                        </div>
+                    </form>
+                </tab><!--FIN TAB 4 CUATRO-->
+        </div>
+    <div class="margen_clear"></div>
+    </div><!--FIN container_border-->
+</div><!--FIN col-md-offset-1 col-md-10-->

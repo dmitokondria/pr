@@ -1,0 +1,43 @@
+<div id="headline">
+    <div class="hoy">{{fecha}}</div>
+</div>
+<header>
+    <div class="header_imagen">
+        <div class="logo">
+            <a href=""><img src="../images/logo_neg.png" alt=""></a>
+        </div>
+        <div class="sede">{{seccion}}</div>
+        <div class="saludo">Bienvenid@</div>
+        <div class="soc_box">
+            <ul class="header_soc_list">
+                <li><a href="#" class="icon1"><span class="fa-facebook"></span></a></li>
+                <li><a href="#" class="icon2"><span class="fa-twitter"></span></a></li>
+                <li><a href="#" class="icon3"><span class="fa-google-plus"></span></a></li>
+                <li><a href="#" class="icon4"><span class="fa-linkedin"></span></a></li>
+                <li><a href="#" class="icon5"><span class="fa-envelope"></span></a></li>
+            </ul>
+        </div>  
+    </div>
+    <div class="header_border"></div>
+</header>
+<div class="col-md-12">
+	<form class="form-horizontal">
+		<div class="form-group">
+			<div class="col-sm-offset-4 col-sm-4">
+				<input type="text" class="form-control" placeholder="Usuario" ng-model="formulario.usuario">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-sm-offset-4 col-sm-4">
+				<input type="password" class="form-control" placeholder="Contraseña" ng-model="formulario.clave">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-sm-offset-5 col-sm-2">
+				<button type="submit" class="btn btn-default btn-block" ng-click="ingreso()">Ir</button>
+			</div>
+		</div>
+	</form>
+</div>

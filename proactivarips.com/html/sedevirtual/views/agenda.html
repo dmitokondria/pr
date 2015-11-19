@@ -1,0 +1,88 @@
+<div id="headline">
+    <div class="hoy">{{fecha}}</div>
+    <div class="logout"><a ng-click="cerrarSesion()">Cerrar Sesión</a></div>
+</div>
+<header>
+    <div class="header_imagen">
+        <div class="logo">
+            <a href=""><img src="../images/logo_neg.png" alt=""></a>
+        </div>
+        <div class="sede">{{seccion}}</div>
+        <div class="saludo">Bienvenid@</div>
+        <div class="soc_box">
+            <ul class="header_soc_list">
+                <li><a href="#" class="icon1"><span class="fa-facebook"></span></a></li>
+                <li><a href="#" class="icon2"><span class="fa-twitter"></span></a></li>
+                <li><a href="#" class="icon3"><span class="fa-google-plus"></span></a></li>
+                <li><a href="#" class="icon4"><span class="fa-linkedin"></span></a></li>
+                <li><a href="#" class="icon5"><span class="fa-envelope"></span></a></li>
+            </ul>
+        </div>  
+    </div>
+    <div class="header_border"></div>
+</header>
+<div class="col-md-offset-1 col-md-10">
+    <div class="bloque_titulo col-md-12">Proactivar I.P.S.</div>
+    <div id="container_border">
+    <div class="margen_clear"></div>
+    <div class="informacion col-md-12">
+        <div class="col-md-4" ng-show="bl_profesional">{{usuario.tipo_usuario}}: {{usuario.nombres}}</div>
+        <div class="col-md-4" ng-hide="bl_profesional">{{usuario.nombres}}</div>
+        <div class="col-md-4">Especialidad: {{usuario.especialidad}}</div>
+        <div class="col-md-4">Hora: 00:00:00</div>
+    </div>
+    
+    <div class="menu_lateral" ng-controller="menu_lateralCTRL">
+        <accordion close-others="true" class="col-md-2">
+            <accordion-group ng-repeat="menu in menu_lateral" heading="{{menu.nombre}}">
+                <ul>
+                    <li ng-repeat="opcion in menu.opciones"><a ng-href="{{opcion.vinculo}}">{{opcion.nombre}}</a></li>
+                </ul>
+            </accordion-group>
+        </accordion>
+    </div>
+        
+    <div class="col-md-10">
+        <div ng-if="usuario.tipo_usuario == 'Recepción'" >
+            <div class="btn-group col-xs-12 col-md-offset-1 col-md-3">
+                <label class="col-xs-4 btn btn-default" ng-model="radioModel" btn-radio="'Left'" ng-click="cambiarSemana(-1)" uncheckable><span class="glyphicon glyphicon-chevron-left" style="cursor: pointer;"></span></label>
+                <label class="col-xs-4 btn btn-default" ng-model="radioModel" btn-radio="'Middle'" ng-click="cambiarSemana(0)" uncheckable><span class="glyphicon glyphicon-refresh" style="cursor: pointer;"></span></label>
+                <label class="col-xs-4 btn btn-default" ng-model="radioModel" btn-radio="'Right'" ng-click="cambiarSemana(1)" uncheckable><span class="glyphicon glyphicon-chevron-right" style="cursor: pointer;"></span></label>
+            </div>
+            <div class="btn-group col-xs-12 col-md-offset-2 col-md-4">
+                <select ng-model="filtro_profesional" ng-options="profesional.nombres for profesional in profesionales" class="form-control"></select>
+            </div>
+            <div class="btn-group col-xs-12 col-md-offset-0 col-md-2">
+                <label class="col-xs-12 btn btn-default" ng-click="sinFiltro()"> <span class="glyphicon glyphicon-remove" style="cursor: pointer;"> </span></label>
+            </div>
+        </div>
+        <div style="margin-bottom:10px;" ng-if="usuario.tipo_usuario == 'Profesional'" >
+            <div class="btn-group col-xs-12 col-md-offset-1 col-md-10">
+                <label class="col-xs-4 btn btn-default" ng-model="radioModel" btn-radio="'Left'" ng-click="cambiarSemana(-1)" uncheckable><span class="glyphicon glyphicon-chevron-left" style="cursor: pointer;"></span></label>
+                <label class="col-xs-4 btn btn-default" ng-model="radioModel" btn-radio="'Middle'" ng-click="cambiarSemana(0)" uncheckable><span class="glyphicon glyphicon-refresh" style="cursor: pointer;"></span></label>
+                <label class="col-xs-4 btn btn-default" ng-model="radioModel" btn-radio="'Right'" ng-click="cambiarSemana(1)" uncheckable><span class="glyphicon glyphicon-chevron-right" style="cursor: pointer;"></span></label>
+            </div>
+        </div>
+        <accordion close-others="true" class="col-xs-12 col-md-12">
+            <accordion-group ng-repeat="dia in dias_semana" heading="{{dia.titulo}}">
+            <div ng-repeat="profesional in dia.pro | filter:{id:filtro_profesional.id}" class="btn-group col-md-12">
+                <strong>{{profesional.nombre}} - {{profesional.especialidad}}</strong>
+                <div class="btn-group cita agenda_profesional col-xs-12 col-md-12" ng-repeat="cita in profesional.citas" ng-class="" >
+                    <div class="btn-group col-xs-12 col-md-2" ng-click="irHistoriaClinica(cita.id, profesional.especialidad)">{{cita.dt_fecha}}</div>
+                    <div class="btn-group col-xs-12 col-md-3" ng-click="irHistoriaClinica(cita.id, profesional.especialidad)">{{cita.identificacion}}</div>
+                    <div class="btn-group col-xs-12 col-md-4" ng-click="irHistoriaClinica(cita.id, profesional.especialidad)">{{cita.paciente}}</div>
+                    <div class="btn-group col-xs-12 col-md-3">
+                        <button type="button" class="btn dropdown-toggle col-xs-12 btn_cambio_estado" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Estado <span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                            <li><a ng-click="enSala(cita)">En Sala</a></li>
+                            <li><a ng-click="atendido(cita)">Atendido</a></li>
+                            <li><a ng-click="inasistencia(cita)">Inasistencia</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            </accordion-group>
+        </accordion>
+    </div>
+    <div class="margen_clear"></div>
+</div>

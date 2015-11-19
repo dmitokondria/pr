@@ -1,0 +1,768 @@
+/*css*/
+@import "../../css/grid.css";
+@import "../../css/font-awesome.css";
+@import "../../css/opificio-rounded.css";
+
+html, body {height:100%;}
+
+body{
+	background: #ffffff;
+	font-family: 'Helvetica', sans-serif;
+	font-size: 16px;
+	line-height: 21px;
+	position:relative;
+	max-width: 1366px;
+	-webkit-text-size-adjust: none;
+	margin: auto;
+}
+
+/************                                  Header              *******************/
+
+header{
+	width: 100%;
+	}
+	.header_imagen{
+		background: linear-gradient(#4ec2ec, #252a7c);
+		background: url(../../images/header_web.png) no-repeat;
+		padding-top: 30px;
+		height: 300px;
+		box-shadow: 2px 2px 10px #3e3e3e;
+		max-width: 100%;
+		box-sizing: inherit;
+		-webkit-box-sizing: inherit;
+		-moz-box-sizing: inherit;
+		}
+	.logo{
+		width: 299px;
+		border-color: red;
+		margin: 0 auto;
+	}
+	.header_border{
+		margin-bottom: 50px;
+		}
+	.logout{
+		font-family: Helvetica, Arial, sans-serif;
+		font-size: 14px;
+		color:#fff;
+		float: right;
+		margin-right: 4%;
+		vertical-align: middle;
+	}
+	.hoy{
+		font-family: Helvetica, Arial, sans-serif;
+		font-size: 14px;
+		color:#fff;
+		float: left;
+		margin-left: 4%;
+		vertical-align: middle;
+	}
+.sede{
+	font-family: 'OpificioRounded', sans-serif;
+	font-size: 32px;
+	color: #fff;
+	text-align: center;
+	font-weight: lighter;
+	margin-top: 20px;
+}	
+.saludo{
+	font-family: 'OpificioRounded', sans-serif;
+	font-size: 24px;
+	color: #fff;
+	text-align: center;
+	font-weight: lighter;
+	margin-top: 12px;
+	margin-bottom: 8px;
+}
+#headline{
+	background-color: #252a7c;
+	width:100%;
+	height: 18px;
+}
+/************Content***********/
+.soc_box{
+	float: right;
+	overflow: hidden;
+	margin-bottom: 30px;
+	position: relative;
+	margin-top: 10px;
+	margin-right: -84px;
+	right: 50%;
+	width: 150px;
+	}
+	.soc_box h6{
+		padding-top: 3px;
+		font-family: 'Helvetica', sans-serif;
+		font-size: 14px;
+		line-height: 18px;
+		font-weight: normal;
+		padding-left: 15px;
+		color: #4ec2ec;
+		float: left;
+		position: relative;
+		margin-right: 11px;
+		}
+		.soc_box h6:before{
+			position: absolute;
+			content: "\f095";
+			font-family: FontAwesome;
+			font-size: 14px;
+			line-height: 16px;
+			top: 7px;
+			left: 4px;
+			}
+		.header_soc_list{
+			overflow: hidden;
+			padding-top: 0px;
+			}
+			.header_soc_list li{
+				float:left; /*Alinea todos los botones de redes horizontalmente*/
+				margin-left: 4px;
+				}
+				.header_soc_list li:first-child{
+					margin-left: 0px;
+					}
+					.header_soc_list li a{
+						padding-top: 4px;
+						display: block;
+						font-size: 13px;
+						line-height: 15px;
+						width: 23px;
+						text-align: center;
+						color: #fff;
+						border-radius: 49%;
+						padding-bottom: 5px;
+						transition: 0.3s;
+						-webkit-transition: 0.3s;
+						-moz-transition: 0.3s;
+						}
+						.header_soc_list li a.icon1{
+							background: #3a5a9f;
+							}
+						.header_soc_list li a.icon2{
+							background: #45b0e3;
+							}
+						.header_soc_list li a.icon3{
+							background: #d61119;
+							}
+						.header_soc_list li a.icon4{
+							background: #1783bc;
+							}
+						.header_soc_list li a.icon5{
+							background: #676767;
+							}
+							.header_soc_list li a:hover{
+								background: #fb6d09;
+								}
+
+/***************** SEDE VIRTUAL ********************/
+
+/*Estilos de los campos en ingreso.php*/
+body > div > div.col-md-12.ng-scope > form > div > div > input{
+	font-size: 16px;
+	padding: 15px;
+	height: 50px;
+	border: 4px solid #252a7c;
+	border-radius: 28px;
+}
+body > div > div.col-md-12.ng-scope > form > div:nth-child(3) > div > button{
+	margin: 0px 40% 4% 0px;
+	width: 50px;
+	height: 49px;
+	max-width: 50px;
+	max-height: 50px;
+	float: right;
+	border-radius: 50%;
+	border: none;
+	color: #fff;
+	background: #4ec2ec;
+	text-align: center;
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 24px;
+	transition: 0.3s;
+	-webkit-transition: 0.3s;
+	-moz-transition: 0.3s;
+}
+body > div > div.col-md-12.ng-scope > form > div:nth-child(3) > div > button:hover{
+  background: #fb6d09;
+  text-decoration: none;
+  transition: 0.3s ease;
+  -o-transition: 0.3s ease;
+  -webkit-transition: 0.3s ease;
+}
+/* - - > Estilos acordes con BOOTSTRAP*/
+div.radio-inline label{
+	margin-right: 36px;
+}
+/* < - - NO BORRAR*/
+.logout a{
+	color:#fff;
+}
+.bloque_titulo {
+	font-family: 'OpificioRounded', sans-serif;
+	font-size: 24px;
+	font-weight: lighter;
+	color: #fff;
+	background-color: #252a7c;
+	border-radius: 8px;
+	width: 100%;
+	text-align: center;
+	vertical-align: middle;
+	margin: 0px;
+	line-height: 40px;
+	float: none;
+}
+
+.alert{
+	text-align: center;
+	margin-top: 6px;
+}
+
+.mano{
+	cursor: pointer;
+}
+
+.flecha{
+	cursor: default;
+}
+
+/************* SEDE PACIENTES ****************/
+
+input.ng-invalid, textarea.ng-invalid{
+  background-color: rgb(250, 235, 235);
+  border-color: #b94a48;
+}
+
+.help-inline, .help-inline-terminos{
+	color: #b94a48;
+	text-align: right;
+	padding: 7px 14px;
+	margin: -34px 0px 0px 0px;
+	float: right;
+    font-size: 12px;
+	font-style: italic;
+}
+
+input.ng-pristine, textarea.ng-pristine{
+  background-color: #fff;
+  border-color: #CCC;
+}
+
+.mi_cita{
+	/*display: inline-block;*/
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-align: center;
+    color: #fff;
+    background: #4ec2ec;
+    border: 1px solid #11A6D3;
+    border-radius: 6px;
+    padding: 5px 0px;
+}
+
+.mi_cita .hora, .mi_cita .fecha, .mi_cita .datos{
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.mi_cita .eliminar{
+	padding-top: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.cita .fecha, .cita .especialidad, .cita .doctor, .cita .eliminar{
+	padding: 10px 0px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+/************* SEDE PROFESIONAL ****************/
+
+#container_border {
+	width: 98%;
+	border: 2px solid #252a7c;
+	border-top: none;
+	border-radius: 0px 0px 8px 8px;
+	margin: 0px 1% 40px 1%;
+}
+
+.subtitulo, .informacion, .titulo_hc, .sombreado, .subrayado, .titulo_seccion{
+	font-size: 15px;
+	font-weight: 500;
+	text-align: center;
+	background: #4ec2ec;
+	color: #252a7c;
+	border-radius: 4px;
+	display: inline-block;
+	padding: 4px;
+	line-height: 1;
+	margin: 8px 1% 16px 1%;
+	width: 98%;
+}
+
+.titulo_seccion{
+	margin: 1px 1% 16px 1%;
+	padding: 8px;
+}
+
+.sombreado{
+	background: #DBDBDB;
+	margin: 4px 1% 0px 1%;
+}
+
+.informacion{
+	padding: 12px 0px;
+	border: 1px #4ec2ec solid;
+	background-color: #90E1FF;
+	margin: 8px 1%;
+}
+
+.titulo_hc {
+  background: #252a7c;
+  color: #fff;
+ }
+
+.subrayado{
+	background: none;
+	border-bottom: 1px #252a7c dotted;
+	text-align: center;
+	border-radius: 0;
+}
+
+.centrado{
+	text-align: center;
+}
+
+label.titulo{
+	color: #252a7c;
+	font-size: 14px;
+}
+
+.radio span{
+    float: right;
+    margin-right: 40px;
+}
+
+.margen_clear{
+	clear: both;
+}
+/*
+.atendido{
+	background: #5CB85C;
+	border: 1px solid #15A44B;
+}
+
+.en_sala{
+	background: #5BC0DE;
+	border: 1px solid #11A6D3;
+}
+
+.inasistencia{
+	background: #C9302C;
+	border: 1px solid #B12229;
+}
+
+.pendiente{
+	background: #F0AD4E;
+	border: 1px solid #DF9334;
+}*/
+
+.cita, .disponible{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: #4ec2ec;
+    border: 1px solid #11A6D3;
+    color: white;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    text-align:center;
+  	padding: 5px 0px !important;
+  	font-size: 11pt;
+}
+
+.cita .btn_cambio_estado{
+    background: #4ec2ec;
+    padding: 0px !important;
+    border-radius: 3px !important;
+    margin: 2px 0px;
+}
+
+.cita .btn_cambio_estado:hover, .cita .btn_cambio_estado:focus{
+    background: #11A6D3;
+    color: #fff;
+    font-weight: 600;
+}
+
+.remove{font-size: 10pt;}
+
+.btn-info{/*Evaluar si este estilo se esta usando o no*/
+	border: none !important;
+}
+
+.bloque_info{
+	width: 96%;
+	margin: 4px 2% 16px 2%;
+	text-align: center;
+	border-radius: 4px;
+	background: #f5f5f5;
+	border: 1px solid #DDDDDD;
+	padding: 12px 0px;
+}
+
+.menu_tres, .menu_dos{
+	background: #EDEDED;
+	height: 30px;
+	border-bottom: 1px solid #e2e2e2;
+	border-radius: 4px;
+	width: 243px;
+	margin: 10px 35%;
+}
+
+.menu_dos{
+	width: 162px;
+	margin: 10px 41%;
+}
+
+table th{
+	font-size: 14px;
+}
+
+table{
+	font-size: 12px;
+}
+
+.form-inline{
+	margin-bottom: 20px;
+}
+
+.enlinea{
+	float: left;
+	margin: 4px;
+}
+.almedio{
+	padding: 21px 0px;
+}
+
+span.glyphicon.glyphicon-plus{
+    margin-left: 16px;
+}
+
+/* ESTILOS PARA FORMS MEDIOS EN LA HC */
+
+.separador, .separador_cita{
+	border-right: 1px solid;
+	border-color: #C3C3C3;
+}
+
+.separador_cita{
+	border-color: #fff;
+}
+
+.linea_baja{
+	border-bottom: 1px #F5F5F5 solid;
+}
+
+.divisor{
+	width: 8%;
+	float: left;
+	padding: 6px 1% 6px 1%;
+	text-align: center;
+}
+
+.no-padding{
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+.sentado{
+	width: 30%;
+	float: left;
+}
+
+.campo_medio{
+	width: 68%;
+	float: left;
+}
+
+.campo_imc{
+	width: 30%;
+	float: left;
+	margin-left: 2%;
+}
+
+.unidades{
+	padding: 6px 1%;
+	width: 30%;
+}
+
+.checkbox_table{
+	position: relative;
+	display: block;
+	text-align: center;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.table, table > tbody > tr > th{
+	text-align: center;
+}
+
+.centrado_vertical{
+	vertical-align: middle !important;
+}
+
+.suave{
+	color: #656565;
+}
+
+.dos-botones{
+	margin-top: 15px;
+	margin-bottom: 15px;
+	text-align: center;
+}
+
+/*-----crear paciente-----*/
+
+.titulo_azul{
+	font-size: 11pt;
+	font-weight: 600;
+	color: #252A7C;
+	margin: 0px 0px 2px 0px !important;
+    padding: 0px 0px 4px 0px;
+}
+
+.historico{
+	background-color: #F5F5F5;
+    padding: 4px 0px;
+    border-radius: 4px;
+    border: 1px #D8D8D8 solid;
+    margin-bottom: 6px;
+    font-size: 11pt;
+}
+
+/***************** AJUSTE DE LAS TABS ******************/
+ul.nav.nav-tabs{
+	margin-left: 10px;
+}
+
+#container_border > div.col-md-10 > div.tabbable.ng-isolate-scope > ul > li > a{
+	font-size: 13px;
+	padding: 10px 5px !important;
+}
+
+/**********************     ESTILOS ACORDEON BOOTSTRAP    *****************************/
+#container_border > div.menu_lateral > accordion > div > div > div.panel-heading{
+	background-color: #252a7c;
+	color: #fff;
+	padding: 4px 0px;
+}
+
+.panel-default>.panel-heading {
+	text-align: center;
+}
+
+#container_border > div.menu_lateral > accordion > div > div > div.panel-collapse > div.panel-body{
+	font-size: 14px;
+	text-align: center;
+}
+
+#container_border > div.menu_lateral > accordion > div > div > div.panel-heading > h4 > a{
+	font-size: 14px;
+}
+
+#container_border > div.menu_lateral > accordion > div.panel-group{
+	width: 126%;
+	margin-left: -5px;
+}
+
+#container_border > div.col-md-10 > div{
+	margin-bottom: 8px;
+}
+/**********************         FOOTER          *****************************/
+footer{
+	width:100%;
+	padding-bottom: 6px;
+	}
+	
+	.footer_boreder{
+		border-top: 1px solid #413d31;/*Linea de borde horizontal*/
+		}
+	.copyright{
+		
+		font-family: 'Helvetica', sans-serif;
+		font-size: 12px;
+		line-height: 16px;
+		font-weight: 400;
+		text-transform: uppercase;
+		font-weight: 700;
+		color: #4ec2ec;
+		padding-top: 20px;
+		float: left;
+		letter-spacing: 0px;
+		}
+		.copyright a{color:inherit;}
+
+		.copyright span{
+			vertical-align: top;
+			}
+			
+			.copyright .address{
+				color: #252a7c;
+				font-weight: 400;
+				text-transform: none;
+				letter-spacing: 0px;
+				}
+
+	.footer_contact{
+		float: right;
+		padding-top: 16px;
+		padding-right: 70px;
+		}
+		.footer_contact h6{
+			font-family: 'Helvetica', sans-serif;
+			font-size: 12px;
+			line-height: 20px;
+			font-weight: 400;
+			color: #252a7c;
+			margin-bottom: 0px;
+			}
+		.footer_contact_title{
+			position: relative;
+			font-family: 'Helvetica', sans-serif;
+			font-size: 14px;
+			line-height: 18px;
+			font-weight: 400;
+			color: #252a7c;
+			margin-bottom: 10px;
+			padding-left: 15px;
+			}
+			.footer_contact_title:before{ /*Telefonito azul*/
+				position: absolute;
+				content: "\f095";
+				font-family: FontAwesome;
+				font-size: 16px;
+				line-height: 16px;
+				top: 2px;
+				left: 0px;
+				color: #4ec2ec;
+				}
+
+#toTop {
+	border: none;
+	bottom: 40px;
+	color: #6a6a6a;
+	display: none;
+	height: 27px;
+	overflow: hidden;
+	position: fixed;
+	right: 40px;
+	text-decoration: none;
+	width: 26px;
+	z-index: 20;
+	font-size: 28px;
+	line-height: 28px;
+	margin-right: -620px !important;
+	-webkit-transition: 0.3s;
+	-moz-transition: 0.3s;
+	-ms-transition: 0.3s;
+	-o-transition: 0.3s;
+	transition: 0.3s;
+	}
+	#toTop:before{
+		font-family: FontAwesome;
+		content: '\f0aa';
+		color: #6A6A6A;
+		opacity: .15;
+		}
+
+#toTop:hover:before{
+	color: #fb6d09;
+	opacity: 1;
+	-webkit-transition: 0.3s;
+	-moz-transition: 0.3s;
+	-ms-transition: 0.3s;
+	-o-transition: 0.3s;
+	transition: 0.3s;
+	}
+
+#toTop:active, #toTop:focus {
+	outline:none;
+}
+
+
+
+
+/*==================================RESPONSIVE LAYOUTS===============================================*/
+
+@media only screen and (max-width: 1200px) {
+	.header_imagen{
+		background: url(../../images/header_web1200px.png) no-repeat;
+	}
+	#container_border > div.menu_lateral > accordion > div.panel-group{
+	width: 134%;
+	margin-left: -6px;
+}
+
+@media only screen and (max-width: 1024px) { /*MEDIDA iPad acostado*/
+	.header_imagen{
+		background: url(../../images/header_web1024px.png) no-repeat;
+	}
+}
+
+@media only screen and (max-width: 995px) {
+	.header_imagen{
+		background: url(../../images/header_web995px.png) no-repeat;
+	}
+
+	#container_border > div.menu_lateral > accordion > div.panel-group{
+	width: 100%;
+	margin-left: 0px;
+	}
+	#container_border > div.col-md-10 > div.btn-group.col-md-offset-5.col-md-3{
+		margin-left: 41.5%;
+		margin-right: 41.5%;
+	}
+}
+
+@media only screen and (max-width: 768px) {/*Valor original del max-width:767px*/
+	.header_imagen{
+		background: url(../../images/header_web768px.png) no-repeat;
+	}
+	form.form-horizontal{
+	  width: 96%;
+	  margin: auto;
+	}
+	#container_border > div.col-md-10 > div.btn-group.col-md-offset-5.col-md-3{
+		margin-left: 34.5%;
+		margin-right: 34.5%;
+	}
+}
+}
+
+@media only screen and (max-width: 480px) {
+	.header_imagen{
+		background: url(../../images/header_web480px.png) no-repeat;
+	}
+/* - - > Estos estilos estan acordes con BOOTSTRAP - NO BORRAR*/
+	form.form-horizontal{
+	  width: 96%;
+	  margin: auto;
+	}
+	.radio-inline+.radio-inline{
+		margin-left: 8px !important;
+	}
+	div.radio-inline label{
+		margin-right: auto;
+	}
+	#container_border > div.col-md-10 > div.btn-group.col-md-offset-5.col-md-3{
+		margin-left: 27%;
+		margin-right: 27%;
+	}
+	/* < - - NO BORRAR*/
+}
+
+@media only screen and (max-width: 320px) {
+	#container_border > div.col-md-10 > div.btn-group.col-md-offset-5.col-md-3{
+		margin-left: 20%;
+		margin-right: 20%;
+	}
+}
