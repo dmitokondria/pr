@@ -624,6 +624,8 @@ controllers.controller('medicinaCTRL', function($scope, $http, $location, $cooki
     //medicina
     $scope.filtro_pos = 2;
     $scope.medicamentos_formula = [];
+    $scope.medicamento = {};
+    $scope.medicamento.actual = {};
     $scope.agregarMedicamento = function(_actual){
 
         $scope.formulario = {};
@@ -637,6 +639,8 @@ controllers.controller('medicinaCTRL', function($scope, $http, $location, $cooki
             data: $scope.formulario,
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).then(function(result){
+            $scope.medicamento.actual = false;
+            console.log($scope.actual);
         });
 
         $scope.medicamentos_formula.push(_actual);

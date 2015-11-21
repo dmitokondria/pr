@@ -866,10 +866,13 @@
                                     </label>
                                 </div>
                             </div>
+                            Actual: {{actual}}
+                            <a ng-click="medicamento.actual=false">off</a>
+                            <a ng-click="medicamento.actual=true">on</a>
                             <div class="form-group" ng-if="filtro_pos!=2" ng-hide="vista">
                                 <label class="subrayado">Buscar Medicamentos</label>
-                                <input type="text" class="form-control" placeholder="Buscar Medicamento" ng-model="actual" typeahead="medicamento as medicamento.nombre for medicamento in medicamentos | filter:$viewValue | filter:{pos:filtro_pos}" ng-disabled="vista"/>
-                                <div ng-if="actual" ng-show="">
+                                <input type="text" class="form-control" placeholder="Buscar Medicamento" ng-model="medicamento.actual" typeahead="medicamento as medicamento.nombre for medicamento in medicamentos | filter:$viewValue | filter:{pos:filtro_pos}" ng-disabled="vista"/>
+                                <div ng-show="medicamento.actual">
                                     <label class="subrayado">Medicamento seleccionado</label>
                                     <label class="col-md-12">Descripcion: {{actual.descripcion}}</label>
                                     <label class="col-md-12">Principio activo: {{actual.principio_activo}}</label>
@@ -885,7 +888,7 @@
                                             <input type="radio" value="0" ng-model="actual.verificar"><label>No</label>
                                         </div>
                                     </div>
-                                    <label class="col-md-12" >Cantidad</label>
+                                    <label class="col-md-12">Cantidad</label>
                                     <input type="text" class="form-control" ng-model="actual.cantidad">
                                     <label class="col-md-12">Dosis</label>
                                     <input type="text" class="form-control" ng-model="actual.dosis">

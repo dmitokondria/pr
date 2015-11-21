@@ -331,11 +331,11 @@ if ( isset($_GET['listados']) ){
 				$id_cita = $formulario->id_cita;
 				$codigo = $formulario->codigo;
 				$SQLUpdateCeroTodos = "UPDATE hc_cita_diagnosticos SET bl_principal = 0 WHERE id_cita = $id_cita";
-				echo "{{{{".$SQLUpdateCeroTodos."}}}}}";
+				//echo "{{{{".$SQLUpdateCeroTodos."}}}}}";
 				ejecutarQuery($SQLUpdateCeroTodos);
 				$SQLUpdatePpal = "UPDATE hc_cita_diagnosticos SET bl_principal = ".intval($formulario->ppal)." WHERE id_cita = $id_cita AND codigo = '".$codigo."'";
 				ejecutarQuery($SQLUpdatePpal);
-				echo "{{{{".$SQLUpdatePpal."}}}}";
+				//echo "{{{{".$SQLUpdatePpal."}}}}";
 			}
 			//echo "{{".$SQLDiagnostico."}}";
 		} if ( intval($formulario->pagina) == 4 ){
@@ -362,7 +362,8 @@ if ( isset($_GET['listados']) ){
 				//agregando medicamento
 				$medicamento = $formulario->medicamento;
 				$SQLCrearMedicamento = "INSERT INTO formula_medicamentos(id, id_formula, id_medicamento, verificar, cantidad, dosis, salidas)
-				                     	VALUES (NULL,$id_formula,$medicamento->id,$medicamento->verificar,$medicamento->cantidad,$medicamento->dosis,$medicamento->salidas)";
+				                     	VALUES (NULL,$id_formula,$medicamento->id,$medicamento->verificar,$medicamento->cantidad,'$medicamento->dosis','$medicamento->salidas')";
+				                     	//echo "{{$SQLCrearMedicamento}}";
 				$id_medicamento_formula = insertarFila($SQLCrearMedicamento);
 				$datos[id_medicamento_formula] = $id_medicamento_formula;
 			}
