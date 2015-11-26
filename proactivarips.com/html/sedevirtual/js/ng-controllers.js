@@ -12,6 +12,7 @@ controllers.controller('ingresoCTRL', function($scope, $http, $location, $cookie
     });
 
     $scope.formulario = {};
+    $scope.mensaje = '';
 
 	$scope.ingreso = function(){
 		$http({
@@ -32,6 +33,8 @@ controllers.controller('ingresoCTRL', function($scope, $http, $location, $cookie
             }else if (result.data.tipo_usuario=='Paciente' ){
                 $cookieStore.put('usuario', {tipo_usuario: result.data.tipo_usuario, id: result.data.id, nombres: result.data.nombres, mensaje: result.data.mensaje, especialidad:result.data.especialidad, edad: result.data.edad, ocupacion: result.data.ocupacion});
                 $location.path('/miperfil/datos/');
+            }else {
+                $scope.mensaje = '¡Datos de acceso incorrectos!';
             }
         });
 	};

@@ -27,17 +27,18 @@
 				<input type="text" class="form-control" placeholder="Usuario" ng-model="formulario.usuario">
 			</div>
 		</div>
-
 		<div class="form-group">
 			<div class="col-sm-offset-4 col-sm-4">
 				<input type="password" class="form-control" placeholder="Contraseña" ng-model="formulario.clave">
 			</div>
 		</div>
-
 		<div class="form-group">
 			<div class="col-sm-offset-5 col-sm-2">
-				<button type="submit" class="btn btn-default btn-block" ng-click="ingreso()">Ir</button>
+				<button type="submit" class="btn btn-default btn-block" ng-click="ingreso()" ng-disabled="!formulario.usuario || !formulario.clave">Ir</button>
 			</div>
 		</div>
 	</form>
+    <div class="col-sm-offset-4 col-sm-4">
+        <div class="alert alert-danger" role="alert" type="danger" ng-show="mensaje"><div class="col-sm-1"><span class="glyphicon glyphicon-alert" aria-hidden="true"></div></span>{{mensaje}}</div>
+    </div>
 </div>
