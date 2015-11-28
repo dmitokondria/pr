@@ -2,21 +2,24 @@
 
 include_once('funcionesBD.php');
 
+$datos = array();
+
 if ( isset($_GET['listados']) ){
 	$SQLCIE = "SELECT id, CONCAT(codigo,' ',descripcion) as nombre FROM cie ORDER BY descripcion ASC";
 	insertarTablaArray_v2($datos, $SQLCIE, 'cies');
 }else{
 	//traer e interpretar datos POST
-	$mensaje = json_decode(file_get_contents("php://input"));
-	if ( isset($mensaje->cita) ){
-		$id_cita = $mensaje->cita;
+	$paquete = json_decode(file_get_contents("php://input"));
+	//informacio básica del paciente o de la cita para VER
+	if ( isset($paquete->cita) ){
+		$id_cita = $paquete->cita;
 
 		$SQLInfoPaciente = "SELECT p.*
 							FROM r2_pacientes_citas r2pc
 							LEFT JOIN pacientes p ON p.id = r2pc.hd_pacientes
 							WHERE r2pc.id = ".$id_cita;
-		insertarTablaArray_v2($pacientes, $SQLInfoPaciente, 'pacientes');
-		$datos[paciente] = $pacientes[pacientes][0];
+		insertarTablaArray_v2($infoPacientes, $SQLInfoPaciente, 'pacientes');
+		$datos[paciente] = $infoPacientes[pacientes][0];
 
 		//descomponer fecha de nacimiento
 		$fecha_nacimiento = $datos[paciente][da_nacimiento];
@@ -65,8 +68,8 @@ if ( isset($_GET['listados']) ){
 		$datos[fecha][dias] = array();
 		for ($i=1; $i < 32; $i++) array_push($datos[fecha][dias], $i);
 
-/// DAVID TRATÓ DE HACER ESTO Consulta para ver la historia clinica diligenciada en la cita N
-		if ( strcmp($mensaje->accion, 'ver') == 0 ){
+		/// DAVID TRATÓ DE HACER ESTO Consulta para ver la historia clinica diligenciada en la cita N
+		if ( strcmp($paquete->accion, 'ver') == 0 ){
 			$SQLInfoCita = "SELECT * FROM hcpsi_ WHERE id_cita = $id_cita";
 			insertarTablaArray_v2($info_cita, $SQLInfoCita, 'info_cita');
 			$info_cita = $info_cita[info_cita][0];
@@ -93,6 +96,53 @@ if ( isset($_GET['listados']) ){
 
 			$datos[recomendaciones] = array();
 			$datos[recomendaciones] = $info_cita[recomendaciones];
+		}
+	}else{
+		$accion = $paquete->accion;
+		$formulario = $paquete->formulario;
+
+		if ( strcmp($accion , 'guardar_basicos') == 0 ){
+			$SQLInsertBasicos = "UPDATE pacientes SET sl_estado_civil = '$formulario->sl_estado_civil', ocupacion = '$formulario->ocupacion' WHERE id = $formulario->id";
+			if ( ejecutarQuery_v2($SQLInsertBasicos) == true ) {
+				$datos[status] = "OK";
+				$datos[mensaje] = "Datos almacenados correctamente.";
+			}else{
+				$datos[status] = "ERROR";
+				$datos[mensaje] = "Los datos no se pudieron almacenar correctamente.";
+			}
+
+			//existe el registro de la cita de psicologia con el id ....?
+			$SQLExisteHistoriaCitaPsicologia = "SELECT id FROM hcpsi_ WHERE id_cita = '$formulario->cita'";
+			insertarTablaArray_v2($existeHC, $SQLExisteHistoriaCitaPsicologia, 'existe');
+			if( isset($existeHC[existe][0]) ){
+				ECHO "SI EXISTE!! ";
+				//UPDATE
+				$SQLUpdate = "";
+				if ( ejecutarQuery_v2($SQLUpdate) == true ) {
+					$datos[status] = "OK";
+					$datos[mensaje] = "Datos actualizados correctamente.";
+				}else{
+					$datos[status] = "ERROR";
+					$datos[mensaje] = "Los datos no se pudieron actualizar correctamente.";
+				}
+			}else{
+				ECHO "NO EXISTE! :(";
+				//INSERT
+				$SQLInsert = "";
+				if ( ejecutarQuery_v2($SQLInsert) == true ) {
+					$datos[status] = "OK";
+					$datos[mensaje] = "Datos almacenados correctamente.";
+				}else{
+					$datos[status] = "ERROR";
+					$datos[mensaje] = "Los datos no se pudieron almacenar correctamente.";
+				}
+			}
+			//UPDATE o Insert para Acompañante y motivo
+
+
+			/*INSERT INTO `pacientes` (`id`, ``, `segundo_nombre`, `primer_apellido`, `segundo_apellido`, `rd_tipo_identificacion`, `numero_identificacion`, `sl_departamento`, `sl_municipio`, `da_nacimiento`, `edad`, `email`, `clave`, `sl_cliente`, `rd_genero`, ``, `ocupacion`, `direccion`, `telefono`, `celular`, `sl_eps`, `sl_tipo_vinculacion`, `sl_escolaridad`, `acudiente`, `acudiente_parentesco`, `acudiente_celular`, `servicios`, `sl_estado_afiliacion`) VALUES
+(9, 'Guillermo', 'Andrés', 'Malagón', 'García', 1, 80198817, 14, 525, '1984-03-29', 30, 'guillomal373@gmail.com', '1234', 1, 2, 3, 'Ingeniero', 'Calle 8 bis No. 79 c 77', '2923791', '3006595458', 3, 2, 4, 'David', 'Amigo', '3003453434', 2, 1);
+*/
 		}
 	}
 }

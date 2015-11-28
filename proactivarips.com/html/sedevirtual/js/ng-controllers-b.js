@@ -88,9 +88,6 @@ controllers.controller('menu_lateralCTRL', function($scope, $http, $cookieStore)
 ////PSICOLOGIA
 controllers.controller('psicologiaCTRL', function($scope, $http, $location, $cookieStore, $route, $routeParams){
 
-    /*if(typeof $scope.user === "undefined") {
-        $location.path('/ingreso');
-    }*/
     $scope.vista = false;
 
     $scope.seccion = "Profesional";
@@ -110,49 +107,42 @@ controllers.controller('psicologiaCTRL', function($scope, $http, $location, $coo
         data: $scope.formulario,
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).then(function(result){
-        $scope.tipos_id = result.data.tipos_identificacion;
-        $scope.departamentos = result.data.departamentos;
-        $scope.ciudades = result.data.ciudades;
-        $scope.fecha = {};
-        $scope.fecha.dias = result.data.fecha.dias;
-        $scope.fecha.meses = result.data.fecha.meses;
-        $scope.fecha.anios = result.data.fecha.anios;
-        $scope.estados_civiles = result.data.estados_civiles;
-        $scope.niveles_escolaridad = result.data.niveles_escolaridad;
-        $scope.generos = result.data.generos;
-        $scope.epss = result.data.epss;
-        $scope.tipos_vinculacion = result.data.tipos_vinculacion;
-        $scope.paquetes = result.data.paquetes;
-        $scope.afiliaciones = result.data.afiliacion_estados;
+        $scope.datosInicialesPestañas = function(){
+            $scope.tipos_id = result.data.tipos_identificacion;
+            $scope.departamentos = result.data.departamentos;
+            $scope.ciudades = result.data.ciudades;
+            $scope.fecha = {};
+            $scope.fecha.dias = result.data.fecha.dias;
+            $scope.fecha.meses = result.data.fecha.meses;
+            $scope.fecha.anios = result.data.fecha.anios;
+            $scope.estados_civiles = result.data.estados_civiles;
+            $scope.niveles_escolaridad = result.data.niveles_escolaridad;
+            $scope.generos = result.data.generos;
+            $scope.epss = result.data.epss;
+            $scope.tipos_vinculacion = result.data.tipos_vinculacion;
+            $scope.paquetes = result.data.paquetes;
+            $scope.afiliaciones = result.data.afiliacion_estados;
 
-        $scope.paciente = result.data.paciente;
-        $scope.formulario.p_nombre = $scope.paciente.primer_nombre;
-        $scope.formulario.p_apellido = $scope.paciente.primer_apellido;
-        $scope.formulario.s_nombre = $scope.paciente.segundo_nombre;
-        $scope.formulario.s_apellido = $scope.paciente.segundo_apellido;
-        $scope.formulario.tipo_id = $scope.paciente.rd_tipo_identificacion;
-        $scope.formulario.identificacion = $scope.paciente.numero_identificacion;
-        $scope.formulario.fecha_nac = {};
-        $scope.formulario.fecha_nac.dia = $scope.paciente.da_nacimiento.dia;
-        $scope.formulario.fecha_nac.mes = $scope.paciente.da_nacimiento.mes;
-        $scope.formulario.fecha_nac.anio = $scope.paciente.da_nacimiento.anio;
-        $scope.formulario.edad = $scope.paciente.edad;
-        $scope.formulario.estado_civil = $scope.paciente.sl_estado_civil;
-        $scope.formulario.sl_departamento = $scope.paciente.sl_departamento;
-        $scope.formulario.sl_municipio = $scope.paciente.sl_municipio;
-        $scope.formulario.ocupacion = $scope.paciente.ocupacion;
-        $scope.formulario.escolaridad = $scope.paciente.sl_escolaridad;
-        $scope.formulario.genero = $scope.paciente.rd_genero;
-        $scope.formulario.direccion = $scope.paciente.direccion;
-        $scope.formulario.telefono = $scope.paciente.telefono;
-        $scope.formulario.celular = $scope.paciente.celular;
-        $scope.formulario.acudiente = $scope.paciente.acudiente;
-        $scope.formulario.acu_parentesco = $scope.paciente.acudiente_parentesco;
-        $scope.formulario.cel_acudiente = $scope.paciente.acudiente_celular;
-        $scope.formulario.eps = $scope.paciente.sl_eps;
-        $scope.formulario.paquete = $scope.paciente.servicios;
-        $scope.formulario.vinculacion = $scope.paciente.sl_tipo_vinculacion;
-        $scope.formulario.afiliacion = $scope.paciente.sl_estado_afiliacion;
+            $scope.formulario = result.data.paciente;
+            $scope.formulario.cita = $routeParams.cita;
+        };
+        $scope.datosInicialesPestañas();
+
+        //funcion para enviar y guardar los datos d ela primera pestaña
+        $scope.accion = function(_nombreAccion){
+            //armar paquete
+            $scope.paquete = {};
+            $scope.paquete.accion = _nombreAccion;
+            $scope.paquete.formulario = $scope.formulario;
+            //enviar paquete
+            $http({
+                url: 'json/psicologia.php',
+                method: 'POST',
+                data: $scope.paquete,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).then(function(result){
+            });
+        };
 
     });
 
@@ -161,7 +151,7 @@ controllers.controller('psicologiaCTRL', function($scope, $http, $location, $coo
         $location.path('/ingreso');
     };
 });
-
+///No tocar el VER
 controllers.controller('psicologiaVerCTRL', function($scope, $http, $cookieStore, $routeParams){
 
     $scope.vista = true;
@@ -195,7 +185,7 @@ controllers.controller('psicologiaVerCTRL', function($scope, $http, $cookieStore
         $scope.paquetes = result.data.paquetes;
         $scope.afiliaciones = result.data.afiliacion_estados;
 
-        $scope.paciente = result.data.paciente;
+        /*$scope.paciente = result.data.paciente;
         $scope.formulario.p_nombre = $scope.paciente.primer_nombre;
         $scope.formulario.p_apellido = $scope.paciente.primer_apellido;
         $scope.formulario.s_nombre = $scope.paciente.segundo_nombre;
@@ -222,7 +212,7 @@ controllers.controller('psicologiaVerCTRL', function($scope, $http, $cookieStore
         $scope.formulario.eps = $scope.paciente.sl_eps;
         $scope.formulario.paquete = $scope.paciente.servicios;
         $scope.formulario.vinculacion = $scope.paciente.sl_tipo_vinculacion;
-        $scope.formulario.afiliacion = $scope.paciente.sl_estado_afiliacion;
+        $scope.formulario.afiliacion = $scope.paciente.sl_estado_afiliacion;*/
 
     });
 
