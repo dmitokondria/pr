@@ -1,0 +1,31 @@
+<div id="logo"></div>
+<!--form action="http://soyexperto.net/sitio/#!/resultados" id="f" method="get"-->
+<form name="n_formulario" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="input-group">
+        <input type="text" name="n_campo_busqueda" class="form-control input-lg" placeholder="¡Encuentra al Experto que buscas por Experticia, Pais, Ciudad o Barrio!" ng-model="busqueda.opciones" typeahead-on-select="buscar()" typeahead="option as option.frase for option in p.opciones | filter:$viewValue" >
+        <span class="input-group-btn">
+            <button class="btn btn-default btn-lg" ng-click='buscar()' type="button" ng-disabled="!(busqueda.opciones)">Buscar</button>
+        </span>
+    </div>
+    <pre class="col-md-12">Busqueda.opciones{{busqueda.opciones | json}}</pre>
+    <span class="help-inline" ng-show="n_formulario.n_campo_busqueda.$error.pattern">No se aceptan caracteres</span>
+    <input type="submit" value="Submit" ng-click='buscar()' style="display:none">
+</form>
+<script>
+$(document).ready(function() {
+  //ng-pattern="/(?.=[a-záéíóúA-ZÁÉÍÓÚ]/)"
+  /*$("body").each(function( index ) {
+      $(this).removeClass("collage");
+  });*/
+});
+$(document).ready(function() {
+  $("body").each(function( index ) {
+    $(this).addClass("collage");
+  });
+});
+</script>
+<style>
+  .help-inline{
+    color: rgba(224, 92, 92, 0.91);
+  }
+</style> 

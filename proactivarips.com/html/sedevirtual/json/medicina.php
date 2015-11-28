@@ -3,12 +3,22 @@
 include_once('funcionesBD.php');
 
 if ( isset($_GET['listados']) ){
-	if ( isset($_GET['palabra']) ){
-		$SQLCIE = "SELECT id, CONCAT(codigo,' ',descripcion) as nombre, codigo, descripcion FROM cie WHERE CONCAT(codigo,' ',descripcion) LIKE '%$_GET[palabra]%' ORDER BY descripcion ASC";
-		insertarTablaArray_v2($datos, $SQLCIE, 'cies');
-	}else{
-		$SQLCIE = "SELECT id, CONCAT(codigo,' ',descripcion) as nombre, codigo, descripcion FROM cie ORDER BY descripcion ASC";
-		insertarTablaArray_v2($datos, $SQLCIE, 'cies');
+	if ( strcmp($_GET['listados'], '1') == 0 ){
+		if ( isset($_GET['palabra']) ){
+			$SQLCIE = "SELECT id, CONCAT(codigo,' ',descripcion) as nombre, codigo, descripcion FROM cie WHERE CONCAT(codigo,' ',descripcion) LIKE '%$_GET[palabra]%' ORDER BY descripcion ASC";
+			insertarTablaArray_v2($datos, $SQLCIE, 'cies');
+		}else{
+			$SQLCIE = "SELECT id, CONCAT(codigo,' ',descripcion) as nombre, codigo, descripcion FROM cie ORDER BY descripcion ASC";
+			insertarTablaArray_v2($datos, $SQLCIE, 'cies');
+		}
+	}else if ( strcmp($_GET['listados'], '2') == 0 ){
+		if ( isset($_GET['palabra']) ){
+			$SQLCups = "SELECT id, CONCAT(cups,' ',procedimiento) as nombre, cups, procedimiento FROM cups WHERE CONCAT(cups,' ',procedimiento) LIKE '%$_GET[palabra]%' ORDER BY procedimiento ASC";
+			insertarTablaArray_v2($datos, $SQLCups, 'cups');
+		}else{
+			$SQLCups = "SELECT id, CONCAT(cups,' ',procedimiento) as nombre, cups, procedimiento FROM cups ORDER BY procedimiento ASC";
+			insertarTablaArray_v2($datos, $SQLCups, 'cups');
+		}
 	}
 }else{
 	//traer e interpretar datos POST
@@ -102,7 +112,7 @@ if ( isset($_GET['listados']) ){
 		$SQLTiposDiagnostico = "SELECT * FROM diagnostico_tipos ORDER BY nombre ASC";
 		insertarTablaArray_v2($datos, $SQLTiposDiagnostico, 'tipos_diagnostico');
 
-		//medicamentos cups
+		//medicamentos pos / no pos
 		$SQLMedicamentos = "SELECT *, CONCAT(descripcion,' - ',principio_activo, ' - ', forma_farmaceutica) AS nombre FROM medicamentos ORDER BY descripcion ASC";
 		insertarTablaArray_v2($datos, $SQLMedicamentos, 'medicamentos');
 

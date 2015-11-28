@@ -77,7 +77,92 @@ controllers.controller('registro_rapidoCTRL', function($scope, $http, $location,
     };
 });
 
+controllers.controller('menu_lateralCTRL', function($scope, $http, $cookieStore){
 
+    $scope.menu_lateral = [];
+    $scope.usuario = $cookieStore.get("usuario");
+
+    $scope.hoy = moment().locale('es');
+    $scope.semana = moment().week();
+    $scope.anio = moment().year();
+
+    if ( $scope.usuario.tipo_usuario == 'Paciente' ){
+        $scope.menu_lateral.push(
+            {
+                nombre:'Mi Perfil',
+                opciones:
+                    [
+                        {nombre:'Datos Personales',vinculo:'#/miperfil/datos'},
+                        {nombre:'Cambiar Contraseña',vinculo:'#/miperfil/clave'},
+                        {nombre:'Mi Historial de Atención',vinculo:'#/miperfil/historial'}
+                    ]
+            },
+            {
+                nombre:'Mis Citas',
+                opciones:
+                [
+                    {nombre:'Crear Cita',vinculo:'#/miscitas/crear'},
+                    {nombre:'Consultar Mis Citas',vinculo:'#/miscitas/consultar'}
+                ]
+            }
+        );
+    }else if ( $scope.usuario.tipo_usuario == 'Profesional' ){
+
+        $scope.menu_lateral.push(
+            {
+                nombre:'Agenda de Pacientes',
+                opciones:
+                [
+                    {nombre:'Agenda',vinculo:'#/profesional/agenda/'+$scope.semana+'/'+$scope.anio},
+                    {nombre:'Asignar Cita',vinculo:'#/recepcion/crearcita'} //////****************************************
+                ]
+            },
+            {
+                nombre:'Pacientes',
+                opciones:
+                [
+                    {nombre:'Crear Paciente',vinculo:'#/crearpaciente'},
+                    {nombre:'Consultar Paciente',vinculo:'#/consultarpaciente'}
+                ]
+            },{
+                nombre:'Hospitalización',
+                opciones:
+                [
+                    {nombre:'Crear',vinculo:'#/seguimiento'},
+                    {nombre:'Ver',vinculo:'#/seguimiento'}
+                ]
+            },{
+                nombre:'Seguimiento Telefónico',
+                opciones:
+                [
+                    {nombre:'Crear',vinculo:'#/seguimiento'},
+                    {nombre:'Ver',vinculo:'#/seguimiento'}
+                ]
+            }
+
+        );
+    }else if ( $scope.usuario.tipo_usuario == 'Recepción' ){
+
+        $scope.menu_lateral.push(
+            {
+                nombre:'Agenda de Pacientes',
+                opciones:
+                [
+                    {nombre:'Agenda',vinculo:'#/recepcion/agenda/'+$scope.semana+'/'+$scope.anio},//////****************************************
+                    {nombre:'Asignar Cita',vinculo:'#/recepcion/crearcita'}//////****************************************
+                ]
+            },
+            {
+                nombre:'Pacientes',
+                opciones:
+                [
+                    {nombre:'Crear Paciente',vinculo:'#/crearpaciente'},//////****************************************
+                    {nombre:'Consultar Paciente',vinculo:'#/consultarpaciente'}
+                ]
+            }
+        );
+    }
+});
 
 controllers.controller('agendaCTRL', function($scope, $http, $location, $cookieStore, $route, $routeParams){
 
@@ -201,380 +286,396 @@ controllers.controller('medicinaCTRL', function($scope, $http, $location, $cooki
         data: $scope.formulario,
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).then(function(result){
-        $scope.tipos_id = result.data.tipos_identificacion;
-        $scope.departamentos = result.data.departamentos;
-        $scope.ciudades = result.data.ciudades;
-        $scope.fecha = {};
-        $scope.fecha.dias = result.data.fecha.dias;
-        $scope.fecha.meses = result.data.fecha.meses;
-        $scope.fecha.anios = result.data.fecha.anios;
-        $scope.estados_civiles = result.data.estados_civiles;
-        $scope.niveles_escolaridad = result.data.niveles_escolaridad;
-        $scope.generos = result.data.generos;
-        $scope.epss = result.data.epss;
-        $scope.tipos_vinculacion = result.data.tipos_vinculacion;
-        $scope.paquetes = result.data.paquetes;
-        $scope.afiliaciones = result.data.afiliacion_estados;
 
-        $scope.paciente = result.data.paciente;
-        $scope.formulario.p_nombre = $scope.paciente.primer_nombre;
-        $scope.formulario.p_apellido = $scope.paciente.primer_apellido;
-        $scope.formulario.s_nombre = $scope.paciente.segundo_nombre;
-        $scope.formulario.s_apellido = $scope.paciente.segundo_apellido;
-        $scope.formulario.tipo_id = $scope.paciente.rd_tipo_identificacion;
-        $scope.formulario.identificacion = $scope.paciente.numero_identificacion;
-        $scope.formulario.fecha_nac = {};
-        $scope.formulario.fecha_nac.dia = $scope.paciente.da_nacimiento.dia;
-        $scope.formulario.fecha_nac.mes = $scope.paciente.da_nacimiento.mes;
-        $scope.formulario.fecha_nac.anio = $scope.paciente.da_nacimiento.anio;
-        $scope.formulario.edad = $scope.paciente.edad;
-        $scope.formulario.estado_civil = $scope.paciente.sl_estado_civil;
-        $scope.formulario.sl_departamento = $scope.paciente.sl_departamento;
-        $scope.formulario.sl_municipio = $scope.paciente.sl_municipio;
-        $scope.formulario.ocupacion = $scope.paciente.ocupacion;
-        $scope.formulario.escolaridad = $scope.paciente.sl_escolaridad;
-        $scope.formulario.genero = $scope.paciente.rd_genero;
-        $scope.formulario.direccion = $scope.paciente.direccion;
-        $scope.formulario.telefono = $scope.paciente.telefono;
-        $scope.formulario.celular = $scope.paciente.celular;
-        $scope.formulario.acudiente = $scope.paciente.acudiente;
-        $scope.formulario.acu_parentesco = $scope.paciente.acudiente_parentesco;
-        $scope.formulario.cel_acudiente = $scope.paciente.acudiente_celular;
-        $scope.formulario.eps = $scope.paciente.sl_eps;
-        $scope.formulario.paquete = $scope.paciente.servicios;
-        $scope.formulario.vinculacion = $scope.paciente.sl_tipo_vinculacion;
-        $scope.formulario.afiliacion = $scope.paciente.sl_estado_afiliacion;
+        $scope.cargarDatosIniciales = function(){
+            $scope.tipos_id = result.data.tipos_identificacion;
+            $scope.departamentos = result.data.departamentos;
+            $scope.ciudades = result.data.ciudades;
+            $scope.fecha = {};
+            $scope.fecha.dias = result.data.fecha.dias;
+            $scope.fecha.meses = result.data.fecha.meses;
+            $scope.fecha.anios = result.data.fecha.anios;
+            $scope.estados_civiles = result.data.estados_civiles;
+            $scope.niveles_escolaridad = result.data.niveles_escolaridad;
+            $scope.generos = result.data.generos;
+            $scope.epss = result.data.epss;
+            $scope.tipos_vinculacion = result.data.tipos_vinculacion;
+            $scope.paquetes = result.data.paquetes;
+            $scope.afiliaciones = result.data.afiliacion_estados;
 
-        //motivos
-        $scope.finalidades = result.data.finalidades;
-        $scope.causas_ext = result.data.causas_ext;
-        $scope.eventos = result.data.eventos;
+            $scope.paciente = result.data.paciente;
+            $scope.formulario.p_nombre = $scope.paciente.primer_nombre;
+            $scope.formulario.p_apellido = $scope.paciente.primer_apellido;
+            $scope.formulario.s_nombre = $scope.paciente.segundo_nombre;
+            $scope.formulario.s_apellido = $scope.paciente.segundo_apellido;
+            $scope.formulario.tipo_id = $scope.paciente.rd_tipo_identificacion;
+            $scope.formulario.identificacion = $scope.paciente.numero_identificacion;
+            $scope.formulario.fecha_nac = {};
+            $scope.formulario.fecha_nac.dia = $scope.paciente.da_nacimiento.dia;
+            $scope.formulario.fecha_nac.mes = $scope.paciente.da_nacimiento.mes;
+            $scope.formulario.fecha_nac.anio = $scope.paciente.da_nacimiento.anio;
+            $scope.formulario.edad = $scope.paciente.edad;
+            $scope.formulario.estado_civil = $scope.paciente.sl_estado_civil;
+            $scope.formulario.sl_departamento = $scope.paciente.sl_departamento;
+            $scope.formulario.sl_municipio = $scope.paciente.sl_municipio;
+            $scope.formulario.ocupacion = $scope.paciente.ocupacion;
+            $scope.formulario.escolaridad = $scope.paciente.sl_escolaridad;
+            $scope.formulario.genero = $scope.paciente.rd_genero;
+            $scope.formulario.direccion = $scope.paciente.direccion;
+            $scope.formulario.telefono = $scope.paciente.telefono;
+            $scope.formulario.celular = $scope.paciente.celular;
+            $scope.formulario.acudiente = $scope.paciente.acudiente;
+            $scope.formulario.acu_parentesco = $scope.paciente.acudiente_parentesco;
+            $scope.formulario.cel_acudiente = $scope.paciente.acudiente_celular;
+            $scope.formulario.eps = $scope.paciente.sl_eps;
+            $scope.formulario.paquete = $scope.paciente.servicios;
+            $scope.formulario.vinculacion = $scope.paciente.sl_tipo_vinculacion;
+            $scope.formulario.afiliacion = $scope.paciente.sl_estado_afiliacion;
 
-        //examen fisico
-        $scope.examenfisico = {};
-        $scope.examenfisico.peso = 0;
-        $scope.examenfisico.talla = 0;
-        $scope.examenfisico.imc = 0;
-        $scope.examenfisico.imc_clasificacion = 0;
-        $scope.est_generales = result.data.est_generales;
-        $scope.estados_resp = result.data.estados_resp;
-        $scope.estados_hidratacion = result.data.estados_hidratacion;
-        $scope.glasgows = result.data.glasgows;
-        $scope.estados_conciencia = result.data.estados_conciencia;
-        $scope.imc_clasificaciones = result.data.imc_clasificaciones;
+            //motivos
+            $scope.finalidades = result.data.finalidades;
+            $scope.causas_ext = result.data.causas_ext;
+            $scope.eventos = result.data.eventos;
 
-        //diagnósticos
-        $scope.tipos_diagnostico = result.data.tipos_diagnostico;
-        $scope.tipos_contingencia = result.data.causas_ext;
-
-        //medicamentos
-        $scope.medicamentos = result.data.medicamentos;
-    });
-
-    $scope.motivo = {};
-    $scope.motivo.id_cita = $routeParams.cita;
-
-    //motivos pagina 0
-    $scope.mensaje_motivo = "";
-    $scope.enviarMotivo = function(){
-        $scope.mensaje_motivo = "";
-        $scope.motivo.pagina = 0;
-        $http({
-            url: 'json/medicina.php',
-            method: 'POST',
-            data: $scope.motivo,
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        }).then(function(result){
-            //alert(JSON.stringify(result.data.estado));
-            $scope.mensaje_motivo = "ok";
-            //agregar span con mensaje de pestaña guardada!
-        });
-    };
-
-    //antecetendes pagina 1
-    $scope.antecedentes = {};
-    $scope.mensaje_antecedentes = '';
-    $scope.enviarAntecedentes = function(){
-        $scope.mensaje_antecedentes = '';
-        $scope.antecedentes.id_cita = $routeParams.cita;
-        $scope.antecedentes.pagina = 1;
-        $http({
-            url: 'json/medicina.php',
-            method: 'POST',
-            data: $scope.antecedentes,
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        }).then(function(result){
-            //console.log(result.data.estado);
-            $scope.mensaje_antecedentes = 'ok';
-            //$scope.mensaje_antecedentes = result.data.estado;
-        });
-    };
-
-    //examen fisico pagina 2
-    $scope.examenfisico = {};
-    $scope.mensaje_examenfisico = '';
-    $scope.enviarExamenFisico = function(){
-        $scope.mensaje_examenfisico = '';
-        $scope.examenfisico.id_cita = $routeParams.cita;
-        $scope.examenfisico.pagina = 2;
-        $http({
-            url: 'json/medicina.php',
-            method: 'POST',
-            data: $scope.examenfisico,
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        }).then(function(result){
-            //console.log(result.data.estado);
-            $scope.mensaje_examenfisico = 'ok';
-            //$scope.mensaje_examenfisico = result.data.estado;
-        });
-    };
-    $scope.enviarDiagnosticos = function(){
-        $scope.mensaje_diagnosticos = '';
-        $scope.cita_diagnosticos = {};
-        $scope.cita_diagnosticos.accion = "crear";
-        $scope.cita_diagnosticos.id_cita = $routeParams.cita;
-        $scope.cita_diagnosticos.pagina = 3;
-        $scope.cita_diagnosticos.diagnosticos_cita = $scope.diagnosticos_cita;
-        $http({
-            url: 'json/medicina.php',
-            method: 'POST',
-            data: $scope.cita_diagnosticos,
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        }).then(function(result){
-            //console.log(result.data.estado);
-            $scope.mensaje_diagnosticos = 'ok';
-            //$scope.mensaje_examenfisico = result.data.estado;
-        });
-    };
-
-    $scope.calculoIMC = function(){
-        $scope.examenfisico.imc = $scope.examenfisico.peso/($scope.examenfisico.talla/100*$scope.examenfisico.talla/100);
-
-        if ( $scope.examenfisico.imc < 16 ){
-            $scope.examenfisico.imc_clasificacion = 1;
-        }else if ( $scope.examenfisico.imc >= 16 && $scope.examenfisico.imc <= 16.9 ){
-            $scope.examenfisico.imc_clasificacion = 2;
-        }else if ( $scope.examenfisico.imc >= 17 && $scope.examenfisico.imc <= 17.5 ){
-            $scope.examenfisico.imc_clasificacion = 3;
-        }else if ( $scope.examenfisico.imc >= 17.6 && $scope.examenfisico.imc <= 17.9 ){
-            $scope.examenfisico.imc_clasificacion = 4;
-        }else if ( $scope.examenfisico.imc >= 18 && $scope.examenfisico.imc <= 24.9 ){
-            $scope.examenfisico.imc_clasificacion = 5;
-        }else if ( $scope.examenfisico.imc >= 25 && $scope.examenfisico.imc <= 26.9 ){
-            $scope.examenfisico.imc_clasificacion = 6;
-        }else if ( $scope.examenfisico.imc >= 27 && $scope.examenfisico.imc <= 29.9 ){
-            $scope.examenfisico.imc_clasificacion = 7;
-        }else if ( $scope.examenfisico.imc >= 30 && $scope.examenfisico.imc <= 39.9 ){
-            $scope.examenfisico.imc_clasificacion = 8;
-        }else if ( $scope.examenfisico.imc > 40 ){
-            $scope.examenfisico.imc_clasificacion = 9;
-        }else{
+            //examen fisico
+            $scope.examenfisico = {};
+            $scope.examenfisico.peso = 0;
+            $scope.examenfisico.talla = 0;
+            $scope.examenfisico.imc = 0;
             $scope.examenfisico.imc_clasificacion = 0;
-        }
-    };
+            $scope.est_generales = result.data.est_generales;
+            $scope.estados_resp = result.data.estados_resp;
+            $scope.estados_hidratacion = result.data.estados_hidratacion;
+            $scope.glasgows = result.data.glasgows;
+            $scope.estados_conciencia = result.data.estados_conciencia;
+            $scope.imc_clasificaciones = result.data.imc_clasificaciones;
 
-    $scope.examenfisico.observaciones_ef = '';
-    //completar al hacer clic en los check
-    $scope.examenFisicoCheck = function(_campo){
-        console.log(_campo);
-        if (_campo == 'cabeza' && $scope.examenfisico.ch_cabeza ) $scope.examenfisico.observaciones_ef += "Cabeza: Mucosas húmedas, conjuntivas normocrómicas, escleras anictéricas.";
-        if (_campo == 'ojos' && $scope.examenfisico.ch_ojos ) $scope.examenfisico.observaciones_ef += "\nOjos: ";
-        if (_campo == 'oidos' && $scope.examenfisico.ch_oido ) $scope.examenfisico.observaciones_ef += "\nOidos: ";
-        if (_campo == 'nariz' && $scope.examenfisico.ch_nariz ) $scope.examenfisico.observaciones_ef += "\nNariz: ";
-        if (_campo == 'boca' && $scope.examenfisico.ch_boca ) $scope.examenfisico.observaciones_ef += "\nBoca: ";
-        if (_campo == 'faringe' && $scope.examenfisico.ch_faringe ) $scope.examenfisico.observaciones_ef += "\nFaringe: ";
-        if (_campo == 'laringe' && $scope.examenfisico.ch_laringe ) $scope.examenfisico.observaciones_ef += "\nLaringe: ";
-        if (_campo == 'cuello' && $scope.examenfisico.ch_cuello ) $scope.examenfisico.observaciones_ef += "\nCuello: No se nota ingurgitación yugular, no adenopatías.";
-        if (_campo == 'torax' && $scope.examenfisico.ch_torax ) $scope.examenfisico.observaciones_ef += "\nTorax: Simétrico, Ruidos cardíacos rítmicos, no se notan soplos, respiratorios no agregados.";
-        if (_campo == 'senos' && $scope.examenfisico.ch_senos ) $scope.examenfisico.observaciones_ef += "\nSenos: ";
-        if (_campo == 'corazon' && $scope.examenfisico.ch_corazon ) $scope.examenfisico.observaciones_ef += "\nCorazón: ";
-        if (_campo == 'pulmon' && $scope.examenfisico.ch_pulmon ) $scope.examenfisico.observaciones_ef += "\nPulmón: ";
-        if (_campo == 'abdomen' && $scope.examenfisico.ch_abdomen ) $scope.examenfisico.observaciones_ef += "\nAbdomen: No dolor, no masas, no signos de irritación peritoneal.";
-        if (_campo == 'genitales' && $scope.examenfisico.ch_genitales ) $scope.examenfisico.observaciones_ef += "\nGenitales: Normal. No adenopatías inguinales.";
-        if (_campo == 'ginecologico' && $scope.examenfisico.ch_ginecologico ) $scope.examenfisico.observaciones_ef += "\nGinecológico: ";
-        if (_campo == 'rectal' && $scope.examenfisico.ch_rectal ) $scope.examenfisico.observaciones_ef += "\nRectal: ";
-        if (_campo == 'miembros_sup' && $scope.examenfisico.ch_miembros_sup ) $scope.examenfisico.observaciones_ef += "\nMiembros Superiores: Pulsos simétricos de adecuada amplitud, no edemas.";
-        if (_campo == 'miembros_inf' && $scope.examenfisico.ch_miembros_inf ) $scope.examenfisico.observaciones_ef += "\nMiembros Inferiores: Pulsos simétricos de adecuada amplitud, no edemas.";
-        if (_campo == 'columna' && $scope.examenfisico.ch_columna ) $scope.examenfisico.observaciones_ef += "\nColumna: ";
-        if (_campo == 'reflejos' && $scope.examenfisico.ch_reflejos ) $scope.examenfisico.observaciones_ef += "\nReflejos: ";
-        if (_campo == 'marcha' && $scope.examenfisico.ch_marcha ) $scope.examenfisico.observaciones_ef += "\nMarcha: ";
-        if (_campo == 'postura' && $scope.examenfisico.ch_postura ) $scope.examenfisico.observaciones_ef += "\nPostura: ";
-        if (_campo == 'piel_faneras' && $scope.examenfisico.ch_piel_faneras ) $scope.examenfisico.observaciones_ef += "\nPiel Faneras: Adecuada humectación. No cambios en la coloración. No lesiones.";
-        if (_campo == 'ganglios' && $scope.examenfisico.ch_ganglios ) $scope.examenfisico.observaciones_ef += "\nGanglios: ";
-        if (_campo == 'pulsos' && $scope.examenfisico.ch_pulsos ) $scope.examenfisico.observaciones_ef += "\nPulsos: ";
-        if (_campo == 'mental' && $scope.examenfisico.ch_mental ) $scope.examenfisico.observaciones_ef += "\nMental: ";
-        if (_campo == 'craneanos' && $scope.examenfisico.ch_craneanos ) $scope.examenfisico.observaciones_ef += "\nCraneanos: ";
-        if (_campo == 'pruebas' && $scope.examenfisico.ch_pruebas ) $scope.examenfisico.observaciones_ef += "\nPruebas: ";
-        if (_campo == 'general' && $scope.examenfisico.ch_asp_general ) $scope.examenfisico.observaciones_ef += "\nAsp General: ";
-        if (_campo == 'motor' && $scope.examenfisico.ch_motor ) $scope.examenfisico.observaciones_ef += "\nMotor: ";
-        if (_campo == 'neurologico' && $scope.examenfisico.ch_neurologico ) $scope.examenfisico.observaciones_ef += "\nNeurológico:  Alerta orientado en persona espacio y tiempo, no signos de focalización motora, sensibilidad conservada.  no signos meníngeos. Pares craneanos conservados.";
-    };
+            //diagnósticos
+            $scope.tipos_diagnostico = result.data.tipos_diagnostico;
+            $scope.tipos_contingencia = result.data.causas_ext;
 
-    $scope.cies = {};
-    $scope.bl_buscado = false;
-    $scope.buscarCies = function(_palabra){
-        $http.get('json/medicina.php?listados=1&palabra='+_palabra).then(function(result) {
-            $scope.bl_buscado = true;
-            $scope.cies = result.data.cies;
-            $scope.diagnostico.nombre = _palabra;
-        });
-    };
+            //medicamentos
+            $scope.medicamentos = result.data.medicamentos;
 
-    //diagnostico
-    $scope.diagnosticos_cita = [];
-    $scope.agregarDiagnostico = function(){
-        var diagnosticoTemp = {};
-        diagnosticoTemp.ppal = false;
-        diagnosticoTemp.codigo = $scope.diagnostico.nombre.codigo;
-        diagnosticoTemp.diagnostico = $scope.diagnostico.nombre.descripcion;
-        diagnosticoTemp.tipo = $scope.diagnostico.tipo;
-        diagnosticoTemp.contingencia = $scope.diagnostico.tipo_contingencia;
-        $scope.diagnosticos_cita.push(diagnosticoTemp);
-        $scope.limpiarDiagnostico();
-    };
-    $scope.diagnosticoPrincipal = function(){
+            $scope.motivo = {};
+            $scope.motivo.id_cita = $routeParams.cita;
+        };
+        $scope.cargarDatosIniciales();
 
-        for (var i = 0; i < $scope.diagnosticos_cita.length; i++) {
-            if ( i == this.$index ) $scope.diagnosticos_cita[i].ppal = true;
-            else $scope.diagnosticos_cita[i].ppal = false;
-        }
+        //motivos pagina 0
+        $scope.mensaje_motivo = "";
+        $scope.enviarMotivo = function(){
+            $scope.mensaje_motivo = "";
+            $scope.motivo.pagina = 0;
+            $http({
+                url: 'json/medicina.php',
+                method: 'POST',
+                data: $scope.motivo,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).then(function(result){
+                //alert(JSON.stringify(result.data.estado));
+                $scope.mensaje_motivo = "ok";
+                //agregar span con mensaje de pestaña guardada!
+            });
+        };
 
-        $scope.formulario_ = {};
-        $scope.formulario_.accion = "principal";
-        $scope.formulario_.codigo = $scope.diagnosticos_cita[this.$index].codigo;
-        $scope.formulario_.ppal = $scope.diagnosticos_cita[this.$index].ppal;
-        $scope.formulario_.id_cita = $routeParams.cita;
-        $scope.formulario_.pagina = 3;
-        $http({
-            url: 'json/medicina.php',
-            method: 'POST',
-            data: $scope.formulario_,
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        }).then(function(result){
-        });
-    };
-    $scope.eliminarDiagnostico = function(_index){
-        $scope.formulario_ = {};
-        $scope.formulario_.accion = "eliminar";
-        $scope.formulario_.codigo = $scope.diagnosticos_cita[_index].codigo;
-        $scope.formulario_.id_cita = $routeParams.cita;
-        $scope.formulario_.pagina = 3;
-        $http({
-            url: 'json/medicina.php',
-            method: 'POST',
-            data: $scope.formulario_,
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        }).then(function(result){
-            //eliminando un diagnostico del listado
-            $scope.diagnosticos_cita.splice(_index,1);
-        });
-    };
-    $scope.limpiarDiagnostico = function(){
+        //antecetendes pagina 1
+        $scope.antecedentes = {};
+        $scope.mensaje_antecedentes = '';
+        $scope.enviarAntecedentes = function(){
+            $scope.mensaje_antecedentes = '';
+            $scope.antecedentes.id_cita = $routeParams.cita;
+            $scope.antecedentes.pagina = 1;
+            $http({
+                url: 'json/medicina.php',
+                method: 'POST',
+                data: $scope.antecedentes,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).then(function(result){
+                //console.log(result.data.estado);
+                $scope.mensaje_antecedentes = 'ok';
+                //$scope.mensaje_antecedentes = result.data.estado;
+            });
+        };
+
+        //examen fisico pagina 2
+        $scope.examenfisico = {};
+        $scope.mensaje_examenfisico = '';
+        $scope.enviarExamenFisico = function(){
+            $scope.mensaje_examenfisico = '';
+            $scope.examenfisico.id_cita = $routeParams.cita;
+            $scope.examenfisico.pagina = 2;
+            $http({
+                url: 'json/medicina.php',
+                method: 'POST',
+                data: $scope.examenfisico,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).then(function(result){
+                //console.log(result.data.estado);
+                $scope.mensaje_examenfisico = 'ok';
+                //$scope.mensaje_examenfisico = result.data.estado;
+            });
+        };
+        $scope.enviarDiagnosticos = function(){
+            $scope.mensaje_diagnosticos = '';
+            $scope.cita_diagnosticos = {};
+            $scope.cita_diagnosticos.accion = "crear";
+            $scope.cita_diagnosticos.id_cita = $routeParams.cita;
+            $scope.cita_diagnosticos.pagina = 3;
+            $scope.cita_diagnosticos.diagnosticos_cita = $scope.diagnosticos_cita;
+            $http({
+                url: 'json/medicina.php',
+                method: 'POST',
+                data: $scope.cita_diagnosticos,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).then(function(result){
+                //console.log(result.data.estado);
+                $scope.mensaje_diagnosticos = 'ok';
+                //$scope.mensaje_examenfisico = result.data.estado;
+            });
+        };
+
+        $scope.calculoIMC = function(){
+            $scope.examenfisico.imc = $scope.examenfisico.peso/($scope.examenfisico.talla/100*$scope.examenfisico.talla/100);
+
+            if ( $scope.examenfisico.imc < 16 ){
+                $scope.examenfisico.imc_clasificacion = 1;
+            }else if ( $scope.examenfisico.imc >= 16 && $scope.examenfisico.imc <= 16.9 ){
+                $scope.examenfisico.imc_clasificacion = 2;
+            }else if ( $scope.examenfisico.imc >= 17 && $scope.examenfisico.imc <= 17.5 ){
+                $scope.examenfisico.imc_clasificacion = 3;
+            }else if ( $scope.examenfisico.imc >= 17.6 && $scope.examenfisico.imc <= 17.9 ){
+                $scope.examenfisico.imc_clasificacion = 4;
+            }else if ( $scope.examenfisico.imc >= 18 && $scope.examenfisico.imc <= 24.9 ){
+                $scope.examenfisico.imc_clasificacion = 5;
+            }else if ( $scope.examenfisico.imc >= 25 && $scope.examenfisico.imc <= 26.9 ){
+                $scope.examenfisico.imc_clasificacion = 6;
+            }else if ( $scope.examenfisico.imc >= 27 && $scope.examenfisico.imc <= 29.9 ){
+                $scope.examenfisico.imc_clasificacion = 7;
+            }else if ( $scope.examenfisico.imc >= 30 && $scope.examenfisico.imc <= 39.9 ){
+                $scope.examenfisico.imc_clasificacion = 8;
+            }else if ( $scope.examenfisico.imc > 40 ){
+                $scope.examenfisico.imc_clasificacion = 9;
+            }else{
+                $scope.examenfisico.imc_clasificacion = 0;
+            }
+        };
+
+        $scope.examenfisico.observaciones_ef = '';
+        //completar al hacer clic en los check
+        $scope.examenFisicoCheck = function(_campo){
+            console.log(_campo);
+            if (_campo == 'cabeza' && $scope.examenfisico.ch_cabeza ) $scope.examenfisico.observaciones_ef += "Cabeza: Mucosas húmedas, conjuntivas normocrómicas, escleras anictéricas.";
+            if (_campo == 'ojos' && $scope.examenfisico.ch_ojos ) $scope.examenfisico.observaciones_ef += "\nOjos: ";
+            if (_campo == 'oidos' && $scope.examenfisico.ch_oido ) $scope.examenfisico.observaciones_ef += "\nOidos: ";
+            if (_campo == 'nariz' && $scope.examenfisico.ch_nariz ) $scope.examenfisico.observaciones_ef += "\nNariz: ";
+            if (_campo == 'boca' && $scope.examenfisico.ch_boca ) $scope.examenfisico.observaciones_ef += "\nBoca: ";
+            if (_campo == 'faringe' && $scope.examenfisico.ch_faringe ) $scope.examenfisico.observaciones_ef += "\nFaringe: ";
+            if (_campo == 'laringe' && $scope.examenfisico.ch_laringe ) $scope.examenfisico.observaciones_ef += "\nLaringe: ";
+            if (_campo == 'cuello' && $scope.examenfisico.ch_cuello ) $scope.examenfisico.observaciones_ef += "\nCuello: No se nota ingurgitación yugular, no adenopatías.";
+            if (_campo == 'torax' && $scope.examenfisico.ch_torax ) $scope.examenfisico.observaciones_ef += "\nTorax: Simétrico, Ruidos cardíacos rítmicos, no se notan soplos, respiratorios no agregados.";
+            if (_campo == 'senos' && $scope.examenfisico.ch_senos ) $scope.examenfisico.observaciones_ef += "\nSenos: ";
+            if (_campo == 'corazon' && $scope.examenfisico.ch_corazon ) $scope.examenfisico.observaciones_ef += "\nCorazón: ";
+            if (_campo == 'pulmon' && $scope.examenfisico.ch_pulmon ) $scope.examenfisico.observaciones_ef += "\nPulmón: ";
+            if (_campo == 'abdomen' && $scope.examenfisico.ch_abdomen ) $scope.examenfisico.observaciones_ef += "\nAbdomen: No dolor, no masas, no signos de irritación peritoneal.";
+            if (_campo == 'genitales' && $scope.examenfisico.ch_genitales ) $scope.examenfisico.observaciones_ef += "\nGenitales: Normal. No adenopatías inguinales.";
+            if (_campo == 'ginecologico' && $scope.examenfisico.ch_ginecologico ) $scope.examenfisico.observaciones_ef += "\nGinecológico: ";
+            if (_campo == 'rectal' && $scope.examenfisico.ch_rectal ) $scope.examenfisico.observaciones_ef += "\nRectal: ";
+            if (_campo == 'miembros_sup' && $scope.examenfisico.ch_miembros_sup ) $scope.examenfisico.observaciones_ef += "\nMiembros Superiores: Pulsos simétricos de adecuada amplitud, no edemas.";
+            if (_campo == 'miembros_inf' && $scope.examenfisico.ch_miembros_inf ) $scope.examenfisico.observaciones_ef += "\nMiembros Inferiores: Pulsos simétricos de adecuada amplitud, no edemas.";
+            if (_campo == 'columna' && $scope.examenfisico.ch_columna ) $scope.examenfisico.observaciones_ef += "\nColumna: ";
+            if (_campo == 'reflejos' && $scope.examenfisico.ch_reflejos ) $scope.examenfisico.observaciones_ef += "\nReflejos: ";
+            if (_campo == 'marcha' && $scope.examenfisico.ch_marcha ) $scope.examenfisico.observaciones_ef += "\nMarcha: ";
+            if (_campo == 'postura' && $scope.examenfisico.ch_postura ) $scope.examenfisico.observaciones_ef += "\nPostura: ";
+            if (_campo == 'piel_faneras' && $scope.examenfisico.ch_piel_faneras ) $scope.examenfisico.observaciones_ef += "\nPiel Faneras: Adecuada humectación. No cambios en la coloración. No lesiones.";
+            if (_campo == 'ganglios' && $scope.examenfisico.ch_ganglios ) $scope.examenfisico.observaciones_ef += "\nGanglios: ";
+            if (_campo == 'pulsos' && $scope.examenfisico.ch_pulsos ) $scope.examenfisico.observaciones_ef += "\nPulsos: ";
+            if (_campo == 'mental' && $scope.examenfisico.ch_mental ) $scope.examenfisico.observaciones_ef += "\nMental: ";
+            if (_campo == 'craneanos' && $scope.examenfisico.ch_craneanos ) $scope.examenfisico.observaciones_ef += "\nCraneanos: ";
+            if (_campo == 'pruebas' && $scope.examenfisico.ch_pruebas ) $scope.examenfisico.observaciones_ef += "\nPruebas: ";
+            if (_campo == 'general' && $scope.examenfisico.ch_asp_general ) $scope.examenfisico.observaciones_ef += "\nAsp General: ";
+            if (_campo == 'motor' && $scope.examenfisico.ch_motor ) $scope.examenfisico.observaciones_ef += "\nMotor: ";
+            if (_campo == 'neurologico' && $scope.examenfisico.ch_neurologico ) $scope.examenfisico.observaciones_ef += "\nNeurológico:  Alerta orientado en persona espacio y tiempo, no signos de focalización motora, sensibilidad conservada.  no signos meníngeos. Pares craneanos conservados.";
+        };
+
         $scope.cies = {};
         $scope.bl_buscado = false;
-        $scope.diagnostico = {};
-    };
-    $scope.guardarDiagnosticos = function(){
-        $scope.mensaje_diagnosticos = '';
-        $scope.formulario = {};
-        $scope.formulario.diagnosticos_cita = $scope.diagnosticos_cita;
-        $scope.formulario.id_cita = $routeParams.cita;
-        $scope.formulario.pagina = 3;
-        $http({
-            url: 'json/medicina.php',
-            method: 'POST',
-            data: $scope.formulario,
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        }).then(function(result){
-        });
-    };
+        $scope.buscarCies = function(_palabra){
+            $http.get('json/medicina.php?listados=1&palabra='+_palabra).then(function(result) {
+                $scope.bl_buscado = true;
+                $scope.cies = result.data.cies;
+                $scope.diagnostico.nombre = _palabra;
+            });
+        };
 
-    //evolucion
-    $scope.evolucion = {};
-    $scope.evolucion_invalida = true;
-    $scope.evoluciones_cita = [];
-    $scope.verificarEvolucion = function(){
-        if ( $scope.evolucion !== "" ){
-            $scope.evolucion_invalida = false;
-        }
-    };
-    $scope.crearEvolucion = function(){
-        var evolucionTemp = {};
-        evolucionTemp.descripcion = $scope.evolucion.descripcion;
-        evolucionTemp.pagina = 4;
-        evolucionTemp.id_cita = $routeParams.cita;
-        evolucionTemp.accion = 'crear';
-        $http({
-            url: 'json/medicina.php',
-            method: 'POST',
-            data: evolucionTemp,
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        }).then(function(result){
-            evolucionTemp.numero = result.data.numero;
-            $scope.evoluciones_cita.push(evolucionTemp);
-            $scope.limpiarEvolucion();
-            $scope.evolucion_invalida = true;
-        });
-    };
-    $scope.eliminarEvolucion = function(_index){
-        //$scope.diagnosticos_cita[this.$index].codigo
-        var evolucionTemp = {};
-        evolucionTemp.pagina = 4;
-        evolucionTemp.id_cita = $routeParams.cita;
-        evolucionTemp.accion = 'eliminar';
-        evolucionTemp.id_evolucion = $scope.evoluciones_cita[this.$index].numero;
-        $http({
-            url: 'json/medicina.php',
-            method: 'POST',
-            data: evolucionTemp,
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        }).then(function(result){
-            if ( result.data.status == "OK" ){
-                $scope.evoluciones_cita.splice(_index, 1);
+        //diagnostico
+        $scope.diagnosticos_cita = [];
+        $scope.agregarDiagnostico = function(){
+            var diagnosticoTemp = {};
+            diagnosticoTemp.ppal = false;
+            diagnosticoTemp.codigo = $scope.diagnostico.nombre.codigo;
+            diagnosticoTemp.diagnostico = $scope.diagnostico.nombre.descripcion;
+            diagnosticoTemp.tipo = $scope.diagnostico.tipo;
+            diagnosticoTemp.contingencia = $scope.diagnostico.tipo_contingencia;
+            $scope.diagnosticos_cita.push(diagnosticoTemp);
+            $scope.limpiarDiagnostico();
+        };
+        $scope.diagnosticoPrincipal = function(){
+
+            for (var i = 0; i < $scope.diagnosticos_cita.length; i++) {
+                if ( i == this.$index ) $scope.diagnosticos_cita[i].ppal = true;
+                else $scope.diagnosticos_cita[i].ppal = false;
             }
-        });
-    };
-    $scope.limpiarEvolucion = function(){
-        //
+
+            $scope.formulario_ = {};
+            $scope.formulario_.accion = "principal";
+            $scope.formulario_.codigo = $scope.diagnosticos_cita[this.$index].codigo;
+            $scope.formulario_.ppal = $scope.diagnosticos_cita[this.$index].ppal;
+            $scope.formulario_.id_cita = $routeParams.cita;
+            $scope.formulario_.pagina = 3;
+            $http({
+                url: 'json/medicina.php',
+                method: 'POST',
+                data: $scope.formulario_,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).then(function(result){
+            });
+        };
+        $scope.eliminarDiagnostico = function(_index){
+            $scope.formulario_ = {};
+            $scope.formulario_.accion = "eliminar";
+            $scope.formulario_.codigo = $scope.diagnosticos_cita[_index].codigo;
+            $scope.formulario_.id_cita = $routeParams.cita;
+            $scope.formulario_.pagina = 3;
+            $http({
+                url: 'json/medicina.php',
+                method: 'POST',
+                data: $scope.formulario_,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).then(function(result){
+                //eliminando un diagnostico del listado
+                $scope.diagnosticos_cita.splice(_index,1);
+            });
+        };
+        $scope.limpiarDiagnostico = function(){
+            $scope.cies = {};
+            $scope.bl_buscado = false;
+            $scope.diagnostico = {};
+        };
+        $scope.guardarDiagnosticos = function(){
+            $scope.mensaje_diagnosticos = '';
+            $scope.formulario = {};
+            $scope.formulario.diagnosticos_cita = $scope.diagnosticos_cita;
+            $scope.formulario.id_cita = $routeParams.cita;
+            $scope.formulario.pagina = 3;
+            $http({
+                url: 'json/medicina.php',
+                method: 'POST',
+                data: $scope.formulario,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).then(function(result){
+            });
+        };
+
+        //evolucion
         $scope.evolucion = {};
-    };
+        $scope.evolucion_invalida = true;
+        $scope.evoluciones_cita = [];
+        $scope.verificarEvolucion = function(){
+            if ( $scope.evolucion !== "" ){
+                $scope.evolucion_invalida = false;
+            }
+        };
+        $scope.crearEvolucion = function(){
+            var evolucionTemp = {};
+            evolucionTemp.descripcion = $scope.evolucion.descripcion;
+            evolucionTemp.pagina = 4;
+            evolucionTemp.id_cita = $routeParams.cita;
+            evolucionTemp.accion = 'crear';
+            $http({
+                url: 'json/medicina.php',
+                method: 'POST',
+                data: evolucionTemp,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).then(function(result){
+                evolucionTemp.numero = result.data.numero;
+                $scope.evoluciones_cita.push(evolucionTemp);
+                $scope.limpiarEvolucion();
+                $scope.evolucion_invalida = true;
+            });
+        };
+        $scope.eliminarEvolucion = function(_index){
+            //$scope.diagnosticos_cita[this.$index].codigo
+            var evolucionTemp = {};
+            evolucionTemp.pagina = 4;
+            evolucionTemp.id_cita = $routeParams.cita;
+            evolucionTemp.accion = 'eliminar';
+            evolucionTemp.id_evolucion = $scope.evoluciones_cita[this.$index].numero;
+            $http({
+                url: 'json/medicina.php',
+                method: 'POST',
+                data: evolucionTemp,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).then(function(result){
+                if ( result.data.status == "OK" ){
+                    $scope.evoluciones_cita.splice(_index, 1);
+                }
+            });
+        };
+        $scope.limpiarEvolucion = function(){
+            //
+            $scope.evolucion = {};
+        };
 
-    //medicina
-    $scope.filtro_pos = 2;
-    $scope.medicamentos_formula = [];
-    $scope.medicamento = {};
-    $scope.medicamento.actual = {};
-    $scope.agregarMedicamento = function(_actual){
+        //medicamentos
+        $scope.filtro_pos = 2;
+        $scope.medicamentos_formula = [];
+        $scope.busqueda = {};
+        $scope.agregarMedicamento = function(){
+            $scope.formulario = {};
+            $scope.formulario.id_cita = $routeParams.cita;
+            $scope.formulario.pagina = 5;
+            $scope.formulario.accion = "agregar_medicamento";
+            $scope.formulario.medicamento = $scope.busqueda.medicamento;
+            $http({
+                url: 'json/medicina.php',
+                method: 'POST',
+                data: $scope.formulario,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).then(function(result){
+                $scope.limpiarMedicamento();
+            });
 
-        $scope.formulario = {};
-        $scope.formulario.id_cita = $routeParams.cita;
-        $scope.formulario.pagina = 5;
-        $scope.formulario.accion = "agregar_medicamento";
-        $scope.formulario.medicamento = _actual;
-        $http({
-            url: 'json/medicina.php',
-            method: 'POST',
-            data: $scope.formulario,
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        }).then(function(result){
-            $scope.medicamento.actual = false;
-            console.log($scope.actual);
-        });
+            $scope.medicamentos_formula.push($scope.busqueda.medicamento);
+        };
+        $scope.limpiarMedicamento = function(){
+            $scope.busqueda = {};
+        };
 
-        $scope.medicamentos_formula.push(_actual);
-    };
+        //ordenes
+        $scope.cups = {};
+        $scope.bl_buscado = false;
+        $scope.buscarCUP = function(_palabra){
+            $http.get('json/medicina.php?listados=2&palabra='+_palabra).then(function(result) {
+                $scope.bl_buscado = true;
+                $scope.cies = result.data.cies;
+                $scope.diagnostico.nombre = _palabra;
+            });
+        };
+    });
 
     $scope.siguiente = function(){
         console.log("siguiente");
         $('tabset tab').each( function( index, value ) {
           alert( index + ": " + value );
-        });
+      });
         //$('.nav-tabs > .active').next('li').find('a').trigger('click');
     };
     $scope.cerrarSesion = function(){
         $cookieStore.remove("user");
         $location.path('/ingreso');
     };
+
 });
 controllers.controller('medicinaVerCTRL', function($scope, $http, $cookieStore, $routeParams){
 
