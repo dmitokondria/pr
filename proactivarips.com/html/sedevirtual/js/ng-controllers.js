@@ -658,7 +658,7 @@ controllers.controller('medicinaCTRL', function($scope, $http, $location, $cooki
         $scope.buscarCUP = function(_palabra){
             $http.get('json/medicina.php?listados=2&palabra='+_palabra).then(function(result) {
                 $scope.bl_buscado = true;
-                $scope.cies = result.data.cies;
+                $scope.cups = result.data.cups;
                 $scope.diagnostico.nombre = _palabra;
             });
         };
@@ -675,7 +675,6 @@ controllers.controller('medicinaCTRL', function($scope, $http, $location, $cooki
         $cookieStore.remove("user");
         $location.path('/ingreso');
     };
-
 });
 controllers.controller('medicinaVerCTRL', function($scope, $http, $cookieStore, $routeParams){
 

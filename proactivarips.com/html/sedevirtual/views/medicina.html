@@ -943,9 +943,9 @@
                             <div class="form-group">
                                 <label class="titulo">Buscar Órden</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" my-enter="buscarCUP()" placeholder="Nombre o código CUP" ng-model="orden.buscar" ng-disabled="vista">
+                                    <input type="text" class="form-control" my-enter="buscarCUP(orden.buscar)" placeholder="Nombre o código CUP" ng-model="orden.buscar" ng-disabled="vista">
                                     <span class="input-group-btn">
-                                        <button class="btn btn-default" ng-click="buscarCUP()" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                                        <button class="btn btn-default" ng-click="buscarCUP(orden.buscar)" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                                     </span>
                                 </div>
                             </div>
