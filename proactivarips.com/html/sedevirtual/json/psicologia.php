@@ -51,7 +51,7 @@ if ( isset($_GET['listados']) ){
 		$SQLTiposVinculacion = "SELECT * FROM vinculaciones ORDER BY nombre ASC";
 		insertarTablaArray_v2($datos, $SQLTiposVinculacion, 'tipos_vinculacion');
 
-		$SQLNivelesEscolaridad = "SELECT * FROM escolaridad ORDER BY nombre ASC";
+		$SQLNivelesEscolaridad = "SELECT * FROM escolaridad ORDER BY id";
 		insertarTablaArray_v2($datos, $SQLNivelesEscolaridad, 'niveles_escolaridad');
 
 		$SQLPaquetes = "SELECT * FROM paquetes ORDER BY nombre ASC";
@@ -102,7 +102,7 @@ if ( isset($_GET['listados']) ){
 		$formulario = $paquete->formulario;
 
 		if ( strcmp($accion , 'guardar_basicos') == 0 ){
-			$SQLInsertBasicos = "UPDATE pacientes SET sl_estado_civil = '$formulario->sl_estado_civil', ocupacion = '$formulario->ocupacion' WHERE id = $formulario->id";
+			$SQLInsertBasicos = "UPDATE pacientes SET sl_estado_civil = '$formulario->sl_estado_civil', ocupacion = '$formulario->ocupacion', sl_escolaridad = '$formulario->sl_escolaridad', direccion = '$formulario->direccion', telefono = '$formulario->telefono', celular = '$formulario->celular', acudiente = '$formulario->acudiente', acudiente_parentesco = '$formulario->acudiente_parentesco', acudiente_celular = '$formulario->acudiente_celular' WHERE id = $formulario->id";
 			if ( ejecutarQuery_v2($SQLInsertBasicos) == true ) {
 				$datos[status] = "OK";
 				$datos[mensaje] = "Datos almacenados correctamente.";
@@ -116,8 +116,13 @@ if ( isset($_GET['listados']) ){
 			insertarTablaArray_v2($existeHC, $SQLExisteHistoriaCitaPsicologia, 'existe');
 			if( isset($existeHC[existe][0]) ){
 				ECHO "SI EXISTE!! ";
+				echo($formulario->cita);
 				//UPDATE
-				$SQLUpdate = "";
+				
+
+				$acompanante = $formulario->acompanante; //Esta línea la hice para descomponer la llave del acompanante 
+
+				$SQLUpdate = "UPDATE hcpsi_ SET anombre = '$acompanante->nombre', acelular = '$acompanante->celular', aparentesco = '$acompanante->parentesco', motivo = '$formulario->motivo', observaciones = '$formulario->observaciones' WHERE id_cita = '$formulario->cita'";
 				if ( ejecutarQuery_v2($SQLUpdate) == true ) {
 					$datos[status] = "OK";
 					$datos[mensaje] = "Datos actualizados correctamente.";
@@ -140,7 +145,7 @@ if ( isset($_GET['listados']) ){
 			//UPDATE o Insert para Acompañante y motivo
 
 
-			/*INSERT INTO `pacientes` (`id`, ``, `segundo_nombre`, `primer_apellido`, `segundo_apellido`, `rd_tipo_identificacion`, `numero_identificacion`, `sl_departamento`, `sl_municipio`, `da_nacimiento`, `edad`, `email`, `clave`, `sl_cliente`, `rd_genero`, ``, `ocupacion`, `direccion`, `telefono`, `celular`, `sl_eps`, `sl_tipo_vinculacion`, `sl_escolaridad`, `acudiente`, `acudiente_parentesco`, `acudiente_celular`, `servicios`, `sl_estado_afiliacion`) VALUES
+			/*INSERT INTO `pacientes` (`id`, ``, ``, ``, ``, ``, ``, ``, ``, ``, ``, ``, ``, ``, ``, `ocupacion`, `direccion`, `telefono`, `celular`, `sl_eps`, `sl_tipo_vinculacion`, ``, ``, ``, ``, `servicios`, `sl_estado_afiliacion`) VALUES
 (9, 'Guillermo', 'Andrés', 'Malagón', 'García', 1, 80198817, 14, 525, '1984-03-29', 30, 'guillomal373@gmail.com', '1234', 1, 2, 3, 'Ingeniero', 'Calle 8 bis No. 79 c 77', '2923791', '3006595458', 3, 2, 4, 'David', 'Amigo', '3003453434', 2, 1);
 */
 		}
