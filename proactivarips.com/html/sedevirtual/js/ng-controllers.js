@@ -659,7 +659,6 @@ controllers.controller('medicinaCTRL', function($scope, $http, $location, $cooki
             $http.get('json/medicina.php?listados=2&palabra='+_palabra).then(function(result) {
                 $scope.bl_buscado = true;
                 $scope.cups = result.data.cups;
-                $scope.diagnostico.nombre = _palabra;
             });
         };
     });

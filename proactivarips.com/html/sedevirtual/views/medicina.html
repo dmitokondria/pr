@@ -948,8 +948,37 @@
                                         <button class="btn btn-default" ng-click="buscarCUP(orden.buscar)" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                                     </span>
                                 </div>
+                                <div class="form-group" ng-show="bl_buscado">
+                                    <label class="titulo">Seleccione la Órden</label>
+                                    <!--input type="text" class="form-control" placeholder="Nombre o código" ng-model="diagnostico.nombre" typeahead="cie as cie.nombre for cie in cies | filter:$viewValue" typeahead-on-select=""-->
+                                    <select class="form-control" ng-model="orden.nombre" ng-options='cup as cup.nombre for cup in cups'></select>
+                                </div>
                             </div>
                         </form>
+                        <div class="col-md-12">
+                            <label class="subrayado">Diagnósticos Actuales</label>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <tr class="info">
+                                        <th>Nombre Órden</th>
+                                        <th ng-hide="vista"><span class="glyphicon glyphicon-remove suave"></span></th>
+                                    </tr>
+                                    <tr ng-repeat="diagnostico_cita in diagnosticos_cita">
+                                        <td>
+                                            <div class="checkbox_table">
+                                                <input type="checkbox" ng-click="diagnosticoPrincipal()" ng-model="diagnostico_cita.ppal">
+                                            </div>
+                                        </td>
+                                        <td class="centrado_vertical">{{diagnostico_cita.diagnostico}}</td>
+                                        <td class="centrado_vertical" ng-hide="vista"><span class="glyphicon glyphicon-remove suave" ng-click="eliminarDiagnostico($index)"></span></td>
+                                    </tr>
+                                </table>
+                                <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
+                                    <button type="button" class="btn btn-default" ng-click="enviarDiagnosticos()" ng-disabled="vista"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
+                                    <!--button type="button" class="btn btn-default" ng-click="" ng-disabled="vista">Continuar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button-->
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </tab><!--FIN TAB 7 SIETE-->
             </tabset>
