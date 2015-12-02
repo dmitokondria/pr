@@ -104,12 +104,14 @@ if ( isset($_GET['listados']) ){
 		if ( strcmp($accion , 'guardar_basicos') == 0 ){
 			$SQLInsertBasicos = "UPDATE pacientes SET sl_estado_civil = '$formulario->sl_estado_civil', ocupacion = '$formulario->ocupacion', sl_escolaridad = '$formulario->sl_escolaridad', direccion = '$formulario->direccion', telefono = '$formulario->telefono', celular = '$formulario->celular', acudiente = '$formulario->acudiente', acudiente_parentesco = '$formulario->acudiente_parentesco', acudiente_celular = '$formulario->acudiente_celular' WHERE id = $formulario->id";
 			if ( ejecutarQuery_v2($SQLInsertBasicos) == true ) {
-				$datos[status] = "OK";
+				$datos[estado] = "OK";
 				$datos[mensaje] = "Datos almacenados correctamente.";
 			}else{
-				$datos[status] = "ERROR";
+				$datos[estado] = "ERROR";
 				$datos[mensaje] = "Los datos no se pudieron almacenar correctamente.";
 			}
+
+			$acompanante = $formulario->acompanante; //Esta línea la hice para descomponer la llave 'acompanante': David
 
 			//existe el registro de la cita de psicologia con el id ....?
 			$SQLExisteHistoriaCitaPsicologia = "SELECT id FROM hcpsi_ WHERE id_cita = '$formulario->cita'";
@@ -119,35 +121,27 @@ if ( isset($_GET['listados']) ){
 				echo($formulario->cita);
 				//UPDATE
 				
-
-				$acompanante = $formulario->acompanante; //Esta línea la hice para descomponer la llave del acompanante 
-
 				$SQLUpdate = "UPDATE hcpsi_ SET anombre = '$acompanante->nombre', acelular = '$acompanante->celular', aparentesco = '$acompanante->parentesco', motivo = '$formulario->motivo', observaciones = '$formulario->observaciones' WHERE id_cita = '$formulario->cita'";
 				if ( ejecutarQuery_v2($SQLUpdate) == true ) {
-					$datos[status] = "OK";
+					$datos[estado] = "OK";
 					$datos[mensaje] = "Datos actualizados correctamente.";
 				}else{
-					$datos[status] = "ERROR";
+					$datos[estado] = "ERROR";
 					$datos[mensaje] = "Los datos no se pudieron actualizar correctamente.";
 				}
 			}else{
 				ECHO "NO EXISTE! :(";
 				//INSERT
-				$SQLInsert = "";
+				$SQLInsert = "INSERT INTO hcpsi_ (id, id_cita, anombre, acelular, aparentesco, motivo, observaciones) 
+							  VALUES ( NULL, ".$formulario->cita.", '".$acompanante->nombre."', '".$acompanante->celular."', '".$acompanante->parentesco."', '".$formulario->motivo."', '".$formulario->observaciones."')";
 				if ( ejecutarQuery_v2($SQLInsert) == true ) {
-					$datos[status] = "OK";
+					$datos[estado] = "OK";
 					$datos[mensaje] = "Datos almacenados correctamente.";
 				}else{
-					$datos[status] = "ERROR";
+					$datos[estado] = "ERROR";
 					$datos[mensaje] = "Los datos no se pudieron almacenar correctamente.";
 				}
 			}
-			//UPDATE o Insert para Acompañante y motivo
-
-
-			/*INSERT INTO `pacientes` (`id`, ``, ``, ``, ``, ``, ``, ``, ``, ``, ``, ``, ``, ``, ``, `ocupacion`, `direccion`, `telefono`, `celular`, `sl_eps`, `sl_tipo_vinculacion`, ``, ``, ``, ``, `servicios`, `sl_estado_afiliacion`) VALUES
-(9, 'Guillermo', 'Andrés', 'Malagón', 'García', 1, 80198817, 14, 525, '1984-03-29', 30, 'guillomal373@gmail.com', '1234', 1, 2, 3, 'Ingeniero', 'Calle 8 bis No. 79 c 77', '2923791', '3006595458', 3, 2, 4, 'David', 'Amigo', '3003453434', 2, 1);
-*/
 		}
 	}
 }
@@ -156,4 +150,8 @@ if ( isset($_GET[debug]) ){
 	echo "<pre>";
 	print_r($datos);
 	echo "</pre>";
-} else echo json_encode($datos);
+} else {
+	echo json_encode($datos);
+}
+
+?>

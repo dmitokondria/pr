@@ -198,6 +198,9 @@
                             <button type="button" class="btn btn-default" ng-disabled="vista" ng-click="accion('guardar_basicos')"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
                             <!--button type="button" class="btn btn-default" ng-disabled="vista">Continuar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button-->
                         </div>
+                        <div class="col-md-12">
+                            <div class="alert alert-success" role="alert" type="danger" ng-show="mensaje"><div class="col-sm-1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></div></span>{{mensaje}}</div>
+                        </div>
                     </form>
                 </tab><!--FIN TAB 1 UNO-->
                 <tab heading="Emocionalidad">
