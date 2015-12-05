@@ -42,7 +42,7 @@
         <div class="col-md-10">
             <div class="titulo_hc">Historia Clínica Psicología</div>
             <tabset justified="true">
-                <tab heading="Datos Básicos">  
+                <tab heading="Datos Básicos" ng-click="mensaje = 0">  
                     <form class="col-md-12">
                         <div class="subtitulo">Datos Personales</div>
                         <div class="col-md-6">
@@ -193,18 +193,135 @@
                         <div class="form-group col-md-12">
                             <textarea class="form-control" rows="3" ng-model="formulario.observaciones" ng-disabled="vista"></textarea>
                         </div>
-                        <div class="col-md-12"><pre>{{ formulario | json}}</pre></div>
+                        <!--div class="col-md-12"><pre>{{ formulario | json}}</pre></div-->
+                        <div class="col-md-12">
+                            <div class="alert alert-success" role="alert" type="danger" ng-show="mensaje"><div class="col-sm-1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></div></span>{{mensaje}}</div>
+                        </div>
                         <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
                             <button type="button" class="btn btn-default" ng-disabled="vista" ng-click="accion('guardar_basicos')"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
                             <!--button type="button" class="btn btn-default" ng-disabled="vista">Continuar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button-->
                         </div>
+                    </form>
+                </tab><!--FIN TAB 1 UNO-->
+                <tab heading="Emocionalidad" ng-click="mensaje = 0">
+                    <form class="col-md-12">
+                        <div class="subtitulo">Niveles de Emocionalidad y Dolor</div>
+                            <div class="form-group col-md-3">
+                                <label class="subrayado">Ansiedad</label>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" value="1" ng-model="formulario.rd_ansiedad" ng-disabled="vista">Bueno
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" value="2" ng-model="formulario.rd_ansiedad" ng-disabled="vista">Regular
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" value="3" ng-model="formulario.rd_ansiedad" ng-disabled="vista">Malo
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="subrayado">Tristeza</label>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" value="1" ng-model="formulario.rd_tristeza" ng-disabled="vista">Bueno
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" value="2" ng-model="formulario.rd_tristeza" ng-disabled="vista">Regular
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" value="3" ng-model="formulario.rd_tristeza" ng-disabled="vista">Malo
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="subrayado">Irritabilidad</label>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" value="1" ng-model="formulario.rd_irritable" ng-disabled="vista">Bueno
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" value="2" ng-model="formulario.rd_irritable" ng-disabled="vista">Regular
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" value="3" ng-model="formulario.rd_irritable" ng-disabled="vista">Malo
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label class="subrayado">Dolor</label>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" value="1" ng-model="formulario.rd_dolor" ng-disabled="vista">Sin Dolor
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" value="2" ng-model="formulario.rd_dolor" ng-disabled="vista">Dolor Soportable
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" value="3" ng-model="formulario.rd_dolor" ng-disabled="vista">Dolor Insoportable
+                                    </label>
+                                </div>
+                            </div>
+                        <div class="subtitulo">Áreas de Ajuste</div>
+                        <div class="form-group col-md-12">
+                            <div class="col-md-6 separador">
+                                <div class="sombreado">Área Familiar</div>
+                                <div class="col-md-12">
+                                    <textarea class="form-control" rows="3" ng-model="formulario.ajuste.familiar" ng-disabled="vista"></textarea>
+                                </div>
+                                <div class="sombreado">Área Social</div>
+                                <div class="col-md-12">
+                                    <textarea class="form-control" rows="3" ng-model="formulario.ajuste.social" ng-disabled="vista"></textarea>
+                                </div>
+                                <div class="sombreado">Área Laboral</div>
+                                <div class="col-md-12">
+                                    <textarea class="form-control" rows="3" ng-model="formulario.ajuste.laboral" ng-disabled="vista"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="sombreado">Área Académica</div>
+                                <div class="col-md-12">
+                                    <textarea class="form-control" rows="3" ng-model="formulario.ajuste.academica" ng-disabled="vista"></textarea>
+                                </div>
+                                <div class="sombreado">Área Afectiva</div>
+                                <div class="col-md-12">
+                                    <textarea class="form-control" rows="3" ng-model="formulario.ajuste.afectiva" ng-disabled="vista"></textarea>
+                                </div>
+                                <div class="sombreado">Área Recreación</div>
+                                <div class="col-md-12">
+                                    <textarea class="form-control" rows="3" ng-model="formulario.ajuste.recreacion" ng-disabled="vista"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="subtitulo">Análisis Profesional</div>
+                        <div class="form-group col-md-12">
+                            <textarea class="form-control" rows="3" ng-model="formulario.analisis_prof" ng-disabled="vista"></textarea>
+                        </div>
                         <div class="col-md-12">
                             <div class="alert alert-success" role="alert" type="danger" ng-show="mensaje"><div class="col-sm-1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></div></span>{{mensaje}}</div>
                         </div>
+                        <!--div class="col-md-12"><pre>{{ formulario | json}}</pre></div-->
+                        <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
+                            <button type="button" class="btn btn-default" ng-disabled="vista" ng-click="accion('guardar_emocion')"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
+                            <!--button type="button" class="btn btn-default" ng-disabled="vista">Continuar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button-->
+                        </div>
                     </form>
-                </tab><!--FIN TAB 1 UNO-->
-                <tab heading="Emocionalidad">
-                    <span style="color:red;">Estoy en Emocionalidad</span>
                 </tab><!--FIN TAB 2 DOS-->
                 <tab heading="Diagnósticos">
                     <span style="color:red;">Estoy en Diagnósticos</span>

@@ -117,10 +117,7 @@ if ( isset($_GET['listados']) ){
 			$SQLExisteHistoriaCitaPsicologia = "SELECT id FROM hcpsi_ WHERE id_cita = '$formulario->cita'";
 			insertarTablaArray_v2($existeHC, $SQLExisteHistoriaCitaPsicologia, 'existe');
 			if( isset($existeHC[existe][0]) ){
-				ECHO "SI EXISTE!! ";
-				echo($formulario->cita);
 				//UPDATE
-				
 				$SQLUpdate = "UPDATE hcpsi_ SET anombre = '$acompanante->nombre', acelular = '$acompanante->celular', aparentesco = '$acompanante->parentesco', motivo = '$formulario->motivo', observaciones = '$formulario->observaciones' WHERE id_cita = '$formulario->cita'";
 				if ( ejecutarQuery_v2($SQLUpdate) == true ) {
 					$datos[estado] = "OK";
@@ -130,7 +127,6 @@ if ( isset($_GET['listados']) ){
 					$datos[mensaje] = "Los datos no se pudieron actualizar correctamente.";
 				}
 			}else{
-				ECHO "NO EXISTE! :(";
 				//INSERT
 				$SQLInsert = "INSERT INTO hcpsi_ (id, id_cita, anombre, acelular, aparentesco, motivo, observaciones) 
 							  VALUES ( NULL, ".$formulario->cita.", '".$acompanante->nombre."', '".$acompanante->celular."', '".$acompanante->parentesco."', '".$formulario->motivo."', '".$formulario->observaciones."')";
@@ -142,6 +138,20 @@ if ( isset($_GET['listados']) ){
 					$datos[mensaje] = "Los datos no se pudieron almacenar correctamente.";
 				}
 			}
+		} else if ( strcmp( $accion, 'guardar_emocion') == 0 ){
+			
+			$ajuste = $formulario->ajuste;
+			
+			$SQLUpdateEmocion = "UPDATE hcpsi_ SET rd_ansiedad = '$formulario->rd_ansiedad', rd_tristeza = '$formulario->rd_tristeza', rd_irritable = '$formulario->rd_irritable', rd_dolor = '$formulario->rd_dolor', familiar = '$ajuste->familiar', social = '$ajuste->social', laboral = '$ajuste->laboral', academica = '$ajuste->academica', afectiva = '$ajuste->afectiva', recreacion = '$ajuste->recreacion', analisis_prof = '$formulario->analisis_prof' WHERE id_cita = '$formulario->cita'";
+		
+			if ( ejecutarQuery_v2($SQLUpdateEmocion) == true ) {
+				//ECHO ($formulario->cita);
+					$datos[estado] = "OK";
+					$datos[mensaje] = "Datos almacenados correctamente.";
+				}else{
+					$datos[estado] = "ERROR";
+					$datos[mensaje] = "Los datos no se pudieron almacenar correctamente.";
+				}
 		}
 	}
 }

@@ -675,6 +675,7 @@ controllers.controller('medicinaCTRL', function($scope, $http, $location, $cooki
         $location.path('/ingreso');
     };
 });
+
 controllers.controller('medicinaVerCTRL', function($scope, $http, $cookieStore, $routeParams){
 
     /*if(typeof $scope.user === "undefined") {
