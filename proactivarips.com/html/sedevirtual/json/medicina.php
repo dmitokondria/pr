@@ -243,7 +243,7 @@ if ( isset($_GET['listados']) ){
 					$datos[estado] = "error";
 				}
 			}
-		} if ( intval($formulario->pagina) == 1 ){
+		} else if ( intval($formulario->pagina) == 1 ){
 			$SQLAntecedentes = "UPDATE hc
 								SET ant_familiares = '$formulario->ant_familiares',
 									ant_psicoso = '$formulario->psicosociales',
@@ -276,7 +276,7 @@ if ( isset($_GET['listados']) ){
 			}else {
 				$datos[estado] = "error";
 			}
-		} if ( intval($formulario->pagina) == 2 ){
+		} else if ( intval($formulario->pagina) == 2 ){
 			$SQLUpdateExamenes = "	UPDATE hc
 									SET sl_estadogral = '".$formulario->est_general."',
 										sl_hidratacion = '".$formulario->est_hidratacion."',
@@ -313,7 +313,7 @@ if ( isset($_GET['listados']) ){
 			}else {
 				$datos[estado] = "error";
 			}
-		} if ( intval($formulario->pagina) == 3 ){
+		} else if ( intval($formulario->pagina) == 3 ){
 			if ( strcmp('crear', $formulario->accion) == 0 ){
 				$id_cita = $formulario->id_cita;
 				$diagnosticos = $formulario->diagnosticos_cita;
@@ -348,7 +348,7 @@ if ( isset($_GET['listados']) ){
 				//echo "{{{{".$SQLUpdatePpal."}}}}";
 			}
 			//echo "{{".$SQLDiagnostico."}}";
-		} if ( intval($formulario->pagina) == 4 ){
+		} else if ( intval($formulario->pagina) == 4 ){
 			if ( strcmp($formulario->accion, 'crear') == 0 ){
 				$SQLInsertar = "INSERT INTO hc_evoluciones (id, id_cita, descripcion) VALUES (NULL,".$formulario->id_cita.",'".$formulario->descripcion."')";
 				$datos[numero] = insertarFila($SQLInsertar);
@@ -357,7 +357,7 @@ if ( isset($_GET['listados']) ){
 				$gg = eliminarFilas($SQLEliminar);
 				if ( $gg != 0 ) $datos[status] = "OK";
 			}
-		} if ( intval($formulario->pagina) == 5 ){
+		} else if ( intval($formulario->pagina) == 5 ){
 			if ( strcmp($formulario->accion, 'agregar_medicamento') == 0 ){
 				$SQLExisteCitaFormula = "SELECT * FROM cita_formula WHERE id_cita = ".$formulario->id_cita;
 				insertarTablaArray_v2($existe_cita_formula, $SQLExisteCitaFormula, 'existe_cita_formula');
@@ -376,6 +376,37 @@ if ( isset($_GET['listados']) ){
 				                     	//echo "{{$SQLCrearMedicamento}}";
 				$id_medicamento_formula = insertarFila($SQLCrearMedicamento);
 				$datos[id_medicamento_formula] = $id_medicamento_formula;
+			}
+		} else if ( intval($formulario->pagina) == 6 ){ echo "6-";
+			if ( strcmp($formulario->accion, 'agregar_orden') == 0 ){ echo "agregar_orden-";
+				$SQLExisteCitaOrden = "SELECT * FROM citas_ordenes WHERE id_cita = ".$formulario->id_cita." AND id_cup = ".$formulario->orden->id;
+				insertarTablaArray_v2($existe, $SQLExisteCitaOrden, 'cita_orden');
+				if ( count($existe[cita_orden]) != 0 ){ echo "existe-";
+					//INSERT
+					$SQLInsertCitaOrden = "INSERT INTO citas_ordenes(id_cita, id_cup) VALUES(".$formulario->id_cita.", ".$formulario->orden->id.")";
+					if (insertarFila($SQLInsertCitaOrden) != 0 ){ echo "insertarFila-OK-";
+						$datos[status] = "OK";
+						$datos[mensaje] = "Orden creado correctamente";
+					}else{echo "insertarFila-ERROR1-";
+						$datos[status] = "ERROR";
+						$datos[mensaje] = "Orden creado correctamente";
+					}
+				}else{echo "insertarFila-ERROR2-";
+					//ERROR
+					$datos[status] = "ERROR";
+					$datos[mensaje] = "La orden ya ha sido generada";
+				}
+				/*{
+				    "id_cita": "93",
+				    "pagina": 6,
+				    "accion": "agregar_orden",
+				    "orden": {
+				        "id": "10616",
+				        "nombre": "781601 APLICACION DE TUTOR EXTERNO RODILLA",
+				        "cups": "781601",
+				        "procedimiento": "APLICACION DE TUTOR EXTERNO RODILLA"
+				    }
+				}:*/	
 			}
 		}
 	}

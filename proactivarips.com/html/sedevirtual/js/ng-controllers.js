@@ -645,7 +645,6 @@ controllers.controller('medicinaCTRL', function($scope, $http, $location, $cooki
             }).then(function(result){
                 $scope.limpiarMedicamento();
             });
-
             $scope.medicamentos_formula.push($scope.busqueda.medicamento);
         };
         $scope.limpiarMedicamento = function(){
@@ -655,11 +654,32 @@ controllers.controller('medicinaCTRL', function($scope, $http, $location, $cooki
         //ordenes
         $scope.cups = {};
         $scope.bl_buscado = false;
+        $scope.orden = {};
+        $scope.ordenes = [];
         $scope.buscarCUP = function(_palabra){
             $http.get('json/medicina.php?listados=2&palabra='+_palabra).then(function(result) {
                 $scope.bl_buscado = true;
                 $scope.cups = result.data.cups;
             });
+        };
+        $scope.agregarOrden = function(){
+            $scope.formulario = {};
+            $scope.formulario.id_cita = $routeParams.cita;
+            $scope.formulario.pagina = 6;
+            $scope.formulario.accion = "agregar_orden";
+            $scope.formulario.orden = $scope.orden.seleccionada;
+            $http({
+                url: 'json/medicina.php',
+                method: 'POST',
+                data: $scope.formulario,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).then(function(result){
+                $scope.ordenes.push($scope.orden.seleccionada);
+                $scope.orden = {};
+                $scope.bl_buscado = false;
+            });
+            
+
         };
     });
 
@@ -675,6 +695,7 @@ controllers.controller('medicinaCTRL', function($scope, $http, $location, $cooki
         $location.path('/ingreso');
     };
 });
+
 controllers.controller('medicinaVerCTRL', function($scope, $http, $cookieStore, $routeParams){
 
     /*if(typeof $scope.user === "undefined") {
