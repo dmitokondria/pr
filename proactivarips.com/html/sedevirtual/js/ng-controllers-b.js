@@ -131,6 +131,7 @@ controllers.controller('psicologiaCTRL', function($scope, $http, $location, $coo
         //funcion para enviar y guardar los datos d ela primera pestaña
         $scope.accion = function(_nombreAccion){
             //armar paquete
+            $scope.mensaje = "";
             $scope.paquete = {};
             $scope.paquete.accion = _nombreAccion;
             $scope.paquete.formulario = $scope.formulario;
@@ -141,6 +142,7 @@ controllers.controller('psicologiaCTRL', function($scope, $http, $location, $coo
                 data: $scope.paquete,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).then(function(result){
+                $scope.mensaje = result.data.mensaje;
             });
         };
 
