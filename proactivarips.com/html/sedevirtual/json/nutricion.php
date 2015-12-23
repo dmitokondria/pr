@@ -2,14 +2,17 @@
 
 include_once('funcionesBD.php');
 
+$datos = array();
+
 if ( isset($_GET['listados']) ){
 	$SQLCIE = "SELECT id, CONCAT(codigo,' ',descripcion) as nombre FROM cie ORDER BY descripcion ASC";
 	insertarTablaArray_v2($datos, $SQLCIE, 'cies');
 }else{
 	//traer e interpretar datos POST
-	$mensaje = json_decode(file_get_contents("php://input"));
-	if ( isset($mensaje->cita) ){
-		$id_cita = $mensaje->cita;
+	$paquete = json_decode(file_get_contents("php://input"));
+	//informacio básica del paciente o de la cita para VER
+	if ( isset($paquete->cita) ){
+		$id_cita = $paquete->cita;
 
 		$SQLInfoPaciente = "SELECT p.*
 							FROM r2_pacientes_citas r2pc
@@ -93,57 +96,6 @@ if ( isset($_GET['listados']) ){
 		insertarTablaArray_v2($datos, $SQLEstadosConciencia, 'estados_conciencia');
 	}
 }
-/*
-{ 
-
--"ch_cabeza": true, 
--"ch_ojos": true, 
-"ch_oido": true, 
-"ch_nariz": true, 
-"ch_boca": true, 
-"ch_faringe": true, 
-"ch_laringe": true, 
-"ch_cuello": true, 
-"ch_torax": true, 
-"ch_senos": true, 
-"ch_corazon": true, 
-"ch_pulmon": true, 
-"ch_abdomen": true, 
-"ch_genitales": true, 
-"ch_ginecologico": true, 
-"ch_rectal": true, 
-"ch_miembros_sup": true, 
-"ch_miembros_inf": true, 
-"ch_columna": true, 
-"ch_reflejos": true, 
-"ch_marcha": true, 
-"ch_postura": true, 
-"ch_piel_faneras": true, 
-"ch_ganglios": true, 
-"ch_pulsos": true, 
-"ch_mental": true, 
-"ch_craneanos": true, 
-"ch_pruebas": true, 
-"ch_asp_general": true, 
-"ch_motor": true, 
-"ch_neurologico": true, 
-"": "examen fisico", 
-"": "adic. exam fisico" 
-}
-
-if ($scope.ch_cabeza) $scope.observaciones_ef += " Cabeza: ";
-if ($scope.ch_ojos) $scope.observaciones_ef += " Ojos: ";
-
-
-if ( ch_cabeza == false && ch_cuello == false ) $scope.observaciones_ef += 'Mucosas húmedas, conjuntivas normocrómicas, escleras anictéricas. No se nota ingurgitación yugular, no adenopatías';
-Cabeza y cuello: Mucosas húmedas, conjuntivas normocrómicas, escleras anictéricas. No se nota ingurgitación yugular, no adenopatías.
-Tórax: Simétrico, Ruidos cardíacos rítmicos, no se notan soplos, respiratorios no agregados.
-Abdomen: No dolor, no masas, no signos de irritación peritoneal.
-Genitourinario: Normal. No adenopatías inguinales.
-Extremidades: pulsos simétricos de adecuada amplitud, no edemas.
-Neurológico: Alerta orientado en persona espacio y tiempo, no signos de focalización motora, sensibilidad conservada.  no signos meníngeos. Pares craneanos conservados.
-Pie y faneras: adecuada humectación. No cambios en la coloración. No lesiones.
- */
 
 if ( isset($_GET[debug]) ){
 	echo "<pre>";

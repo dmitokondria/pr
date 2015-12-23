@@ -128,7 +128,7 @@ controllers.controller('psicologiaCTRL', function($scope, $http, $location, $coo
         };
         $scope.datosInicialesPestañas();
 
-        //funcion para enviar y guardar los datos d ela primera pestaña
+        //funcion para enviar y guardar los datos de las pestañas
         $scope.accion = function(_nombreAccion){
             //armar paquete
             $scope.mensaje = "";
@@ -238,3 +238,76 @@ controllers.controller('psicologiaVerCTRL', function($scope, $http, $cookieStore
         $location.path('/ingreso');
     };
 });
+
+////NUTRICION
+controllers.controller('nutricionCTRL', function($scope, $http, $location, $cookieStore, $route, $routeParams){
+
+    /*if(typeof $scope.user === "undefined") {
+        $location.path('/ingreso');
+    }*/
+
+    $scope.seccion = "Profesional";
+    $http.get('json/fecha.php').then(function(result) {
+        $scope.fecha = result.data.info;
+    });
+
+    //datos básicos del doctor
+    $scope.usuario = $cookieStore.get('usuario');
+
+    //datos básicos del paciente y de la cita
+    $scope.formulario = {};
+    $scope.formulario.cita = $routeParams.cita;
+    $http({
+        url: 'json/nutricion.php',
+        method: 'POST',
+        data: $scope.formulario,
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    }).then(function(result){
+        $scope.datosInicialesPestañas = function(){
+            $scope.tipos_id = result.data.tipos_identificacion;
+            $scope.departamentos = result.data.departamentos;
+            $scope.ciudades = result.data.ciudades;
+            $scope.fecha = {};
+            $scope.fecha.dias = result.data.fecha.dias;
+            $scope.fecha.meses = result.data.fecha.meses;
+            $scope.fecha.anios = result.data.fecha.anios;
+            $scope.estados_civiles = result.data.estados_civiles;
+            $scope.niveles_escolaridad = result.data.niveles_escolaridad;
+            $scope.generos = result.data.generos;
+            $scope.epss = result.data.epss;
+            $scope.tipos_vinculacion = result.data.tipos_vinculacion;
+            $scope.paquetes = result.data.paquetes;
+            $scope.afiliaciones = result.data.afiliacion_estados;
+
+            $scope.formulario = result.data.paciente;
+            $scope.formulario.cita = $routeParams.cita;
+        }
+        $scope.datosInicialesPestañas();
+
+    //funcion para enviar y guardar los datos de las pestañas
+    $scope.accion = function(_nombreAccion){
+        //Armar el paquete para el envío de datos
+        $scope.mensaje = "";
+        $scope.paquete = {};
+        $scope.paquete.accion = _nombreAccion;
+        $scope.paquete.formulario = $scope.formulario;
+        //Enviar paquete
+        $http({
+                url: 'json/nutricion.php',
+                method: 'POST',
+                data: $scope.paquete,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        }).then(function(result){
+                $scope.mensaje = result.data.mensaje;
+        });
+    }
+    });
+
+    $scope.cerrarSesion = function(){
+        $cookieStore.remove("user");
+        $location.path('/ingreso');
+    };
+});
+///No tocar el VER
+controllers.controller('nutricionVerCTRL', function($scope, $http, $location, $cookieStore, $route, $routeParams){});
+////////

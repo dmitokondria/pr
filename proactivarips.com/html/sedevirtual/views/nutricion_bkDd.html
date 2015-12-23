@@ -1,0 +1,740 @@
+<div id="headline">
+    <div class="hoy">{{fecha_hoy}}</div>
+    <div class="logout"><a ng-click="cerrarSesion()">Cerrar Sesión</a></div>
+</div>
+<header>
+    <div class="header_imagen">
+        <div class="logo">
+            <a href=""><img src="../images/logo_neg.png" alt=""></a>
+        </div>
+        <div class="sede">{{seccion}}</div>
+        <div class="saludo">Bienvenid@</div>
+        <div class="soc_box">
+            <ul class="header_soc_list">
+                <li><a href="#" class="icon1"><span class="fa-facebook"></span></a></li>
+                <li><a href="#" class="icon2"><span class="fa-twitter"></span></a></li>
+                <li><a href="#" class="icon3"><span class="fa-google-plus"></span></a></li>
+                <li><a href="#" class="icon4"><span class="fa-linkedin"></span></a></li>
+                <li><a href="#" class="icon5"><span class="fa-envelope"></span></a></li>
+            </ul>
+        </div>  
+    </div>
+    <div class="header_border"></div>
+</header>
+<div class="col-md-offset-1 col-md-10">
+    <div class="bloque_titulo col-md-12">Proactivar I.P.S.</div>
+    <div id="container_border">
+        <div class="margen_clear"></div>
+        <div class="informacion col-md-12">
+            <div class="col-md-4">Profesional: {{usuario.nombres}}</div>
+            <div class="col-md-4">Especialidad: {{usuario.especialidad}}</div>
+            <div class="col-md-4">Hora: 00:00:00</div>
+        </div>
+        <div class="menu_lateral" ng-controller="menu_lateralCTRL">
+            <accordion close-others="true" class="col-md-2">
+                <accordion-group ng-repeat="menu in menu_lateral" heading="{{menu.nombre}}">
+                <ul>
+                    <li ng-repeat="opcion in menu.opciones"><a ng-href="{{opcion.vinculo}}">{{opcion.nombre}}</a></li>
+                </ul>
+            </accordion-group>
+        </accordion>
+    </div>
+    <div class="col-md-10">
+        <div class="titulo_hc">Historia Clínica Nutrición</div>
+        <tabset justified="true">
+            <tab heading="Datos Básicos">
+             <form class="col-md-12">
+                <div class="subtitulo">Datos Personales</div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Primer Nombre</label>
+                        <input type="text" class="form-control" ng-model="formulario.p_nombre" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>Primer Apellido</label>
+                        <input type="text" class="form-control" ng-model="formulario.p_apellido" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>Identificación</label>
+                        <input type="text" class="form-control" ng-model="formulario.identificacion" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo de Identificación</label>
+                        <select class="form-control" ng-model="formulario.tipo_id" disabled>
+                            <option ng-repeat="tipo in tipos_id" value='{{tipo.id}}'>{{tipo.nombre}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Departamento Nacimiento</label>
+                        <select class="form-control" ng-model="formulario.sl_departamento" ng-options='departamento.id as departamento.nombre for departamento in departamentos' disabled>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Ciudad Nacimiento</label>
+                        <select class="form-control" ng-model="formulario.sl_municipio" ng-options='ciudad.id as ciudad.nombre for ciudad in ciudades' disabled>
+                        </select>
+                    </div>
+                    <div class="form-group col-sm-12 col-md-12">
+                        <label class="col-md-12">Fecha de Nacimiento</label>
+                        <div class="col-sm-4 col-md-4">
+                            <select class="form-control" ng-model="formulario.fecha_nac.anio" disabled>
+                                <option value="-1" disabled>Año</option>
+                                <option ng-repeat="anio in fecha.anios">{{anio}}</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4 col-md-4">
+                            <select class="form-control" ng-model='formulario.fecha_nac.mes' ng-options='mes.id as mes.nombre for mes in fecha.meses' disabled>
+                            </select>
+                        </div>
+                        <div class="col-sm-4 col-md-4">
+                            <select name="nac_dia" class="form-control" ng-model="formulario.fecha_nac.dia" disabled>
+                                <option value="-1" disabled>Día</option>
+                                <option ng-repeat="dia in fecha.dias">{{dia}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Edad</label>
+                        <input type="text" class="form-control" ng-model="formulario.edad">
+                    </div>
+                    <div class="form-group">
+                        <label>Estado Civil</label>
+                        <select class="form-control" ng-model='formulario.estado_civil' ng-options='estado_civil.id as estado_civil.nombre for estado_civil in estados_civiles'>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Ocupación</label>
+                        <input type="text" class="form-control" ng-model="formulario.ocupacion">
+                    </div>
+                    <div class="form-group">
+                        <label>Nivel de Escolaridad</label>
+                        <select class="form-control" ng-model='formulario.escolaridad' ng-options='nivel_escolaridad.id as nivel_escolaridad.nombre for nivel_escolaridad in niveles_escolaridad'>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Género</label>
+                        <div class="radio col-md-12">
+                            <label class="col-md-6 centrado" ng-repeat="genero in generos"><span>{{genero.nombre}}</span>
+                                <input type="radio" ng-model="formulario.genero" name="genero" value="{{genero.id}}" disabled/>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Segundo Nombre</label>
+                        <input type="text" class="form-control" ng-model="formulario.s_nombre" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>Segundo Apellido</label>
+                        <input type="text" class="form-control" ng-model="formulario.s_apellido" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>Dirección</label>
+                        <input type="text" class="form-control" ng-model="formulario.direccion">
+                    </div>
+                    <div class="form-group">
+                        <label>Teléfono Fijo</label>
+                        <input type="text" class="form-control" ng-model="formulario.telefono">
+                    </div>
+                    <div class="form-group">
+                        <label>Celular</label>
+                        <input type="text" class="form-control" ng-model="formulario.celular">
+                    </div>
+                    <div class="form-group">
+                        <label>Acudiente</label>
+                        <input type="text" class="form-control" ng-model="formulario.acudiente">
+                    </div>
+                    <div class="form-group">
+                        <label>Parentesco Acudiente</label>
+                        <input type="text" class="form-control" ng-model="formulario.acu_parentesco">
+                    </div>
+                    <div class="form-group">
+                        <label>Celular Acudiente</label>
+                        <input type="text" class="form-control" ng-model="formulario.cel_acudiente">
+                    </div>
+                    <div class="form-group">
+                        <label>EPS / Aseguradora</label>
+                        <select class="form-control" ng-model="formulario.eps" ng-options='eps.id as eps.nombre for eps in epss' disabled>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo de Vinculación</label>
+                        <select class="form-control" ng-model="formulario.vinculacion" ng-options='tipo_vinculacion.id as tipo_vinculacion.nombre for tipo_vinculacion in tipos_vinculacion' disabled>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Paquete de Servicios</label>
+                        <select class="form-control" ng-model="formulario.paquete" ng-options='paquete.id as paquete.nombre for paquete in paquetes' disabled>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Estado de Afiliación</label>
+                        <select class="form-control" ng-model="formulario.afiliacion" ng-options='afiliacion.id as afiliacion.nombre for afiliacion in afiliaciones' disabled>
+                        </select>
+                    </div>
+                </div>
+                <div class="subtitulo">Acompañante</div>
+                <div class="form-group col-md-12">
+                    <label>Nombre Completo</label>
+                    <input type="text" class="form-control" ng-model="basicos.acompanante.nombre">
+                </div>
+                <div class="form-group col-md-12">
+                    <label>Celular</label>
+                    <input type="text" class="form-control" ng-model="basicos.acompanante.celular">
+                </div>
+                <div class="form-group col-md-12">
+                    <label>Parentesco</label>
+                    <input type="text" class="form-control" ng-model="basicos.acompanante.parentesco">
+                </div>
+                <div class="subtitulo">Antecedentes Personales</div>
+                <div class="form-group col-md-12">
+                    <div class="form-group col-md-4">
+                        <div class="radio">
+                            <label>
+                                <input type="checkbox" ng-model="basicos.ant.bajo_peso" value=""> Bajo peso al nacer
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="checkbox" ng-model="basicos.ant.alteraciones" value=""> Alteraciones del desarrollo
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="checkbox" ng-model="basicos.ant.sobrepeso" value=""> Sobrepeso u obesidad
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <div class="radio">
+                            <label>
+                                <input type="checkbox" ng-model="basicos.ant.hipertension" value=""> Hipertensión arterial
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="checkbox" ng-model="basicos.ant.diabetes" value=""> Diabetes Mellitus
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="checkbox" ng-model="basicos.ant.hipotiroidismo" value=""> Hipotiroidismo
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <div class="radio">
+                            <label>
+                                <input type="checkbox" ng-model="basicos.ant.insuficiencia" value=""> Insuficiencia renal
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="checkbox" ng-model="basicos.ant.otro" value=""> Otros
+                            </label>
+                        </div>
+                        <input type="text" ng-model="basicos.ant.otro_cual" class="form-control" ng-if="basicos.ant.otro" placeholder="¿Cuáles?">
+                    </div>
+                </div>
+                <div class="col-md-12"><pre>{{ basicos | json}}</pre></div>
+                <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
+                    <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
+                    <button type="button" class="btn btn-default">Continuar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
+                </div>
+            </form>
+        </tab><!--FIN TAB 1 UNO-->
+        <tab heading="Antropométricos">
+            <form class="col-md-12">
+                <div class="subtitulo">Medidas Antropométricas</div>
+                <div class="form-group col-md-12">
+                    <label class="col-md-5 no-padding">Peso</label>
+                    <div class="col-md-7 no-padding">
+                        <input type="text" class="form-control campo_medio" ng-model="antropo.peso">
+                        <label class="unidades">Kg.</label>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label class="col-md-5 no-padding">Talla</label>
+                    <div class="col-md-7 no-padding">
+                        <input type="text" class="form-control campo_medio" ng-model="antropo.talla">
+                        <label class="unidades">cms.</label>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label class="col-md-5 no-padding">Perímetro torácico</label>
+                    <div class="col-md-7 no-padding">
+                        <input type="text" class="form-control campo_medio" ng-model="antropo.p_toracico">
+                        <label class="unidades">cms.</label>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label class="col-md-5 no-padding">Perímetro abdominal</label>
+                    <div class="col-md-7 no-padding">
+                        <input type="text" class="form-control campo_medio" ng-model="antropo.p_abdominal">
+                        <label class="unidades">cms.</label>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label class="col-md-5 no-padding">Perímetro cadera</label>
+                    <div class="col-md-7 no-padding">
+                        <input type="text" class="form-control campo_medio" ng-model="antropo.p_cadera">
+                        <label class="unidades">cms.</label>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label class="col-md-5 no-padding">Relación Cintura/Cadera</label>
+                    <div class="col-md-7 no-padding">
+                        <input type="text" class="form-control campo_medio" ng-model="antropo.relacion">
+                        <label class="unidades">cms.</label>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label class="col-md-5 no-padding">Creatinina</label>
+                    <div class="col-md-7 no-padding">
+                        <input type="text" class="form-control campo_medio" ng-model="antropo.creatinina">
+                        <label class="unidades">mg/dL</label>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label class="col-md-5 no-padding">TFG</label>
+                    <div class="col-md-7 no-padding">
+                        <input type="text" class="form-control campo_medio" ng-model="antropo.tfg">
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label class="col-md-5 no-padding">IMC</label>
+                    <div class="col-md-7 no-padding">
+                        <input type="text" class="form-control campo_medio" ng-model="antropo.nivel_imc">
+                        <input type="text" class="form-control campo_imc" ng-model="antropo.imc">
+                    </div>
+                </div>
+                <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
+                    <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
+                    <button type="button" class="btn btn-default">Continuar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
+                </div>
+                <div class="col-md-12"><pre>{{ antropo | json }}</pre></div>
+            </form>
+        </tab><!--FIN TAB 2 DOS-->
+        <tab heading="Nutrición">
+            <form class="col-md-12">
+                <div class="subtitulo">Alimentación y Nutrición</div>
+                <div class="col-md-12 subrayado">Frecuencia semanal de consumo de alimentos</div>
+                <div class="form-group col-md-12">
+                    <label class="col-md-5">Cereales, raíces, tubérculos y plátanos</label>
+                    <div class="col-md-7">
+                        <input type="text" class="form-control campo_medio" ng-model="nutri.semanal.cereales">
+                        <label class="unidades">Veces</label>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label class="col-md-5">Hortalizas y verduras</label>
+                    <div class="col-md-7">
+                        <input type="text" class="form-control campo_medio" ng-model="nutri.semanal.hortalizas">
+                        <label class="unidades">Veces</label>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label class="col-md-5">Frutas</label>
+                    <div class="col-md-7">
+                        <input type="text" class="form-control campo_medio" ng-model="nutri.semanal.frutas">
+                        <label class="unidades">Veces</label>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label class="col-md-5">Carnes, huevos y leguminosas</label>
+                    <div class="col-md-7">
+                        <input type="text" class="form-control campo_medio" ng-model="nutri.semanal.carnes">
+                        <label class="unidades">Veces</label>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label class="col-md-5">Lácteos y derivados</label>
+                    <div class="col-md-7">
+                        <input type="text" class="form-control campo_medio" ng-model="nutri.semanal.lacteos">
+                        <label class="unidades">Veces</label>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label class="col-md-5">Azúcares</label>
+                    <div class="col-md-7">
+                        <input type="text" class="form-control campo_medio" ng-model="nutri.semanal.azucares">
+                        <label class="unidades">Veces</label>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label class="col-md-5">Grasas</label>
+                    <div class="col-md-7">
+                        <input type="text" class="form-control campo_medio" ng-model="nutri.semanal.grasas">
+                        <label class="unidades">Veces</label>
+                    </div>
+                </div>
+                <div class="col-md-12 subrayado">Frecuencia diaria de consumo de alimentos</div>
+
+                    <div class="col-md-12">
+                        <label class="col-md-5">Desayuno</label>
+                        <div class="form-group col-md-7">
+                            <input type="text" class="form-control campo_medio" ng-model="nutri.diaria.desayuno">
+                            <label class="unidades">Veces</label>
+                        </div>
+                        <div class="col-md-5"></div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control campo_medio" ng-model="nutri.diaria.desayuno_hora">
+                            <label class="unidades">Horarios</label>
+                        </div>
+                    </div>
+                    <div class="col-md-12"><hr>
+                        <label class="col-md-5">Merienda</label>
+                        <div class="form-group col-md-7">
+                            <input type="text" class="form-control campo_medio" ng-model="nutri.diaria.merienda">
+                            <label class="unidades">Veces</label>
+                        </div>
+                        <div class="col-md-5"></div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control campo_medio" ng-model="nutri.diaria.merienda_hora">
+                            <label class="unidades">Horarios</label>
+                        </div>
+                    </div>
+                    <div class="col-md-12"><hr>
+                        <label class="col-md-5">Almuerzo</label>
+                        <div class="form-group col-md-7">
+                            <input type="text" class="form-control campo_medio" ng-model="nutri.diaria.almuerzo">
+                            <label class="unidades">Veces</label>
+                        </div>
+                        <div class="col-md-5"></div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control campo_medio" ng-model="nutri.diaria.almuerzo_hora">
+                            <label class="unidades">Horarios</label>
+                        </div>
+                    </div>
+                    <div class="col-md-12"><hr>
+                        <label class="col-md-5">Onces</label>
+                        <div class="form-group col-md-7">
+                            <input type="text" class="form-control campo_medio" ng-model="nutri.diaria.onces">
+                            <label class="unidades">Veces</label>
+                        </div>
+                        <div class="col-md-5"></div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control campo_medio" ng-model="nutri.diaria.onces_hora">
+                            <label class="unidades">Horarios</label>
+                        </div>
+                    </div>
+                    <div class="col-md-12"><hr>
+                        <label class="col-md-5">Cena</label>
+                        <div class="form-group col-md-7">
+                            <input type="text" class="form-control campo_medio" ng-model="nutri.diaria.cena">
+                            <label class="unidades">Veces</label>
+                        </div>
+                        <div class="col-md-5"></div>
+                        <div class="form-group col-md-7">
+                            <input type="text" class="form-control campo_medio" ng-model="nutri.diaria.cena_hora">
+                            <label class="unidades">Horarios</label>
+                        </div>
+                    </div>
+                <div class="col-md-12 subrayado">Hábitos de alimentación</div>
+                <div class="form-group col-md-12">
+                    <label>¿En el último mes faltó dinero en su hogar para comprar alimentos?</label>
+                    <div class="col-md-offset-4 col-md-4">
+                        <div class="radio">
+                            <input type="radio" value="1" ng-model="nutri.hab.falto_dinero"><label>Sí</label>
+                        </div>
+                        <div class="radio">
+                            <input type="radio" value="0" ng-model="nutri.hab.falto_dinero"><label>No</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-12"><hr>
+                    <label>¿En el último mes se disminuyó el número de comidas por falta de dinero para comprar los alimentos?</label>
+                    <div class="col-md-offset-4 col-md-4">
+                        <div class="radio">
+                            <input type="radio" value="1" ng-model="nutri.hab.menos_comidas"><label>Sí</label>
+                        </div>
+                        <div class="radio">
+                            <input type="radio" value="0" ng-model="nutri.hab.menos_comidas"><label>No</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-12"><hr>
+                    <label>¿Qué comidas preparadas fuera de casa consume?</label>
+                    <div class="col-md-offset-4 col-md-4">
+                        <div class="radio">
+                            <input type="checkbox" ng-model="nutri.hab.fuera_desa"><label>Desayuno</label>
+                        </div>
+                        <div class="radio">
+                            <input type="checkbox" ng-model="nutri.hab.fuera_almu"><label>Almuerzo</label>
+                        </div>
+                        <div class="radio">
+                            <input type="checkbox" ng-model="nutri.hab.fuera_cena"><label>Cena</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <div class="form-group">
+                        <label>¿En qué lugar consume estos alimentos?</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" ng-model="nutri.hab.lugar">
+                    </div>
+                </div>
+                <div class="form-group col-md-12"><hr>
+                    <label>¿Cuántas veces a la semana consume alimentos preparados fuera de casa?</label>
+                    <div class="col-md-offset-4 col-md-4">
+                        <div class="radio">
+                            <input type="radio" value="1" ng-model="nutri.hab.fuera_semana"><label>Ocasionalmente</label>
+                        </div>
+                        <div class="radio">
+                            <input type="radio" value="2" ng-model="nutri.hab.fuera_semana"><label>1 - 2 veces</label>
+                        </div>
+                        <div class="radio">
+                            <input type="radio" value="3" ng-model="nutri.hab.fuera_semana"><label>3 - 5 veces</label>
+                        </div>
+                        <div class="radio">
+                            <input type="radio" value="4" ng-model="nutri.hab.fuera_semana"><label>Todos los días</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-12"><hr>
+                    <label>¿Cuáles son los alimentos que consume con mayor frecuencia fuera de casa?</label>
+                    <div class="col-md-offset-4 col-md-8">
+                        <div class="radio">
+                            <input type="checkbox" ng-model="nutri.hab.ffc_paquete"><label>Productos de paquete</label>
+                        </div>
+                        <div class="radio">
+                            <input type="checkbox" ng-model="nutri.hab.ffc_panaderia"><label>Productos de panadería</label>
+                        </div>
+                        <div class="radio">
+                            <input type="checkbox" ng-model="nutri.hab.ffc_rapidas"><label>Comidas rápidas</label>
+                        </div>
+                        <div class="radio">
+                            <input type="checkbox" ng-model="nutri.hab.ffc_gaseosas"><label>Gaseosas o refrescos</label>
+                        </div>
+                        <div class="radio">
+                            <input type="checkbox" ng-model="nutri.hab.ffc_fritos"><label>Alimentos fritos</label>
+                        </div>
+                        <div class="radio">
+                            <input type="checkbox" ng-model="nutri.hab.ffc_otros"><label>Otros</label>
+                        </div>
+                        <div class="col-md-12" ng-if="nutri.hab.ffc_otros">
+                            <label class="col-md-4">¿Cuáles?</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" placeholder="Cuáles Otros" ng-model="nutri.hab.ffc_cuales">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12"><pre>{{ nutri | json }}</pre></div>
+                <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
+                    <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
+                    <button type="button" class="btn btn-default">Continuar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
+                </div>
+            </form>
+        </tab><!--FIN TAB 3 TRES-->
+        <tab heading="Lactancia">
+            <form class="col-md-12">  
+                <div class="subtitulo">Lactancia Materna (Niños menores de 1 año)</div>
+                <div class="form-horizontal col-md-12">
+                    <div class="form-group col-md-12">
+                        <label>¿Actualmente recibe lactancia materna?</label>
+                        <div class="col-md-offset-4 col-md-4">
+                            <div class="radio">
+                                <input type="radio" value="1" ng-model="lactancia.recibe"><label>Sí</label>
+                            </div>
+                            <div class="radio">
+                                <input type="radio" value="0" ng-model="lactancia.recibe" ng-click="lactancia.recibe_dia=''"><label>No</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12" ng-if="lactancia.recibe">
+                        <label for="inputEmail3" class="control-label">¿Cuántas veces al día?</label>
+                        <input type="text" class="form-control" ng-model="lactancia.recibe_dia">
+                    </div>
+                    <div class="form-group col-md-12"><hr>
+                        <label>¿También hay lactancia durante la noche?</label>
+                        <div class="col-md-offset-4 col-md-4">
+                            <div class="radio">
+                                <input type="radio" value="1" ng-model="lactancia.noche" ng-click="lactancia.noche_motivo=''"><label>Sí</label>
+                            </div>
+                            <div class="radio">
+                                <input type="radio" value="0" ng-model="lactancia.noche"><label>No</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12" ng-if="lactancia.noche == 0">
+                        <label for="inputEmail3" class="control-label">¿Cuál es el motivo por el que no lacta de noche?</label>
+                        <input type="text" class="form-control" ng-model="lactancia.noche_motivo">
+                    </div>
+                    <div class="form-group col-md-12"><hr>
+                        <label>¿Ha tenido problemas con la lactancia materna?</label>
+                        <div class="col-md-offset-4 col-md-4">
+                            <div class="radio">
+                                <input type="radio" value="1" ng-model="lactancia.problemas"><label>Sí</label>
+                            </div>
+                            <div class="radio">
+                                <input type="radio" value="0" ng-model="lactancia.problemas" ng-click="lactancia.problemas_cuales=''"><label>No</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12" ng-if="lactancia.problemas">
+                        <label for="inputEmail3" class="control-label">¿Qué problemas se han presentado en la lactancia?</label>
+                        <input type="text" class="form-control" ng-model="lactancia.problemas_cuales">
+                    </div>
+                    <div class="form-group col-md-12"><hr>
+                        <label>¿Recibió capacitación en lactancia materna antes del nacimiento o posterior a el?</label>
+                        <div class="col-md-offset-4 col-md-4">
+                            <div class="radio">
+                                <input type="radio" value="1" ng-model="lactancia.capacitacion"><label>Sí</label>
+                            </div>
+                            <div class="radio">
+                                <input type="radio" value="0" ng-model="lactancia.capacitacion"><label>No</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12"><hr>
+                        <label>¿Actualmente recibe alimentos diferentes a la lactancia materna?</label>
+                        <div class="col-md-offset-4 col-md-4">
+                            <div class="radio">
+                                <input type="radio" value="1" ng-model="lactancia.alimentos"><label>Sí</label>
+                            </div>
+                            <div class="radio">
+                                <input type="radio" value="0" ng-model="lactancia.alimentos" ng-click="lactancia.alimentos_que=''"><label>No</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12" ng-if="lactancia.alimentos">
+                        <label class="control-label">¿Qué alimentos recibe?</label>
+                        <input type="text" class="form-control" ng-model="lactancia.alimentos_que">
+                    </div>
+                    <div class="form-group col-md-12"><hr>
+                        <label>¿El niño(a) consume leche entera o de fórmula?</label>
+                        <div class="col-md-offset-4 col-md-4">
+                            <div class="radio">
+                                <input type="radio" value="1" ng-model="lactancia.leche"><label>Sí</label>
+                            </div>
+                            <div class="radio">
+                                <input type="radio" value="0" ng-model="lactancia.leche"><label>No</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12"><hr>
+                        <label>¿Actualmente recibe suplementación?</label>
+                        <div class="col-md-offset-4 col-md-4">
+                            <div class="radio">
+                                <input type="radio" value="1" ng-model="lactancia.suplementacion"><label>Sí</label>
+                            </div>
+                            <div class="radio">
+                                <input type="radio" value="0" ng-model="lactancia.suplementacion" ng-click="lactancia.suplementacion_tipo=''"><label>No</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12" ng-if="lactancia.suplementacion">
+                        <label for="inputEmail3" class="control-label">¿Qué tipo de suplementación recibe?</label>
+                        <input type="text" class="form-control" ng-model="lactancia.suplementacion_tipo">
+                    </div>
+                    <div class="form-group col-md-12"><hr>
+                        <label>¿En el día de ayer o anoche el niño(a) bebió algo en biberón?</label>
+                        <div class="col-md-offset-4 col-md-4">
+                            <div class="radio">
+                                <input type="radio" value="1" ng-model="lactancia.biberon"><label>Sí</label>
+                            </div>
+                            <div class="radio">
+                                <input type="radio" value="0" ng-model="lactancia.biberon" ng-click="lactancia.bebida_que=''"><label>No</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12" ng-if="lactancia.biberon">
+                        <label for="inputEmail3" class="control-label">¿Qué bebida tomó por este medio?</label>
+                        <input type="text" class="form-control" ng-model="lactancia.bebida_que">
+                    </div>
+                    <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
+                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
+                        <button type="button" class="btn btn-default">Continuar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
+                    </div>
+                    <div class="col-md-12"><pre>{{ lactancia | json }}</pre></div>
+                </div>
+            </form>
+        </tab><!--FIN TAB 4 CUATRO-->
+        <tab heading="Diagnósticos">
+            <form class="col-md-12">
+                <div class="subtitulo">Diagnóstico Nutricional</div>
+                <div class="form-group col-md-12">
+                    <label class="subrayado">Buscar Diagnóstico</label>
+                    <input type="text" class="form-control">
+                </div>
+                <label class="subrayado">Diagnósticos Actuales</label>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <tr class="info">
+                            <th>Principal</th>
+                            <th>Código</th>
+                            <th>Diagnóstico</th>
+                            <th>Tipo</th>
+                            <th>Contingencia</th>
+                            <th><span class="glyphicon glyphicon-remove suave"></th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="checkbox_table">
+                                    <input type="checkbox" value="">
+                                </div>
+                            </td>
+                            <td class="centrado_vertical">Código</td>
+                            <td class="centrado_vertical">Diagnóstico</td>
+                            <td class="centrado_vertical">Tipo</td>
+                            <td class="centrado_vertical">Contingencia</td>
+                            <td class="centrado_vertical"><span class="glyphicon glyphicon-remove suave"></span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="checkbox_table">
+                                    <input type="checkbox" value="">
+                                </div>
+                            </td>
+                            <td class="centrado_vertical">Código</td>
+                            <td class="centrado_vertical">Diagnóstico</td>
+                            <td class="centrado_vertical">Tipo</td>
+                            <td class="centrado_vertical">Contingencia</td>
+                            <td class="centrado_vertical"><span class="glyphicon glyphicon-remove suave"></span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="checkbox_table">
+                                    <input type="checkbox" value="">
+                                </div>
+                            </td>
+                            <td class="centrado_vertical">Código</td>
+                            <td class="centrado_vertical">Diagnóstico</td>
+                            <td class="centrado_vertical">Tipo</td>
+                            <td class="centrado_vertical">Contingencia</td>
+                            <td class="centrado_vertical"><span class="glyphicon glyphicon-remove suave"></span></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
+                    <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
+                    <button type="button" class="btn btn-default">Continuar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
+                </div>
+            </form>
+        </tab><!--FIN TAB 5 CINCO-->
+        <tab heading="Hallazgos">
+            <form class="col-md-12">
+                <div class="subtitulo">Hallazgos y Conducta</div>
+                <div class="form-group col-md-12">
+                    <textarea class="form-control" rows="3" ng-model="hallazgos.conducta"></textarea>
+                </div>
+                <div class="subtitulo">Recomendaciones Nutricionales</div>
+                <div class="form-group col-md-12">
+                    <textarea class="form-control" rows="3" ng-model="hallazgos.recomendaciones"></textarea>
+                </div>
+                <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
+                    <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
+                    <button type="button" class="btn btn-default">Finalizar <span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span></button>
+                </div>
+                <div class="col-md-12"><pre>{{ hallazgos | json }}</pre></div>
+            </form>
+        </tab><!--FIN TAB 6 SEIS-->
+        <!--div class="col-md-12">{{formulario | json}}</div-->
+    </tabset>
+</div>
+<div class="margen_clear"></div>
+</div><!--FIN container_border-->
+</div><!--FIN col-md-offset-1 col-md-10-->

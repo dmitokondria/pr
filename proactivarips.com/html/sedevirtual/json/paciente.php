@@ -146,11 +146,3 @@ if ( !isset($formulario->accion) ){//información transversal
 }
 
 echo json_encode($datos);
-
-
-
-/*SELECT p.id, p.primer_nombre, p.primer_apellido, p.rd_tipo_identificacion, it.nombre AS tipo, it.alias
-FROM pacientes p
-LEFT JOIN identificacion_tipos it ON p.rd_tipo_identificacion = it.id
-
-$SQLDatosPaciente = "SELECT * FROM pacientes  WHERE id = ".$formulario->usuario->id;*/
