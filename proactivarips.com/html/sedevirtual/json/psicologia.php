@@ -68,7 +68,7 @@ if ( isset($_GET['listados']) ){
 		$datos[fecha][dias] = array();
 		for ($i=1; $i < 32; $i++) array_push($datos[fecha][dias], $i);
 
-		/// DAVID TRATÓ DE HACER ESTO Consulta para ver la historia clinica diligenciada en la cita N
+		/// DAVID TRATÓ DE HACER ESTO Consulta para ver la historia clinica diligenciada en la cita N | Revisar la accion 'VER' pues probablemente se dañó al realizar los insert.
 		if ( strcmp($paquete->accion, 'ver') == 0 ){
 			$SQLInfoCita = "SELECT * FROM hcpsi_ WHERE id_cita = $id_cita";
 			insertarTablaArray_v2($info_cita, $SQLInfoCita, 'info_cita');
@@ -129,7 +129,7 @@ if ( isset($_GET['listados']) ){
 			}else{
 				//INSERT
 				$SQLInsert = "INSERT INTO hcpsi_ (id, id_cita, anombre, acelular, aparentesco, motivo, observaciones) 
-							  VALUES ( NULL, ".$formulario->cita.", '".$acompanante->nombre."', '".$acompanante->celular."', '".$acompanante->parentesco."', '".$formulario->motivo."', '".$formulario->observaciones."')";
+							  VALUES ( NULL, ".$formulario->cita.", '".$acompanante->anombre."', '".$acompanante->acelular."', '".$acompanante->aparentesco."', '".$formulario->motivo."', '".$formulario->observaciones."')";
 				if ( ejecutarQuery_v2($SQLInsert) == true ) {
 					$datos[estado] = "OK";
 					$datos[mensaje] = "Datos almacenados correctamente.";

@@ -51,7 +51,7 @@ if ( isset($_GET['listados']) ){
 		$SQLTiposVinculacion = "SELECT * FROM vinculaciones ORDER BY nombre ASC";
 		insertarTablaArray_v2($datos, $SQLTiposVinculacion, 'tipos_vinculacion');
 
-		$SQLNivelesEscolaridad = "SELECT * FROM escolaridad ORDER BY nombre ASC";
+		$SQLNivelesEscolaridad = "SELECT * FROM escolaridad ORDER BY id ASC";
 		insertarTablaArray_v2($datos, $SQLNivelesEscolaridad, 'niveles_escolaridad');
 
 		$SQLPaquetes = "SELECT * FROM paquetes ORDER BY nombre ASC";
@@ -68,33 +68,52 @@ if ( isset($_GET['listados']) ){
 		$datos[fecha][dias] = array();
 		for ($i=1; $i < 32; $i++) array_push($datos[fecha][dias], $i);
 
+		if ( strcmp ($paquete->accion, 'ver') == 0 ){
+		}
 
-		////// motivo
-		$SQLFinalidades = "SELECT * FROM hc_finalidad ORDER BY nombre ASC";
-		insertarTablaArray_v2($datos, $SQLFinalidades, 'finalidades');
+	}else{
+		$accion = $paquete->accion;
+		$formulario = $paquete->formulario;
 
-		$SQLCausasExt = "SELECT * FROM hc_causaext ORDER BY nombre ASC";
-		insertarTablaArray_v2($datos, $SQLCausasExt, 'causas_ext');
+		if ( strcmp($accion, 'guardar_basicos_nutri') == 0 ){
 
-		$SQLEventos = "SELECT * FROM hc_evento ORDER BY nombre ASC";
-		insertarTablaArray_v2($datos, $SQLEventos, 'eventos');
+			$SQLInsertBasicos = "UPDATE pacientes SET sl_estado_civil = '$formulario->sl_estado_civil', ocupacion = '$formulario->ocupacion', sl_escolaridad = '$formulario->sl_escolaridad', direccion = '$formulario->direccion', telefono = '$formulario->telefono', celular = '$formulario->celular', acudiente = '$formulario->acudiente', acudiente_parentesco = '$formulario->acudiente_parentesco', acudiente_celular = '$formulario->acudiente_celular' WHERE id = $formulario->id";
+			if ( ejecutarQuery_v2($SQLInsertBasicos) == true ){
+				$datos[estado] = "OK";
+				$datos[mensaje] = "Datos almacenados correctamente.";
+			}else{
+				$datos[estado] = "ERROR";
+				$datos[mensaje] = "Los datos no fueron almacenados.";
+			}
+			
+			$acompanante = $formulario->acompanante;
 
-		////// examen fisico
-		$SQLEstGenerales = "SELECT * FROM hc_estadogral ORDER BY nombre ASC";
-		insertarTablaArray_v2($datos, $SQLEstGenerales, 'est_generales');
+			$SQLExisteHistoriaCitaNutri = "SELECT id FROM hcnutri_ WHERE id_cita ='$formulario->cita'";
+			insertarTablaArray_v2($existeHC, $SQLExisteHistoriaCitaNutri, 'existe');
 
-		$SQLEstadosHidratacion = "SELECT * FROM hc_hidratacion ORDER BY nombre ASC";
-		insertarTablaArray_v2($datos, $SQLEstadosHidratacion, 'estados_hidratacion');
+			if (isset($existeHC[existe][0]) ) {
+				$SQLUpdate = "UPDATE hcnutri_ SET anombre = '$acompanante->anombre', acelular = '$acompanante->acelular', aparentesco = '$acompanante->aparentesco' WHERE id_cita = '$formulario->cita'";// rd_bajopeso rd_alteraciones rd_sobrepeso rd_hipertension rd_diabetes rd_hipotiroidismo rd_insufrenal rd_otros otro_cual
+				if ( ejecutarQuery_v2($SQLUpdate) == true ){
+					$datos[estado] = "OK";
+					$datos[mensaje] = "Datos almacenados (actualizados) correctamente.";
+				}else{
+					$datos[estado] = "ERROR";
+					$datos[mensaje] = "Los datos no fueron almacenados.";
+				}
+			}else{
+				$SQLInsert = "INSERT INTO hcnutri_ (id, id_cita, anombre, acelular, aparentesco) 
+							VALUES ( NULL, ".$formulario->cita.", '".$acompanante->anombre."', '".$acompanante->acelular."', '".$acompanante->aparentesco."')";
 
-		$SQLEstadosResp = "SELECT * FROM hc_resp ORDER BY nombre ASC";
-		insertarTablaArray_v2($datos, $SQLEstadosResp, 'estados_resp');
-
-		$SQLGlasgows = "SELECT * FROM hc_glasgow ORDER BY nombre ASC";
-		insertarTablaArray_v2($datos, $SQLGlasgows, 'glasgows');
-
-		$SQLEstadosConciencia = "SELECT * FROM hc_conciencia ORDER BY nombre ASC";
-		insertarTablaArray_v2($datos, $SQLEstadosConciencia, 'estados_conciencia');
-	}
+				if ( ejecutarQuery_v2($SQLInsert) == true ){
+					$datos[estado] = "OK";
+					$datos[mensaje] = "Datos almacenados (insertados) correctamente.";
+				}else{
+					$datos[estado] = "ERROR";
+					$datos[mensaje] = "Los datos no fueron almacenados.";
+				}
+			}
+		}
+	}		
 }
 
 if ( isset($_GET[debug]) ){
