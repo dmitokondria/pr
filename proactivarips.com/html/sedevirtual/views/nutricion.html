@@ -190,54 +190,57 @@
                 <div class="subtitulo">Antecedentes Personales</div>
                 <div class="form-group col-md-12">
                     <div class="form-group col-md-4">
-                        <div class="radio">
+                        <div class="checkbox">
                             <label>
-                                <input type="checkbox" ng-model="formulario.ant.rd_bajopeso" value=""> Bajo peso al nacer
+                                <input type="checkbox" ng-model="formulario.ant.ch_bajopeso" value=""> Bajo peso al nacer
                             </label>
                         </div>
-                        <div class="radio">
+                        <div class="checkbox">
                             <label>
-                                <input type="checkbox" ng-model="formulario.ant.rd_alteraciones" value=""> Alteraciones del desarrollo
+                                <input type="checkbox" ng-model="formulario.ant.ch_alteraciones" value=""> Alteraciones del desarrollo
                             </label>
                         </div>
-                        <div class="radio">
+                        <div class="checkbox">
                             <label>
-                                <input type="checkbox" ng-model="formulario.ant.rd_sobrepeso" value=""> Sobrepeso u obesidad
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <div class="radio">
-                            <label>
-                                <input type="checkbox" ng-model="formulario.ant.rd_hipertension" value=""> Hipertensión arterial
-                            </label>
-                        </div>
-                        <div class="radio">
-                            <label>
-                                <input type="checkbox" ng-model="formulario.ant.rd_diabetes" value=""> Diabetes Mellitus
-                            </label>
-                        </div>
-                        <div class="radio">
-                            <label>
-                                <input type="checkbox" ng-model="formulario.ant.rd_hipotiroidismo" value=""> Hipotiroidismo
+                                <input type="checkbox" ng-model="formulario.ant.ch_sobrepeso" value=""> Sobrepeso u obesidad
                             </label>
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <div class="radio">
+                        <div class="checkbox">
                             <label>
-                                <input type="checkbox" ng-model="formulario.ant.rd_insufrenal" value=""> Insuficiencia renal
+                                <input type="checkbox" ng-model="formulario.ant.ch_hipertension" value=""> Hipertensión arterial
                             </label>
                         </div>
-                        <div class="radio">
+                        <div class="checkbox">
                             <label>
-                                <input type="checkbox" ng-model="formulario.ant.rd_otro" value=""> Otros
+                                <input type="checkbox" ng-model="formulario.ant.ch_diabetes" value=""> Diabetes Mellitus
                             </label>
                         </div>
-                        <input type="text" ng-model="formulario.ant.otro_cual" class="form-control" ng-if="formulario.ant.rd_otro" placeholder="¿Cuáles?">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" ng-model="formulario.ant.ch_hipotiroidismo" value=""> Hipotiroidismo
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" ng-model="formulario.ant.ch_insufrenal" value=""> Insuficiencia renal
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" ng-model="formulario.ant.ch_otros" value=""> Otros
+                            </label>
+                        </div>
+                        <input type="text" ng-model="formulario.ant.otro_cual" class="form-control" ng-if="formulario.ant.ch_otros" placeholder="¿Cuáles?">
                     </div>
                 </div>
-                <div class="col-md-12"><pre>{{ formulario | json }}</pre></div>
+                <!--div class="col-md-12"><pre>{{ formulario | json }}</pre></div-->
+                <div class="col-md-12">
+                    <div class="alert alert-success" role="alert" type="danger" ng-show="mensaje"><div class="col-sm-1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></div>  </span>{{mensaje}}</div>
+                    </div>
                 <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
                     <button type="button" class="btn btn-default" ng-disabled="vista" ng-click="accion('guardar_basicos_nutri')"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
                     <!--button type="button" class="btn btn-default">Continuar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button-->

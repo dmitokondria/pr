@@ -87,12 +87,13 @@ if ( isset($_GET['listados']) ){
 			}
 			
 			$acompanante = $formulario->acompanante;
+			$ant = $formulario->ant;
 
 			$SQLExisteHistoriaCitaNutri = "SELECT id FROM hcnutri_ WHERE id_cita ='$formulario->cita'";
 			insertarTablaArray_v2($existeHC, $SQLExisteHistoriaCitaNutri, 'existe');
 
 			if (isset($existeHC[existe][0]) ) {
-				$SQLUpdate = "UPDATE hcnutri_ SET anombre = '$acompanante->anombre', acelular = '$acompanante->acelular', aparentesco = '$acompanante->aparentesco' WHERE id_cita = '$formulario->cita'";// rd_bajopeso rd_alteraciones rd_sobrepeso rd_hipertension rd_diabetes rd_hipotiroidismo rd_insufrenal rd_otros otro_cual
+				$SQLUpdate = "UPDATE hcnutri_ SET anombre = '$acompanante->anombre', acelular = '$acompanante->acelular', aparentesco = '$acompanante->aparentesco', ch_bajopeso = '$ant->ch_bajopeso', ch_alteraciones = '$ant->ch_alteraciones', ch_sobrepeso = '$ant->ch_sobrepeso', ch_hipertension = '$ant->ch_hipertension', ch_diabetes = '$ant->ch_diabetes', ch_hipotiroidismo = '$ant->ch_hipotiroidismo', ch_insufrenal = '$ant->ch_insufrenal', ch_otros = '$ant->ch_otros', otro_cual = '$ant->otro_cual' WHERE id_cita = '$formulario->cita'";// rd_bajopeso rd_alteraciones rd_sobrepeso rd_hipertension rd_diabetes rd_hipotiroidismo rd_insufrenal rd_otros otro_cual
 				if ( ejecutarQuery_v2($SQLUpdate) == true ){
 					$datos[estado] = "OK";
 					$datos[mensaje] = "Datos almacenados (actualizados) correctamente.";
@@ -101,8 +102,8 @@ if ( isset($_GET['listados']) ){
 					$datos[mensaje] = "Los datos no fueron almacenados.";
 				}
 			}else{
-				$SQLInsert = "INSERT INTO hcnutri_ (id, id_cita, anombre, acelular, aparentesco) 
-							VALUES ( NULL, ".$formulario->cita.", '".$acompanante->anombre."', '".$acompanante->acelular."', '".$acompanante->aparentesco."')";
+				$SQLInsert = "INSERT INTO hcnutri_ (id, id_cita, anombre, acelular, aparentesco, ch_bajopeso, ch_alteraciones, ch_sobrepeso, ch_hipertension, ch_diabetes, ch_hipotiroidismo, ch_insufrenal, ch_otros, otro_cual) 
+							VALUES ( NULL, ".$formulario->cita.", '".$acompanante->anombre."', '".$acompanante->acelular."', '".$acompanante->aparentesco."', '".$ant->ch_bajopeso."', '".$ant->ch_alteraciones."', '".$ant->ch_sobrepeso."', '".$ant->ch_hipertension."', '".$ant->ch_diabetes."', '".$ant->ch_hipotiroidismo."', '".$ant->ch_insufrenal."', '".$ant->ch_otros."', '".$ant->otro_cual."')";
 
 				if ( ejecutarQuery_v2($SQLInsert) == true ){
 					$datos[estado] = "OK";
