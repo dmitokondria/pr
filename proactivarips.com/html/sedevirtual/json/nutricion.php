@@ -113,6 +113,34 @@ if ( isset($_GET['listados']) ){
 					$datos[mensaje] = "Los datos no fueron almacenados.";
 				}
 			}
+		} else if (strcmp($accion, 'guardar_antropo') == 0 ) {
+		
+			$SQLUpdateAntropo = "UPDATE hcnutri_ SET peso = '$formulario->peso', talla = '$formulario->talla', per_toracico = '$formulario->per_toracico', per_abdomen = '$formulario->per_abdomen', per_cadera = '$formulario->per_cadera', rel_cintura = '$formulario->rel_cintura', creatinina = '$formulario->creatinina', tfg = '$formulario->tfg' WHERE id_cita = '$formulario->cita'";
+			insertarTablaArray_v2($updateantropo, $SQLUpdateAntropo, 'update_antropo');
+
+			if (ejecutarQuery_v2($SQLUpdateAntropo) == true ) {
+				$datos[estado] = "OK";
+				$datos[mensaje] = "Datos antropométricos almacenados correctamente.";
+			}else{
+				$datos[estado] = "ERROR";
+				$datos[mensaje] = "Los datos antropométricos no fueron almacenados.";
+			}
+		} else if (strcmp($accion, 'guardar_nutricion') == 0 ) {
+			
+			$semanal = $formulario->semanal;
+			$diaria = $formulario->diaria;
+			$habitos = $formulario->habitos;
+
+			$SQLUpdateNutricion = "UPDATE hcnutri_ SET cereales = '$semanal->cereales', verduras = '$semanal->verduras', frutas = '$semanal->frutas', carnes = '$semanal->carnes', lacteos = '$semanal->lacteos', azucares = '$semanal->azucares', grasas = '$semanal->grasas', desayuno = '$diaria->desayuno', des_hora = '$diaria->des_hora', merienda = '$diaria->merienda', mer_hora = '$diaria->mer_hora', almuerzo = '$diaria->almuerzo', alm_hora = '$diaria->alm_hora', onces = '$diaria->onces', onc_hora = '$diaria->onc_hora', cena = '$diaria->cena', cen_hora = '$diaria->cen_hora', falto_dinero = '$habitos->falto_dinero', menos_comida = '$habitos->menos_comida', fuera_desa = '$habitos->fuera_desa', fuera_almu = '$habitos->fuera_almu', fuera_cena = '$habitos->fuera_cena', lugar_consumo = '$habitos->lugar_consumo', rd_frecuencia = '$habitos->rd_frecuencia', ch_paquete = '$habitos->ch_paquete', ch_panaderia = '$habitos->ch_panaderia', ch_rapidas = '$habitos->ch_rapidas', ch_gaseosas = '$habitos->ch_gaseosas', ch_fritos = '$habitos->ch_fritos', ch_ffc_otros = '$habitos->ch_ffc_otros', ffc_cuales = '$habitos->ffc_cuales' WHERE id_cita = '$formulario->cita'";
+			insertarTablaArray_v2($updatenutricion, $SQLUpdateNutricion, 'update_nutricion');
+
+			if (ejecutarQuery_v2($SQLUpdateNutricion) == true ) {
+				$datos[estado] = "OK";
+				$datos[mensaje] = "Datos antropométricos almacenados correctamente.";
+			}else{
+				$datos[estado] = "ERROR";
+				$datos[mensaje] = "Los datos antropométricos no fueron almacenados.";
+			}
 		}
 	}		
 }

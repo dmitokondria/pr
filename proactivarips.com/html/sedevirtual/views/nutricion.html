@@ -239,14 +239,304 @@
                 </div>
                 <!--div class="col-md-12"><pre>{{ formulario | json }}</pre></div-->
                 <div class="col-md-12">
-                    <div class="alert alert-success" role="alert" type="danger" ng-show="mensaje"><div class="col-sm-1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></div>  </span>{{mensaje}}</div>
-                    </div>
+                    <div class="alert alert-success" role="alert" type="danger" ng-show="mensaje"><div class="col-sm-1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>{{mensaje}}</div>
+                </div>
                 <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
                     <button type="button" class="btn btn-default" ng-disabled="vista" ng-click="accion('guardar_basicos_nutri')"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
                     <!--button type="button" class="btn btn-default">Continuar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button-->
                 </div>
             </form>
         </tab><!--FIN TAB 1 UNO-->
+        <tab heading="Antropométricos">
+            <form class="col-md-12">
+                <div class="subtitulo">Medidas Antropométricas</div>
+                <div class="form-group col-md-12">
+                    <label class="col-md-5 no-padding">Peso</label>
+                    <div class="col-md-7 no-padding">
+                        <input type="text" class="form-control campo_medio" ng-model="formulario.peso">
+                        <label class="unidades">Kg.</label>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label class="col-md-5 no-padding">Talla</label>
+                    <div class="col-md-7 no-padding">
+                        <input type="text" class="form-control campo_medio" ng-model="formulario.talla">
+                        <label class="unidades">cms.</label>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label class="col-md-5 no-padding">Perímetro torácico</label>
+                    <div class="col-md-7 no-padding">
+                        <input type="text" class="form-control campo_medio" ng-model="formulario.per_toracico">
+                        <label class="unidades">cms.</label>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label class="col-md-5 no-padding">Perímetro abdominal</label>
+                    <div class="col-md-7 no-padding">
+                        <input type="text" class="form-control campo_medio" ng-model="formulario.per_abdomen">
+                        <label class="unidades">cms.</label>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label class="col-md-5 no-padding">Perímetro cadera</label>
+                    <div class="col-md-7 no-padding">
+                        <input type="text" class="form-control campo_medio" ng-model="formulario.per_cadera">
+                        <label class="unidades">cms.</label>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label class="col-md-5 no-padding">Relación Cintura/Cadera</label>
+                    <div class="col-md-7 no-padding">
+                        <input type="text" class="form-control campo_medio" ng-model="formulario.rel_cintura">
+                        <label class="unidades">cms.</label>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label class="col-md-5 no-padding">Creatinina</label>
+                    <div class="col-md-7 no-padding">
+                        <input type="text" class="form-control campo_medio" ng-model="formulario.creatinina" placeholder="Sale de Laboratorio">
+                        <label class="unidades">mg/dL</label>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label class="col-md-5 no-padding">TFG</label>
+                    <div class="col-md-7 no-padding">
+                        <input type="text" class="form-control campo_medio" ng-model="formulario.tfg" placeholder="Edad, peso y creatinina (fórmula mujer <> hombre)">
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label class="col-md-5 no-padding">IMC</label>
+                    <div class="col-md-7 no-padding">
+                        <input type="text" class="form-control campo_medio" ng-model="formulario.sl_imc" placeholder="Nivel en el que se encuentra">
+                        <input type="text" class="form-control campo_imc" ng-model="formulario.imc" placeholder="Número resultado de la fórmula">
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="alert alert-success" role="alert" type="danger" ng-show="mensaje"><div class="col-sm-1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>{{mensaje}}</div>
+                </div>
+                <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
+                    <button type="button" class="btn btn-default" ng-disabled="vista" ng-click="accion('guardar_antropo')"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
+                    <!--button type="button" class="btn btn-default">Continuar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button-->
+                </div>
+                <!--div class="col-md-12"><pre>{{ formulario | json }}</pre></div-->
+            </form>
+        </tab><!--FIN TAB 2 DOS-->
+        <tab heading="Nutrición">
+            <form class="col-md-12">
+                <div class="subtitulo">Alimentación y Nutrición</div>
+                <div class="col-md-12 subrayado">Frecuencia semanal de consumo de alimentos</div>
+                <div class="form-group col-md-12">
+                    <label class="col-md-5">Cereales, raíces, tubérculos y plátanos</label>
+                    <div class="col-md-7">
+                        <input type="text" class="form-control campo_medio" ng-model="formulario.semanal.cereales">
+                        <label class="unidades">Veces</label>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label class="col-md-5">Hortalizas y verduras</label>
+                    <div class="col-md-7">
+                        <input type="text" class="form-control campo_medio" ng-model="formulario.semanal.verduras">
+                        <label class="unidades">Veces</label>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label class="col-md-5">Frutas</label>
+                    <div class="col-md-7">
+                        <input type="text" class="form-control campo_medio" ng-model="formulario.semanal.frutas">
+                        <label class="unidades">Veces</label>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label class="col-md-5">Carnes, huevos y leguminosas</label>
+                    <div class="col-md-7">
+                        <input type="text" class="form-control campo_medio" ng-model="formulario.semanal.carnes">
+                        <label class="unidades">Veces</label>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label class="col-md-5">Lácteos y derivados</label>
+                    <div class="col-md-7">
+                        <input type="text" class="form-control campo_medio" ng-model="formulario.semanal.lacteos">
+                        <label class="unidades">Veces</label>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label class="col-md-5">Azúcares</label>
+                    <div class="col-md-7">
+                        <input type="text" class="form-control campo_medio" ng-model="formulario.semanal.azucares">
+                        <label class="unidades">Veces</label>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label class="col-md-5">Grasas</label>
+                    <div class="col-md-7">
+                        <input type="text" class="form-control campo_medio" ng-model="formulario.semanal.grasas">
+                        <label class="unidades">Veces</label>
+                    </div>
+                </div>
+                <div class="col-md-12 subrayado">Frecuencia diaria de consumo de alimentos</div>
+                    <div class="col-md-12">
+                        <label class="col-md-5">Desayuno</label>
+                        <div class="form-group col-md-7">
+                            <input type="text" class="form-control campo_medio" ng-model="formulario.diaria.desayuno">
+                            <label class="unidades">Veces</label>
+                        </div>
+                        <div class="col-md-5"></div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control campo_medio" ng-model="formulario.diaria.des_hora" placeholder="HH:MM am / pm">
+                            <label class="unidades">Horarios</label>
+                        </div>
+                    </div>
+                    <div class="col-md-12"><hr>
+                        <label class="col-md-5">Merienda</label>
+                        <div class="form-group col-md-7">
+                            <input type="text" class="form-control campo_medio" ng-model="formulario.diaria.merienda">
+                            <label class="unidades">Veces</label>
+                        </div>
+                        <div class="col-md-5"></div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control campo_medio" ng-model="formulario.diaria.mer_hora" placeholder="HH:MM am / pm">
+                            <label class="unidades">Horarios</label>
+                        </div>
+                    </div>
+                    <div class="col-md-12"><hr>
+                        <label class="col-md-5">Almuerzo</label>
+                        <div class="form-group col-md-7">
+                            <input type="text" class="form-control campo_medio" ng-model="formulario.diaria.almuerzo">
+                            <label class="unidades">Veces</label>
+                        </div>
+                        <div class="col-md-5"></div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control campo_medio" ng-model="formulario.diaria.alm_hora" placeholder="HH:MM am / pm">
+                            <label class="unidades">Horarios</label>
+                        </div>
+                    </div>
+                    <div class="col-md-12"><hr>
+                        <label class="col-md-5">Onces</label>
+                        <div class="form-group col-md-7">
+                            <input type="text" class="form-control campo_medio" ng-model="formulario.diaria.onces">
+                            <label class="unidades">Veces</label>
+                        </div>
+                        <div class="col-md-5"></div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control campo_medio" ng-model="formulario.diaria.onc_hora" placeholder="HH:MM am / pm">
+                            <label class="unidades">Horarios</label>
+                        </div>
+                    </div>
+                    <div class="col-md-12"><hr>
+                        <label class="col-md-5">Cena</label>
+                        <div class="form-group col-md-7">
+                            <input type="text" class="form-control campo_medio" ng-model="formulario.diaria.cena">
+                            <label class="unidades">Veces</label>
+                        </div>
+                        <div class="col-md-5"></div>
+                        <div class="form-group col-md-7">
+                            <input type="text" class="form-control campo_medio" ng-model="formulario.diaria.cen_hora" placeholder="HH:MM am / pm">
+                            <label class="unidades">Horarios</label>
+                        </div>
+                    </div>
+                <div class="col-md-12 subrayado">Hábitos de alimentación</div>
+                <div class="form-group col-md-12">
+                    <label>¿En el último mes faltó dinero en su hogar para comprar alimentos?</label>
+                    <div class="col-md-offset-4 col-md-4">
+                        <div class="radio">
+                            <input type="radio" value="1" ng-model="formulario.habitos.falto_dinero"><label>Sí</label>
+                        </div>
+                        <div class="radio">
+                            <input type="radio" value="0" ng-model="formulario.habitos.falto_dinero"><label>No</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-12"><hr>
+                    <label>¿En el último mes se disminuyó el número de comidas por falta de dinero para comprar los alimentos?</label>
+                    <div class="col-md-offset-4 col-md-4">
+                        <div class="radio">
+                            <input type="radio" value="1" ng-model="formulario.habitos.menos_comida"><label>Sí</label>
+                        </div>
+                        <div class="radio">
+                            <input type="radio" value="0" ng-model="formulario.habitos.menos_comida"><label>No</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-12"><hr>
+                    <label>¿Qué comidas preparadas fuera de casa consume?</label>
+                    <div class="col-md-offset-4 col-md-4">
+                        <div class="radio">
+                            <input type="checkbox" ng-model="formulario.habitos.fuera_desa"><label>Desayuno</label>
+                        </div>
+                        <div class="radio">
+                            <input type="checkbox" ng-model="formulario.habitos.fuera_almu"><label>Almuerzo</label>
+                        </div>
+                        <div class="radio">
+                            <input type="checkbox" ng-model="formulario.habitos.fuera_cena"><label>Cena</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <div class="form-group">
+                        <label>¿En qué lugar consume estos alimentos?</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" ng-model="formulario.habitos.lugar_consumo">
+                    </div>
+                </div>
+                <div class="form-group col-md-12"><hr>
+                    <label>¿Cuántas veces a la semana consume alimentos preparados fuera de casa?</label>
+                    <div class="col-md-offset-4 col-md-4">
+                        <div class="radio">
+                            <input type="radio" value="1" ng-model="formulario.habitos.rd_frecuencia"><label>Ocasionalmente</label>
+                        </div>
+                        <div class="radio">
+                            <input type="radio" value="2" ng-model="formulario.habitos.rd_frecuencia"><label>1 - 2 veces</label>
+                        </div>
+                        <div class="radio">
+                            <input type="radio" value="3" ng-model="formulario.habitos.rd_frecuencia"><label>3 - 5 veces</label>
+                        </div>
+                        <div class="radio">
+                            <input type="radio" value="4" ng-model="formulario.habitos.rd_frecuencia"><label>Todos los días</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-12"><hr>
+                    <label>¿Cuáles son los alimentos que consume con mayor frecuencia fuera de casa?</label>
+                    <div class="col-md-offset-4 col-md-8">
+                        <div class="radio">
+                            <input type="checkbox" ng-model="formulario.habitos.ch_paquete"><label>Productos de paquete</label>
+                        </div>
+                        <div class="radio">
+                            <input type="checkbox" ng-model="formulario.habitos.ch_panaderia"><label>Productos de panadería</label>
+                        </div>
+                        <div class="radio">
+                            <input type="checkbox" ng-model="formulario.habitos.ch_rapidas"><label>Comidas rápidas</label>
+                        </div>
+                        <div class="radio">
+                            <input type="checkbox" ng-model="formulario.habitos.ch_gaseosas"><label>Gaseosas o refrescos</label>
+                        </div>
+                        <div class="radio">
+                            <input type="checkbox" ng-model="formulario.habitos.ch_fritos"><label>Alimentos fritos</label>
+                        </div>
+                        <div class="radio">
+                            <input type="checkbox" ng-model="formulario.habitos.ch_ffc_otros"><label>Otros</label>
+                        </div>
+                        <div class="col-md-12" ng-if="formulario.habitos.ch_ffc_otros">
+                            <label class="col-md-4">¿Cuáles?</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" placeholder="Cuáles Otros" ng-model="formulario.habitos.ffc_cuales">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="alert alert-success" role="alert" type="danger" ng-show="mensaje"><div class="col-sm-1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>{{mensaje}}</div>
+                </div>
+                <div class="col-md-12"><pre>{{ formulario | json }}</pre></div>
+                <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
+                    <button type="button" class="btn btn-default" ng-disabled="vista" ng-click="accion('guardar_nutricion')"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
+                    <!--button type="button" class="btn btn-default">Continuar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button-->
+                </div>
+            </form>
+        </tab><!--FIN TAB 3 TRES-->
     </tabset>
 </div>
 <div class="margen_clear"></div>
