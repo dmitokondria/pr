@@ -377,21 +377,22 @@ if ( isset($_GET['listados']) ){
 				$id_medicamento_formula = insertarFila($SQLCrearMedicamento);
 				$datos[id_medicamento_formula] = $id_medicamento_formula;
 			}
-		} else if ( intval($formulario->pagina) == 6 ){ echo "6-";
-			if ( strcmp($formulario->accion, 'agregar_orden') == 0 ){ echo "agregar_orden-";
+		} else if ( intval($formulario->pagina) == 6 ){
+			if ( strcmp($formulario->accion, 'agregar_orden') == 0 ){
 				$SQLExisteCitaOrden = "SELECT * FROM citas_ordenes WHERE id_cita = ".$formulario->id_cita." AND id_cup = ".$formulario->orden->id;
+
 				insertarTablaArray_v2($existe, $SQLExisteCitaOrden, 'cita_orden');
-				if ( count($existe[cita_orden]) != 0 ){ echo "existe-";
+				if ( count($existe[cita_orden]) == 0 ){
 					//INSERT
 					$SQLInsertCitaOrden = "INSERT INTO citas_ordenes(id_cita, id_cup) VALUES(".$formulario->id_cita.", ".$formulario->orden->id.")";
-					if (insertarFila($SQLInsertCitaOrden) != 0 ){ echo "insertarFila-OK-";
+					if (insertarFila($SQLInsertCitaOrden) != 0 ){
 						$datos[status] = "OK";
 						$datos[mensaje] = "Orden creado correctamente";
-					}else{echo "insertarFila-ERROR1-";
+					}else{
 						$datos[status] = "ERROR";
 						$datos[mensaje] = "Orden creado correctamente";
 					}
-				}else{echo "insertarFila-ERROR2-";
+				}else{
 					//ERROR
 					$datos[status] = "ERROR";
 					$datos[mensaje] = "La orden ya ha sido generada";
@@ -406,7 +407,7 @@ if ( isset($_GET['listados']) ){
 				        "cups": "781601",
 				        "procedimiento": "APLICACION DE TUTOR EXTERNO RODILLA"
 				    }
-				}:*/	
+				}:*/
 			}
 		}
 	}

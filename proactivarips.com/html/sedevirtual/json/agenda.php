@@ -100,9 +100,9 @@ $usuario = json_decode($cookie_usuario, true);
 //}
 
 if ( isset($_GET[debug]) ){
-	/*echo "<pre>";
-	print_r($datos);
-	echo "</pre>";*/
+	echo $SQLCitasHoy."<pre>";
+	print_r($citas_hoy);
+	echo "</pre>";
 }else {
 	echo json_encode($datos);
 }
