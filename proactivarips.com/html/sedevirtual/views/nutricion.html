@@ -530,13 +530,137 @@
                 <div class="col-md-12">
                     <div class="alert alert-success" role="alert" type="danger" ng-show="mensaje"><div class="col-sm-1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>{{mensaje}}</div>
                 </div>
-                <div class="col-md-12"><pre>{{ formulario | json }}</pre></div>
+                <!--div class="col-md-12"><pre>{{ formulario | json }}</pre></div-->
                 <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
                     <button type="button" class="btn btn-default" ng-disabled="vista" ng-click="accion('guardar_nutricion')"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
                     <!--button type="button" class="btn btn-default">Continuar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button-->
                 </div>
             </form>
         </tab><!--FIN TAB 3 TRES-->
+        <tab heading="Lactancia">
+            <form class="col-md-12">  
+                <div class="subtitulo">Lactancia Materna (Niños menores de 1 año)</div>
+                <div class="form-horizontal col-md-12">
+                    <div class="form-group col-md-12">
+                        <label>¿Actualmente recibe lactancia materna?</label>
+                        <div class="col-md-offset-4 col-md-4">
+                            <div class="radio">
+                                <input type="radio" value="1" ng-model="formulario.lactancia.recibe"><label>Sí</label>
+                            </div>
+                            <div class="radio">
+                                <input type="radio" value="0" ng-model="formulario.lactancia.recibe" ng-click="formulario.lactancia.recibe_dia=''"><label>No</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12" ng-if="formulario.lactancia.recibe">
+                        <label for="inputEmail3" class="control-label">¿Cuántas veces al día?</label>
+                        <input type="text" class="form-control" ng-model="formulario.lactancia.recibe_dia">
+                    </div>
+                    <div class="form-group col-md-12"><hr>
+                        <label>¿También hay lactancia durante la noche?</label>
+                        <div class="col-md-offset-4 col-md-4">
+                            <div class="radio">
+                                <input type="radio" value="1" ng-model="formulario.lactancia.noche" ng-click="formulario.lactancia.noche_motivo=''"><label>Sí</label>
+                            </div>
+                            <div class="radio">
+                                <input type="radio" value="0" ng-model="formulario.lactancia.noche"><label>No</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12" ng-if="formulario.lactancia.noche == 0">
+                        <label for="inputEmail3" class="control-label">¿Cuál es el motivo por el que no lacta de noche?</label>
+                        <input type="text" class="form-control" ng-model="formulario.lactancia.noche_motivo">
+                    </div>
+                    <div class="form-group col-md-12"><hr>
+                        <label>¿Ha tenido problemas con la lactancia materna?</label>
+                        <div class="col-md-offset-4 col-md-4">
+                            <div class="radio">
+                                <input type="radio" value="1" ng-model="formulario.lactancia.problemas"><label>Sí</label>
+                            </div>
+                            <div class="radio">
+                                <input type="radio" value="0" ng-model="formulario.lactancia.problemas" ng-click="formulario.lactancia.problemas_cuales=''"><label>No</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12" ng-if="formulario.lactancia.problemas">
+                        <label for="inputEmail3" class="control-label">¿Qué problemas se han presentado en la lactancia?</label>
+                        <input type="text" class="form-control" ng-model="formulario.lactancia.problemas_cuales">
+                    </div>
+                    <div class="form-group col-md-12"><hr>
+                        <label>¿Recibió capacitación en lactancia materna antes del nacimiento o posterior a el?</label>
+                        <div class="col-md-offset-4 col-md-4">
+                            <div class="radio">
+                                <input type="radio" value="1" ng-model="formulario.lactancia.capacitacion"><label>Sí</label>
+                            </div>
+                            <div class="radio">
+                                <input type="radio" value="0" ng-model="formulario.lactancia.capacitacion"><label>No</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12"><hr>
+                        <label>¿Actualmente recibe alimentos diferentes a la lactancia materna?</label>
+                        <div class="col-md-offset-4 col-md-4">
+                            <div class="radio">
+                                <input type="radio" value="1" ng-model="formulario.lactancia.alimentos"><label>Sí</label>
+                            </div>
+                            <div class="radio">
+                                <input type="radio" value="0" ng-model="formulario.lactancia.alimentos" ng-click="formulario.lactancia.alimentos_que=''"><label>No</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12" ng-if="formulario.lactancia.alimentos">
+                        <label class="control-label">¿Qué alimentos recibe?</label>
+                        <input type="text" class="form-control" ng-model="formulario.lactancia.alimentos_que">
+                    </div>
+                    <div class="form-group col-md-12"><hr>
+                        <label>¿El niño(a) consume leche entera o de fórmula?</label>
+                        <div class="col-md-offset-4 col-md-4">
+                            <div class="radio">
+                                <input type="radio" value="1" ng-model="formulario.lactancia.leche"><label>Sí</label>
+                            </div>
+                            <div class="radio">
+                                <input type="radio" value="0" ng-model="formulario.lactancia.leche"><label>No</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12"><hr>
+                        <label>¿Actualmente recibe suplementación?</label>
+                        <div class="col-md-offset-4 col-md-4">
+                            <div class="radio">
+                                <input type="radio" value="1" ng-model="formulario.lactancia.suplementacion"><label>Sí</label>
+                            </div>
+                            <div class="radio">
+                                <input type="radio" value="0" ng-model="formulario.lactancia.suplementacion" ng-click="formulario.lactancia.suplementacion_tipo=''"><label>No</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12" ng-if="formulario.lactancia.suplementacion">
+                        <label for="inputEmail3" class="control-label">¿Qué tipo de suplementación recibe?</label>
+                        <input type="text" class="form-control" ng-model="formulario.lactancia.suplementacion_tipo">
+                    </div>
+                    <div class="form-group col-md-12"><hr>
+                        <label>¿En el día de ayer o anoche el niño(a) bebió algo en biberón?</label>
+                        <div class="col-md-offset-4 col-md-4">
+                            <div class="radio">
+                                <input type="radio" value="1" ng-model="formulario.lactancia.biberon"><label>Sí</label>
+                            </div>
+                            <div class="radio">
+                                <input type="radio" value="0" ng-model="formulario.lactancia.biberon" ng-click="formulario.lactancia.bebida_que=''"><label>No</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12" ng-if="formulario.lactancia.biberon">
+                        <label for="inputEmail3" class="control-label">¿Qué bebida tomó por este medio?</label>
+                        <input type="text" class="form-control" ng-model="formulario.lactancia.bebida_que">
+                    </div>
+                    <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
+                        <button type="button" class="btn btn-default" ng-disabled="vista" ng-click="accion('guardar_lactancia')"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
+                        <!--button type="button" class="btn btn-default">Continuar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button-->
+                    </div>
+                    <div class="col-md-12"><pre>{{ formulario | json }}</pre></div>
+                </div>
+            </form>
+        </tab><!--FIN TAB 4 CUATRO-->
     </tabset>
 </div>
 <div class="margen_clear"></div>

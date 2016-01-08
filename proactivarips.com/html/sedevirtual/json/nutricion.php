@@ -141,6 +141,24 @@ if ( isset($_GET['listados']) ){
 				$datos[estado] = "ERROR";
 				$datos[mensaje] = "Los datos antropométricos no fueron almacenados.";
 			}
+		} else if (strcmp($accion, 'guardar_lactancia') == 0 ) {
+
+			//idRegistro////
+			$SQLIdCita = "SELECT id FROM hcnutri_ WHERE id_cita = $formulario->cita";
+			insertarTablaArray_v2($cita, $SQLIdCita, 'info');
+			$id_registro = $cita[info][0][id];
+			////////////////
+
+			$ejecucion = actualizarRegistro('hcnutri_', $id_registro, $formulario->lactancia);
+			if ( $ejecucion[status] == "OK" ){
+				$datos[status] = "OK";
+				$datos[mensaje] = "";
+			}else{
+				$datos[status] = "ERROR";
+				echo "<pre>";
+				print_r($ejecucion);
+				echo "</pre>";
+			}
 		}
 	}		
 }
