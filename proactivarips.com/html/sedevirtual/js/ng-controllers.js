@@ -1201,6 +1201,8 @@ controllers.controller('crearcitaCTRL', function($scope, $http, $cookieStore, $l
     $scope.reiniciar = function(){
         $scope.formulario = {};
         $scope.formulario.accion = 'iniciales';
+        $scope.agendada = false;
+        $scope.mensaje = '';
     };
 
     $scope.$watch('formulario.fecha', function() {

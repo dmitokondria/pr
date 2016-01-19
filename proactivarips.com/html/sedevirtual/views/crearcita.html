@@ -92,16 +92,13 @@
                 </select>
                 <!--input id="datepicker" type="text" data-ng-datepicker data-ng-options="datepickerOptions" data-ng-model="date"-->
             </div>
-            <div ng-if="formulario.cita" class="form-group col-md-offset-3 col-md-4">
+            <div ng-if="formulario.cita" class="form-group col-md-12 centrado">
                 <button ng-disabled="agendada" class="btn btn-default" type="submit" ng-click="agendar()">Agendar Cita</button>
                 <button class="btn btn-default" type="submit" ng-click="reiniciar()">Reiniciar</button>
             </div>
         </form>
-
         <div class="form-group col-md-offset-1 col-md-10 alert alert-success" role="alert" ng-show="mensaje">{{mensaje}}</div>
     </div>
-    <div class="col-md-12">Agendada: <pre>{{agendad | json}}</pre></div>
-    <div class="col-md-12">Model: <pre>{{formulario | json}} - {{usuario | json}}</pre></div>
     <div class="margen_clear"></div>
     </div>
 </div>

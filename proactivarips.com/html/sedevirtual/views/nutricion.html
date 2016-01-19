@@ -653,14 +653,99 @@
                         <label for="inputEmail3" class="control-label">¿Qué bebida tomó por este medio?</label>
                         <input type="text" class="form-control" ng-model="formulario.lactancia.bebida_que">
                     </div>
-                    <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
-                        <button type="button" class="btn btn-default" ng-disabled="vista" ng-click="accion('guardar_lactancia')"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
-                        <!--button type="button" class="btn btn-default">Continuar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button-->
-                    </div>
-                    <div class="col-md-12"><pre>{{ formulario | json }}</pre></div>
                 </div>
+                <div class="col-md-12">
+                    <div class="alert alert-success" role="alert" type="danger" ng-show="mensaje"><div class="col-sm-1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>{{mensaje}}</div>
+                </div>
+                <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
+                    <button type="button" class="btn btn-default" ng-disabled="vista" ng-click="accion('guardar_lactancia')"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
+                    <!--button type="button" class="btn btn-default">Continuar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button-->
+                </div>
+                <!--div class="col-md-12"><pre>{{ formulario | json }}</pre></div-->
             </form>
         </tab><!--FIN TAB 4 CUATRO-->
+        <tab heading="Diagnósticos">
+            <form class="col-md-12">
+                <div class="subtitulo">Diagnóstico Nutricional</div>
+                <div class="form-group col-md-12">
+                    <label class="subrayado">Buscar Diagnóstico</label>
+                    <input type="text" class="form-control">
+                </div>
+                <label class="subrayado">Diagnósticos Actuales</label>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <tr class="info">
+                            <th>Principal</th>
+                            <th>Código</th>
+                            <th>Diagnóstico</th>
+                            <th>Tipo</th>
+                            <th>Contingencia</th>
+                            <th><span class="glyphicon glyphicon-remove suave"></th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="checkbox_table">
+                                    <input type="checkbox" value="">
+                                </div>
+                            </td>
+                            <td class="centrado_vertical">Código</td>
+                            <td class="centrado_vertical">Diagnóstico</td>
+                            <td class="centrado_vertical">Tipo</td>
+                            <td class="centrado_vertical">Contingencia</td>
+                            <td class="centrado_vertical"><span class="glyphicon glyphicon-remove suave"></span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="checkbox_table">
+                                    <input type="checkbox" value="">
+                                </div>
+                            </td>
+                            <td class="centrado_vertical">Código</td>
+                            <td class="centrado_vertical">Diagnóstico</td>
+                            <td class="centrado_vertical">Tipo</td>
+                            <td class="centrado_vertical">Contingencia</td>
+                            <td class="centrado_vertical"><span class="glyphicon glyphicon-remove suave"></span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="checkbox_table">
+                                    <input type="checkbox" value="">
+                                </div>
+                            </td>
+                            <td class="centrado_vertical">Código</td>
+                            <td class="centrado_vertical">Diagnóstico</td>
+                            <td class="centrado_vertical">Tipo</td>
+                            <td class="centrado_vertical">Contingencia</td>
+                            <td class="centrado_vertical"><span class="glyphicon glyphicon-remove suave"></span></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
+                    <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
+                    <button type="button" class="btn btn-default">Continuar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
+                </div>
+            </form>
+        </tab><!--FIN TAB 5 CINCO-->
+        <tab heading="Hallazgos">
+            <form class="col-md-12">
+                <div class="subtitulo">Hallazgos y Conducta</div>
+                <div class="form-group col-md-12">
+                    <textarea class="form-control" rows="3" ng-model="formulario.hallazgos.conducta"></textarea>
+                </div>
+                <div class="subtitulo">Recomendaciones Nutricionales</div>
+                <div class="form-group col-md-12">
+                    <textarea class="form-control" rows="3" ng-model="formulario.hallazgos.recomendacion"></textarea>
+                </div>
+                <div class="col-md-12">
+                    <div class="alert alert-success" role="alert" type="danger" ng-show="mensaje"><div class="col-sm-1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>{{mensaje}}</div>
+                </div>
+                <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
+                    <button type="button" class="btn btn-default" ng-disabled="vista" ng-click="accion('guardar_hallazgos')"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
+                    <button type="button" class="btn btn-default">Finalizar <span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span></button>
+                </div>
+                <!--div class="col-md-12"><pre>{{ hallazgos | json }}</pre></div-->
+            </form>
+        </tab><!--FIN TAB 6 SEIS-->
     </tabset>
 </div>
 <div class="margen_clear"></div>

@@ -147,18 +147,35 @@ if ( isset($_GET['listados']) ){
 			$SQLIdCita = "SELECT id FROM hcnutri_ WHERE id_cita = $formulario->cita";
 			insertarTablaArray_v2($cita, $SQLIdCita, 'info');
 			$id_registro = $cita[info][0][id];
-			////////////////
 
 			$ejecucion = actualizarRegistro('hcnutri_', $id_registro, $formulario->lactancia);
 			if ( $ejecucion[status] == "OK" ){
 				$datos[status] = "OK";
-				$datos[mensaje] = "";
+				$datos[mensaje] = "Datos de lactancia almacenados correctamente.";
 			}else{
 				$datos[status] = "ERROR";
 				echo "<pre>";
 				print_r($ejecucion);
 				echo "</pre>";
 			}
+		} else if (strcmp($accion, 'guardar_hallazgos') == 0 ) {
+
+			//idRegistro////
+			$SQLIdCita = "SELECT id FROM hcnutri_ WHERE id_cita = $formulario->cita";
+			insertarTablaArray_v2($cita, $SQLIdCita, 'info');
+			$id_registro = $cita[info][0][id];
+
+			$ejecucion = actualizarRegistro('hcnutri_', $id_registro, $formulario->hallazgos);
+			if ( $ejecucion[status] == "OK" ){
+				$datos[status] = "OK";
+				$datos[mensaje] = "Datos de hallazgos almacenados correctamente.";
+			}else{
+				$datos[status] = "ERROR";
+				echo "<pre>";
+				print_r($ejecucion);
+				echo "</pre>";
+			}
+
 		}
 	}		
 }
