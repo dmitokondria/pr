@@ -42,7 +42,7 @@
     <div class="col-md-10">
         <div class="titulo_hc">Historia Clínica Nutrición</div>
         <tabset justified="true">
-            <tab heading="Datos Básicos">
+            <tab heading="Datos Básicos" ng-click="reset()">
              <form class="col-md-12">
                 <div class="subtitulo">Datos Personales</div>
                 <div class="col-md-6">
@@ -247,7 +247,7 @@
                 </div>
             </form>
         </tab><!--FIN TAB 1 UNO-->
-        <tab heading="Antropométricos">
+        <tab heading="Antropométricos" ng-click="reset()">
             <form class="col-md-12">
                 <div class="subtitulo">Medidas Antropométricas</div>
                 <div class="form-group col-md-12">
@@ -322,7 +322,7 @@
                 <!--div class="col-md-12"><pre>{{ formulario | json }}</pre></div-->
             </form>
         </tab><!--FIN TAB 2 DOS-->
-        <tab heading="Nutrición">
+        <tab heading="Nutrición" ng-click="reset()">
             <form class="col-md-12">
                 <div class="subtitulo">Alimentación y Nutrición</div>
                 <div class="col-md-12 subrayado">Frecuencia semanal de consumo de alimentos</div>
@@ -537,7 +537,7 @@
                 </div>
             </form>
         </tab><!--FIN TAB 3 TRES-->
-        <tab heading="Lactancia">
+        <tab heading="Lactancia" ng-click="reset()">
             <form class="col-md-12">  
                 <div class="subtitulo">Lactancia Materna (Niños menores de 1 año)</div>
                 <div class="form-horizontal col-md-12">
@@ -664,69 +664,82 @@
                 <!--div class="col-md-12"><pre>{{ formulario | json }}</pre></div-->
             </form>
         </tab><!--FIN TAB 4 CUATRO-->
-        <tab heading="Diagnósticos">
+        <tab heading="Diagnósticos" ng-click="reset()">
             <form class="col-md-12">
-                <div class="subtitulo">Diagnóstico Nutricional</div>
-                <div class="form-group col-md-12">
-                    <label class="subrayado">Buscar Diagnóstico</label>
-                    <input type="text" class="form-control">
+                <div class="subtitulo">Diagnósticos</div>
+                <div ng-hide="vista">
+                    <form class="col-md-12">
+                        <label class="subrayado">Agregar Diagnóstico</label>
+                        <div class="form-group  col-md-12">
+                            <label class="titulo">Buscar Diagnóstico</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" my-enter="buscarCies(diagnostico.buscar)" placeholder="Nombre o código" ng-model="diagnostico.buscar" ng-disabled="vista">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" ng-click="buscarCies(diagnostico.buscar)" type="button" ng-disabled="!diagnostico.buscar"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12" ng-show="bl_buscado">
+                            <label class="titulo">Seleccione el diagnóstico</label>
+                            <!--input type="text" class="form-control" placeholder="Nombre o código" ng-model="diagnostico.nombre" typeahead="cie as cie.nombre for cie in cies | filter:$viewValue" typeahead-on-select=""-->
+                            <select class="form-control" ng-model="diagnostico.nombre" ng-options='cie as cie.nombre for cie in cies'></select>
+                        </div>
+                        <div class="form-group col-md-6" ng-show="bl_buscado">
+                            <label class="titulo">Tipo</label>
+                            <select class="form-control" ng-model="diagnostico.tipo" ng-options='tipo as tipo.nombre for tipo in tipos_diagnostico'>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6" ng-show="bl_buscado">
+                            <label class="titulo">Contingencia</label>
+                            <select class="form-control" ng-model="diagnostico.tipo_contingencia" ng-options='tipo_contingencia as tipo_contingencia.nombre for tipo_contingencia in tipos_contingencia'></select>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <div class="alert alert-danger"  ng-if="mensaje_diagnostico=='error'">warning</div>
+                            <div class="alert alert-success" ng-if="mensaje_diagnostico=='ok'">Se ha guardado exitosamente!</div>
+                        </div>
+                        <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4" ng-show="bl_buscado">
+                            <button type="button" class="btn btn-default" ng-click="agregarDiagnostico()" ng-disabled="vista"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Agregar</button>
+                            <button type="button" class="btn btn-default" ng-click="limpiarDiagnostico()" ng-disabled="vista"><span class="glyphicon glyphicon-erase" aria-hidden="true"></span> Limpiar</button>
+                        </div>
+                    </form>
                 </div>
-                <label class="subrayado">Diagnósticos Actuales</label>
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <tr class="info">
-                            <th>Principal</th>
-                            <th>Código</th>
-                            <th>Diagnóstico</th>
-                            <th>Tipo</th>
-                            <th>Contingencia</th>
-                            <th><span class="glyphicon glyphicon-remove suave"></th>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="checkbox_table">
-                                    <input type="checkbox" value="">
-                                </div>
-                            </td>
-                            <td class="centrado_vertical">Código</td>
-                            <td class="centrado_vertical">Diagnóstico</td>
-                            <td class="centrado_vertical">Tipo</td>
-                            <td class="centrado_vertical">Contingencia</td>
-                            <td class="centrado_vertical"><span class="glyphicon glyphicon-remove suave"></span></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="checkbox_table">
-                                    <input type="checkbox" value="">
-                                </div>
-                            </td>
-                            <td class="centrado_vertical">Código</td>
-                            <td class="centrado_vertical">Diagnóstico</td>
-                            <td class="centrado_vertical">Tipo</td>
-                            <td class="centrado_vertical">Contingencia</td>
-                            <td class="centrado_vertical"><span class="glyphicon glyphicon-remove suave"></span></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="checkbox_table">
-                                    <input type="checkbox" value="">
-                                </div>
-                            </td>
-                            <td class="centrado_vertical">Código</td>
-                            <td class="centrado_vertical">Diagnóstico</td>
-                            <td class="centrado_vertical">Tipo</td>
-                            <td class="centrado_vertical">Contingencia</td>
-                            <td class="centrado_vertical"><span class="glyphicon glyphicon-remove suave"></span></td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
-                    <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
-                    <button type="button" class="btn btn-default">Continuar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
+                <div class="col-md-12">
+                    <label class="subrayado">Diagnósticos Actuales</label>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <tr class="info">
+                                <th>Principal</th>
+                                <th>Código</th>
+                                <th>Diagnóstico</th>
+                                <th>Tipo</th>
+                                <th>Contingencia</th>
+                                <th ng-hide="vista"><span class="glyphicon glyphicon-remove suave"></span></th>
+                            </tr>
+                            <tr ng-repeat="diagnostico_cita in diagnosticos_cita">
+                                <td>
+                                    <div class="checkbox_table">
+                                        <input type="checkbox" ng-click="diagnosticoPrincipal()" ng-model="diagnostico_cita.ppal">
+                                    </div>
+                                </td>
+                                <td class="centrado_vertical">{{diagnostico_cita.codigo}}</td>
+                                <td class="centrado_vertical">{{diagnostico_cita.diagnostico}}</td>
+                                <td class="centrado_vertical">{{diagnostico_cita.tipo.nombre}}</td>
+                                <td class="centrado_vertical">{{diagnostico_cita.contingencia.nombre}}</td>
+                                <td class="centrado_vertical" ng-hide="vista"><span class="glyphicon glyphicon-remove suave" ng-click="eliminarDiagnostico($index)"></span></td>
+                            </tr>
+                        </table>
+                        <div class="col-md-12">
+                            <div class="alert alert-success" role="alert" type="danger" ng-show="mensaje"><div class="col-sm-1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>{{mensaje}}</div>
+                        </div>
+                        <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
+                            <button type="button" class="btn btn-default" ng-click="enviarDiagnosticos()" ng-disabled="vista"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
+                            <!--button type="button" class="btn btn-default" ng-click="" ng-disabled="vista">Continuar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button-->
+                        </div>
+                    </div>
                 </div>
             </form>
         </tab><!--FIN TAB 5 CINCO-->
-        <tab heading="Hallazgos">
+        <tab heading="Hallazgos" ng-click="reset()">
             <form class="col-md-12">
                 <div class="subtitulo">Hallazgos y Conducta</div>
                 <div class="form-group col-md-12">
@@ -741,7 +754,7 @@
                 </div>
                 <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
                     <button type="button" class="btn btn-default" ng-disabled="vista" ng-click="accion('guardar_hallazgos')"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
-                    <button type="button" class="btn btn-default">Finalizar <span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span></button>
+                    <!--button type="button" class="btn btn-default">Finalizar <span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span></button-->
                 </div>
                 <!--div class="col-md-12"><pre>{{ hallazgos | json }}</pre></div-->
             </form>

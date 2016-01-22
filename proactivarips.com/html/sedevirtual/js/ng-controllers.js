@@ -417,6 +417,7 @@ controllers.controller('medicinaCTRL', function($scope, $http, $location, $cooki
             });
         };
         $scope.enviarDiagnosticos = function(){
+            $scope.mensaje = "";
             $scope.mensaje_diagnosticos = '';
             $scope.cita_diagnosticos = {};
             $scope.cita_diagnosticos.accion = "crear";
@@ -430,6 +431,7 @@ controllers.controller('medicinaCTRL', function($scope, $http, $location, $cooki
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).then(function(result){
                 //console.log(result.data.estado);
+                $scope.mensaje = result.data.mensaje;
                 $scope.mensaje_diagnosticos = 'ok';
                 //$scope.mensaje_examenfisico = result.data.estado;
             });

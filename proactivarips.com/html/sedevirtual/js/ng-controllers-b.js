@@ -90,6 +90,8 @@ controllers.controller('psicologiaCTRL', function($scope, $http, $location, $coo
 
     $scope.vista = false;
 
+    $scope.diagnostico = {};
+
     $scope.seccion = "Profesional";
     $http.get('json/fecha.php').then(function(result) {
         $scope.fecha = result.data.info;
@@ -125,6 +127,9 @@ controllers.controller('psicologiaCTRL', function($scope, $http, $location, $coo
 
             $scope.formulario = result.data.paciente;
             $scope.formulario.cita = $routeParams.cita;
+        //diagnósticos
+            $scope.tipos_diagnostico = result.data.tipos_diagnostico;
+            $scope.tipos_contingencia = result.data.causas_ext;
         };
         $scope.datosInicialesPestañas();
 
@@ -147,6 +152,114 @@ controllers.controller('psicologiaCTRL', function($scope, $http, $location, $coo
         };
 
     });
+    
+    ///////diagnostico
+
+    $scope.cies = {};
+    $scope.bl_buscado = false;
+    $scope.buscarCies = function(_palabra){
+        $http.get('json/medicina.php?listados=1&palabra='+_palabra).then(function(result) {
+            $scope.bl_buscado = true;
+            $scope.cies = result.data.cies;
+            $scope.diagnostico.nombre = _palabra;
+        });
+    };
+
+    $scope.diagnosticos_cita = [];
+    $scope.agregarDiagnostico = function(){
+        var diagnosticoTemp = {};
+        diagnosticoTemp.ppal = false;
+        diagnosticoTemp.codigo = $scope.diagnostico.nombre.codigo;
+        diagnosticoTemp.diagnostico = $scope.diagnostico.nombre.descripcion;
+        diagnosticoTemp.tipo = $scope.diagnostico.tipo;
+        diagnosticoTemp.contingencia = $scope.diagnostico.tipo_contingencia;
+        $scope.diagnosticos_cita.push(diagnosticoTemp);
+        $scope.limpiarDiagnostico();
+    };
+    $scope.diagnosticoPrincipal = function(){
+
+        for (var i = 0; i < $scope.diagnosticos_cita.length; i++) {
+            if ( i == this.$index ) $scope.diagnosticos_cita[i].ppal = true;
+            else $scope.diagnosticos_cita[i].ppal = false;
+        }
+
+        $scope.formulario_ = {};
+        $scope.formulario_.accion = "principal";
+        $scope.formulario_.codigo = $scope.diagnosticos_cita[this.$index].codigo;
+        $scope.formulario_.ppal = $scope.diagnosticos_cita[this.$index].ppal;
+        $scope.formulario_.id_cita = $routeParams.cita;
+        $scope.formulario_.pagina = 3;
+        $http({
+            url: 'json/medicina.php',
+            method: 'POST',
+            data: $scope.formulario_,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        }).then(function(result){
+        });
+    };
+    $scope.eliminarDiagnostico = function(_index){
+        $scope.formulario_ = {};
+        $scope.formulario_.accion = "eliminar";
+        $scope.formulario_.codigo = $scope.diagnosticos_cita[_index].codigo;
+        $scope.formulario_.id_cita = $routeParams.cita;
+        $scope.formulario_.pagina = 3;
+        $http({
+            url: 'json/medicina.php',
+            method: 'POST',
+            data: $scope.formulario_,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        }).then(function(result){
+            //eliminando un diagnostico del listado
+            $scope.diagnosticos_cita.splice(_index,1);
+        });
+    };
+    $scope.limpiarDiagnostico = function(){
+        $scope.cies = {};
+        $scope.bl_buscado = false;
+        $scope.diagnostico = {};
+    };
+    $scope.guardarDiagnosticos = function(){
+        $scope.mensaje_diagnosticos = '';
+        $scope.formulario = {};
+        $scope.formulario.diagnosticos_cita = $scope.diagnosticos_cita;
+        $scope.formulario.id_cita = $routeParams.cita;
+        $scope.formulario.pagina = 3;
+        $http({
+            url: 'json/medicina.php',
+            method: 'POST',
+            data: $scope.formulario,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        }).then(function(result){
+        });
+    };
+
+    $scope.enviarDiagnosticos = function(){
+        $scope.mensaje = "";
+        $scope.mensaje_diagnosticos = '';
+        $scope.cita_diagnosticos = {};
+        $scope.cita_diagnosticos.accion = "crear";
+        $scope.cita_diagnosticos.id_cita = $routeParams.cita;
+        $scope.cita_diagnosticos.pagina = 3;
+        $scope.cita_diagnosticos.diagnosticos_cita = $scope.diagnosticos_cita;
+        $http({
+            url: 'json/medicina.php',
+            method: 'POST',
+            data: $scope.cita_diagnosticos,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        }).then(function(result){
+            //console.log(result.data.estado);
+            $scope.mensaje = result.data.mensaje;
+            $scope.mensaje_diagnosticos = 'ok';
+            //$scope.mensaje_examenfisico = result.data.estado;
+        });
+    };
+
+    ////////FIN DIAGNOSTICOS
+
+    //// Borra el mensaje "Datos almacenados exitosamente." según se navegue entre tabs de la HC.
+    $scope.reset = function(){
+        $scope.mensaje = '';
+    }
 
     $scope.cerrarSesion = function(){
         $cookieStore.remove("user");
@@ -157,6 +270,8 @@ controllers.controller('psicologiaCTRL', function($scope, $http, $location, $coo
 controllers.controller('psicologiaVerCTRL', function($scope, $http, $cookieStore, $routeParams){
 
     $scope.vista = true;
+
+    $scope.diagnostico = {};
 
     $scope.seccion = "Profesional";
     $http.get('json/fecha.php').then(function(result) {
@@ -246,6 +361,8 @@ controllers.controller('nutricionCTRL', function($scope, $http, $location, $cook
         $location.path('/ingreso');
     }*/
 
+    $scope.diagnostico = {};
+
     $scope.seccion = "Profesional";
     $http.get('json/fecha.php').then(function(result) {
         $scope.fecha = result.data.info;
@@ -281,6 +398,10 @@ controllers.controller('nutricionCTRL', function($scope, $http, $location, $cook
 
             $scope.formulario = result.data.paciente;
             $scope.formulario.cita = $routeParams.cita;
+
+            //diagnósticos
+            $scope.tipos_diagnostico = result.data.tipos_diagnostico;
+            $scope.tipos_contingencia = result.data.causas_ext;
         }
         $scope.datosInicialesPestañas();
 
@@ -302,6 +423,112 @@ controllers.controller('nutricionCTRL', function($scope, $http, $location, $cook
         });
     }
     });
+    
+    ///////diagnostico
+
+    $scope.cies = {};
+    $scope.bl_buscado = false;
+    $scope.buscarCies = function(_palabra){
+        $http.get('json/medicina.php?listados=1&palabra='+_palabra).then(function(result) {
+            $scope.bl_buscado = true;
+            $scope.cies = result.data.cies;
+            $scope.diagnostico.nombre = _palabra;
+        });
+    };
+
+    $scope.diagnosticos_cita = [];
+    $scope.agregarDiagnostico = function(){
+        var diagnosticoTemp = {};
+        diagnosticoTemp.ppal = false;
+        diagnosticoTemp.codigo = $scope.diagnostico.nombre.codigo;
+        diagnosticoTemp.diagnostico = $scope.diagnostico.nombre.descripcion;
+        diagnosticoTemp.tipo = $scope.diagnostico.tipo;
+        diagnosticoTemp.contingencia = $scope.diagnostico.tipo_contingencia;
+        $scope.diagnosticos_cita.push(diagnosticoTemp);
+        $scope.limpiarDiagnostico();
+    };
+    $scope.diagnosticoPrincipal = function(){
+
+        for (var i = 0; i < $scope.diagnosticos_cita.length; i++) {
+            if ( i == this.$index ) $scope.diagnosticos_cita[i].ppal = true;
+            else $scope.diagnosticos_cita[i].ppal = false;
+        }
+
+        $scope.formulario_ = {};
+        $scope.formulario_.accion = "principal";
+        $scope.formulario_.codigo = $scope.diagnosticos_cita[this.$index].codigo;
+        $scope.formulario_.ppal = $scope.diagnosticos_cita[this.$index].ppal;
+        $scope.formulario_.id_cita = $routeParams.cita;
+        $scope.formulario_.pagina = 3;
+        $http({
+            url: 'json/medicina.php',
+            method: 'POST',
+            data: $scope.formulario_,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        }).then(function(result){
+        });
+    };
+    $scope.eliminarDiagnostico = function(_index){
+        $scope.formulario_ = {};
+        $scope.formulario_.accion = "eliminar";
+        $scope.formulario_.codigo = $scope.diagnosticos_cita[_index].codigo;
+        $scope.formulario_.id_cita = $routeParams.cita;
+        $scope.formulario_.pagina = 3;
+        $http({
+            url: 'json/medicina.php',
+            method: 'POST',
+            data: $scope.formulario_,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        }).then(function(result){
+            //eliminando un diagnostico del listado
+            $scope.diagnosticos_cita.splice(_index,1);
+        });
+    };
+    $scope.limpiarDiagnostico = function(){
+        $scope.cies = {};
+        $scope.bl_buscado = false;
+        $scope.diagnostico = {};
+    };
+    $scope.guardarDiagnosticos = function(){
+        $scope.mensaje_diagnosticos = '';
+        $scope.formulario = {};
+        $scope.formulario.diagnosticos_cita = $scope.diagnosticos_cita;
+        $scope.formulario.id_cita = $routeParams.cita;
+        $scope.formulario.pagina = 3;
+        $http({
+            url: 'json/medicina.php',
+            method: 'POST',
+            data: $scope.formulario,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        }).then(function(result){
+        });
+    };
+
+    $scope.enviarDiagnosticos = function(){
+        $scope.mensaje = "";
+        $scope.mensaje_diagnosticos = '';
+        $scope.cita_diagnosticos = {};
+        $scope.cita_diagnosticos.accion = "crear";
+        $scope.cita_diagnosticos.id_cita = $routeParams.cita;
+        $scope.cita_diagnosticos.pagina = 3;
+        $scope.cita_diagnosticos.diagnosticos_cita = $scope.diagnosticos_cita;
+        $http({
+            url: 'json/medicina.php',
+            method: 'POST',
+            data: $scope.cita_diagnosticos,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        }).then(function(result){
+            $scope.mensaje = result.data.mensaje;
+            $scope.mensaje_diagnosticos = 'ok';
+        });
+    };
+
+    ////////FIN DIAGNOSTICOS
+
+    //// Borra el mensaje "Datos almacenados exitosamente." según se navegue entre tabs de la HC.
+    $scope.reset = function(){
+        $scope.mensaje = '';
+    }
 
     $scope.cerrarSesion = function(){
         $cookieStore.remove("user");
@@ -309,5 +536,10 @@ controllers.controller('nutricionCTRL', function($scope, $http, $location, $cook
     };
 });
 ///No tocar el VER
-controllers.controller('nutricionVerCTRL', function($scope, $http, $location, $cookieStore, $route, $routeParams){});
+controllers.controller('nutricionVerCTRL', function($scope, $http, $location, $cookieStore, $route, $routeParams){
+
+    $scope.vista = true;
+    $scope.diagnostico = {};
+
+});
 ////////

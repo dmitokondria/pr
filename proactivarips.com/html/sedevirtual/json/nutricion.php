@@ -60,6 +60,14 @@ if ( isset($_GET['listados']) ){
 		$SQLAfiliacionEstados = "SELECT * FROM afiliacion_estados ORDER BY nombre ASC";
 		insertarTablaArray_v2($datos, $SQLAfiliacionEstados, 'afiliacion_estados');
 
+		//tipos diagnostico
+		$SQLTiposDiagnostico = "SELECT * FROM diagnostico_tipos ORDER BY nombre ASC";
+		insertarTablaArray_v2($datos, $SQLTiposDiagnostico, 'tipos_diagnostico');
+
+		//Contingencia Diagnósticos == Causa Externa en HC MEDICINA
+		$SQLCausasExt = "SELECT * FROM hc_causaext ORDER BY nombre ASC";
+		insertarTablaArray_v2($datos, $SQLCausasExt, 'causas_ext');
+
 		$datos[fecha][anios] = array();
 		for ($i=1900; $i < 2041; $i++) array_push($datos[fecha][anios], $i);
 
@@ -80,7 +88,7 @@ if ( isset($_GET['listados']) ){
 			$SQLInsertBasicos = "UPDATE pacientes SET sl_estado_civil = '$formulario->sl_estado_civil', ocupacion = '$formulario->ocupacion', sl_escolaridad = '$formulario->sl_escolaridad', direccion = '$formulario->direccion', telefono = '$formulario->telefono', celular = '$formulario->celular', acudiente = '$formulario->acudiente', acudiente_parentesco = '$formulario->acudiente_parentesco', acudiente_celular = '$formulario->acudiente_celular' WHERE id = $formulario->id";
 			if ( ejecutarQuery_v2($SQLInsertBasicos) == true ){
 				$datos[estado] = "OK";
-				$datos[mensaje] = "Datos almacenados correctamente.";
+				$datos[mensaje] = "Datos básicos almacenados correctamente.";
 			}else{
 				$datos[estado] = "ERROR";
 				$datos[mensaje] = "Los datos no fueron almacenados.";
@@ -96,7 +104,7 @@ if ( isset($_GET['listados']) ){
 				$SQLUpdate = "UPDATE hcnutri_ SET anombre = '$acompanante->anombre', acelular = '$acompanante->acelular', aparentesco = '$acompanante->aparentesco', ch_bajopeso = '$ant->ch_bajopeso', ch_alteraciones = '$ant->ch_alteraciones', ch_sobrepeso = '$ant->ch_sobrepeso', ch_hipertension = '$ant->ch_hipertension', ch_diabetes = '$ant->ch_diabetes', ch_hipotiroidismo = '$ant->ch_hipotiroidismo', ch_insufrenal = '$ant->ch_insufrenal', ch_otros = '$ant->ch_otros', otro_cual = '$ant->otro_cual' WHERE id_cita = '$formulario->cita'";// rd_bajopeso rd_alteraciones rd_sobrepeso rd_hipertension rd_diabetes rd_hipotiroidismo rd_insufrenal rd_otros otro_cual
 				if ( ejecutarQuery_v2($SQLUpdate) == true ){
 					$datos[estado] = "OK";
-					$datos[mensaje] = "Datos almacenados (actualizados) correctamente.";
+					$datos[mensaje] = "Datos básicos almacenados correctamente.";
 				}else{
 					$datos[estado] = "ERROR";
 					$datos[mensaje] = "Los datos no fueron almacenados.";
@@ -107,7 +115,7 @@ if ( isset($_GET['listados']) ){
 
 				if ( ejecutarQuery_v2($SQLInsert) == true ){
 					$datos[estado] = "OK";
-					$datos[mensaje] = "Datos almacenados (insertados) correctamente.";
+					$datos[mensaje] = "Datos básicos almacenados correctamente.";
 				}else{
 					$datos[estado] = "ERROR";
 					$datos[mensaje] = "Los datos no fueron almacenados.";
@@ -136,10 +144,10 @@ if ( isset($_GET['listados']) ){
 
 			if (ejecutarQuery_v2($SQLUpdateNutricion) == true ) {
 				$datos[estado] = "OK";
-				$datos[mensaje] = "Datos antropométricos almacenados correctamente.";
+				$datos[mensaje] = "Datos nutricionales almacenados correctamente.";
 			}else{
 				$datos[estado] = "ERROR";
-				$datos[mensaje] = "Los datos antropométricos no fueron almacenados.";
+				$datos[mensaje] = "Los datos nutricionales no fueron almacenados.";
 			}
 		} else if (strcmp($accion, 'guardar_lactancia') == 0 ) {
 
@@ -168,7 +176,7 @@ if ( isset($_GET['listados']) ){
 			$ejecucion = actualizarRegistro('hcnutri_', $id_registro, $formulario->hallazgos);
 			if ( $ejecucion[status] == "OK" ){
 				$datos[status] = "OK";
-				$datos[mensaje] = "Datos de hallazgos almacenados correctamente.";
+				$datos[mensaje] = "Hallazgos y recomendaciones almacenados correctamente.";
 			}else{
 				$datos[status] = "ERROR";
 				echo "<pre>";

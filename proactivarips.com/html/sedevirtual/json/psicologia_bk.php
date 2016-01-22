@@ -172,7 +172,7 @@ if ( isset($_GET['listados']) ){
 			if ( ejecutarQuery_v2($SQLUpdateEmocion) == true ) {
 				//ECHO ($formulario->cita);
 					$datos[estado] = "OK";
-					$datos[mensaje] = "Datos de emocionalidad almacenados correctamente.";
+					$datos[mensaje] = "Datos almacenados correctamente.";
 				}else{
 					$datos[estado] = "ERROR";
 					$datos[mensaje] = "Los datos no se pudieron almacenar correctamente.";
@@ -183,7 +183,7 @@ if ( isset($_GET['listados']) ){
 
 			if (ejecutarQuery_v2($SQLUpdateRecomen) == true ){
 				$datos[estado] = "OK";
-				$datos[mensaje] = "Recomencadiones almacenados correctamente.";
+				$datos[mensaje] = "Datos almacenados correctamente.";
 			}else{
 				$datos[estado] = "ERROR";
 				$datos[mensaje] = "Los datos no se pudieron almacenar correctamente.";

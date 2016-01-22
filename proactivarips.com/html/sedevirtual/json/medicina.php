@@ -324,11 +324,13 @@ if ( isset($_GET['listados']) ){
 						$SQLDiagnostico = "INSERT INTO hc_cita_diagnosticos (id, id_cita, bl_principal, codigo, tipo, contingencia) VALUES (NULL,$id_cita,".intval($diagnostico->ppal).",'".$diagnostico->codigo."',".$diagnostico->tipo->id.",".$diagnostico->contingencia->id.")";
 						if (ejecutarQuery_v2($SQLDiagnostico)){
 							$datos[estado] = "ok";
+							$datos[mensaje] = "Diagnósticos almacenados correctamente.";
 						}else{
 							$datos[estado] = "error";
 						}
 					}else{
 						$datos[estado] = "ok";
+						$datos[mensaje] = "Diagnósticos almacenados correctamente.";
 					}
 				}
 			}else if ( strcmp('eliminar', $formulario->accion) == 0 ){
