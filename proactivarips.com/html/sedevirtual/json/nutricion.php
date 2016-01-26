@@ -68,6 +68,9 @@ if ( isset($_GET['listados']) ){
 		$SQLCausasExt = "SELECT * FROM hc_causaext ORDER BY nombre ASC";
 		insertarTablaArray_v2($datos, $SQLCausasExt, 'causas_ext');
 
+		//IMC
+		$datos[imc_clasificaciones] = array( array('id'=>0, 'nombre'=>'Sin Datos'), array('id'=>1, 'nombre'=>'Delgadez Severa'), array('id'=>2, 'nombre'=>'Delgadez Moderada'), array('id'=>3, 'nombre'=>'Delgadez Leve'), array('id'=>4, 'nombre'=>'Bajo Peso'), array('id'=>5, 'nombre'=>'Normal'), array('id'=>6, 'nombre'=>'Sobrepeso'), array('id'=>7, 'nombre'=>'Obesidad Grado I'), array('id'=>8, 'nombre'=>'Obesidad Grado II'), array('id'=>9, 'nombre'=>'Obesidad Grado III') );
+
 		$datos[fecha][anios] = array();
 		for ($i=1900; $i < 2041; $i++) array_push($datos[fecha][anios], $i);
 
@@ -123,7 +126,7 @@ if ( isset($_GET['listados']) ){
 			}
 		} else if (strcmp($accion, 'guardar_antropo') == 0 ) {
 		
-			$SQLUpdateAntropo = "UPDATE hcnutri_ SET peso = '$formulario->peso', talla = '$formulario->talla', per_toracico = '$formulario->per_toracico', per_abdomen = '$formulario->per_abdomen', per_cadera = '$formulario->per_cadera', rel_cintura = '$formulario->rel_cintura', creatinina = '$formulario->creatinina', tfg = '$formulario->tfg' WHERE id_cita = '$formulario->cita'";
+			$SQLUpdateAntropo = "UPDATE hcnutri_ SET peso = '$formulario->peso', talla = '$formulario->talla', per_toracico = '$formulario->per_toracico', per_abdomen = '$formulario->per_abdomen', per_cadera = '$formulario->per_cadera', rel_cintura = '$formulario->rel_cintura', creatinina = '$formulario->creatinina', tfg = '$formulario->tfg', imc_clasificacion = '$formulario->imc_clasificacion', imc = '$formulario->imc' WHERE id_cita = '$formulario->cita'";
 			insertarTablaArray_v2($updateantropo, $SQLUpdateAntropo, 'update_antropo');
 
 			if (ejecutarQuery_v2($SQLUpdateAntropo) == true ) {

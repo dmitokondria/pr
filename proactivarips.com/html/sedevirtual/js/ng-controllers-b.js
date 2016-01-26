@@ -402,6 +402,8 @@ controllers.controller('nutricionCTRL', function($scope, $http, $location, $cook
             //diagnósticos
             $scope.tipos_diagnostico = result.data.tipos_diagnostico;
             $scope.tipos_contingencia = result.data.causas_ext;
+            //IMC
+            $scope.imc_clasificaciones = result.data.imc_clasificaciones;
         }
         $scope.datosInicialesPestañas();
 
@@ -424,6 +426,36 @@ controllers.controller('nutricionCTRL', function($scope, $http, $location, $cook
     }
     });
     
+    /////// Examen Físico
+
+    $scope.calculoIMC = function(){
+        $scope.formulario.imc = $scope.formulario.peso/($scope.formulario.talla/100*$scope.formulario.talla/100);
+
+        if ($scope.formulario.imc < 16) {
+            $scope.formulario.imc_clasificacion = 1;
+        }else if ($scope.formulario.imc >= 16 && $scope.formulario.imc <= 16.9) {
+            $scope.formulario.imc_clasificacion = 2;
+        }else if ( $scope.formulario.imc >= 17 && $scope.formulario.imc <= 17.5 ){
+                $scope.formulario.imc_clasificacion = 3;
+        }else if ( $scope.formulario.imc >= 17.6 && $scope.formulario.imc <= 17.9 ){
+            $scope.formulario.imc_clasificacion = 4;
+        }else if ( $scope.formulario.imc >= 18 && $scope.formulario.imc <= 24.9 ){
+            $scope.formulario.imc_clasificacion = 5;
+        }else if ( $scope.formulario.imc >= 25 && $scope.formulario.imc <= 26.9 ){
+            $scope.formulario.imc_clasificacion = 6;
+        }else if ( $scope.formulario.imc >= 27 && $scope.formulario.imc <= 29.9 ){
+            $scope.formulario.imc_clasificacion = 7;
+        }else if ( $scope.formulario.imc >= 30 && $scope.formulario.imc <= 39.9 ){
+            $scope.formulario.imc_clasificacion = 8;
+        }else if ( $scope.formulario.imc > 40 ){
+            $scope.formulario.imc_clasificacion = 9;
+        }else{
+            $scope.formulario.imc_clasificacion = 0;
+        }
+    };
+
+
+
     ///////diagnostico
 
     $scope.cies = {};
