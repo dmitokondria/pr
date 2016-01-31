@@ -214,8 +214,8 @@
                             </select>
                         </div>
                         <div class="form-group col-md-12">
-                            <div class="alert alert-danger"  ng-if="mensaje_motivo=='error'">warning</div>
-                            <div class="alert alert-success" ng-if="mensaje_motivo=='ok'">Se ha guardado exitosamente!</div>
+                            <div class="alert alert-danger"  ng-if="mensaje_motivo=='error'"><div class="col-sm-1"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></div>Los datos no fueron almacenados.</div>
+                            <div class="alert alert-success" ng-if="mensaje_motivo=='ok'"><div class="col-sm-1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>Datos almacenados correctamente.</div>
                         </div>
                         <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
                             <button type="button" class="btn btn-default" ng-click="enviarMotivo()" ng-disabled="vista"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
@@ -335,8 +335,8 @@
                             </div>
                         </div>
                         <div class="form-group col-md-12">
-                            <div class="alert alert-danger"  ng-if="mensaje_antecedentes=='error'">warning</div>
-                            <div class="alert alert-success" ng-if="mensaje_antecedentes=='ok'">Se ha guardado exitosamente!</div>
+                            <div class="alert alert-danger"  ng-if="mensaje_antecedentes=='error'"><div class="col-sm-1"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></div>Los datos no fueron almacenados.</div>
+                            <div class="alert alert-success" ng-if="mensaje_antecedentes=='ok'"><div class="col-sm-1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>Datos almacenados correctamente.</div>
                         </div>
                         <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
                             <button type="button" class="btn btn-default" ng-click="enviarAntecedentes()" ng-disabled="vista"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
@@ -725,15 +725,15 @@
                             <textarea class="form-control" rows="3" ng-model='examenfisico.adicionales_ef' ng-disabled="vista"></textarea>
                         </div>
                         <div class="form-group col-md-12">
-                            <div class="alert alert-danger"  ng-if="mensaje_examenfisico=='error'">warning</div>
-                            <div class="alert alert-success" ng-if="mensaje_examenfisico=='ok'">Se ha guardado exitosamente!</div>
+                            <div class="alert alert-danger"  ng-if="mensaje_examenfisico=='error'"><div class="col-sm-1"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></div>Los datos no fueron almacenados.</div>
+                            <div class="alert alert-success" ng-if="mensaje_examenfisico=='ok'"><div class="col-sm-1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>Datos almacenados correctamente.</div>
                         </div>
                         <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
                             <button type="button" class="btn btn-default" ng-click="enviarExamenFisico()" ng-disabled="vista"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
                             <!--button type="button" class="btn btn-default" ng-click="" ng-disabled="vista">Continuar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button-->
                         </div>
                     </form>
-                    <!--div class="col-md-12">{{examenfisico | json}}</div-->
+                    <div class="col-md-12"><pre>{{examenfisico | json}}</pre></div>
                 </tab><!--FIN TAB 3 TRES-->
                 <tab heading="Diagnósticos">
                     <form class="col-md-12">
@@ -766,8 +766,8 @@
                                     <!--textarea class="form-control" ng-model="diagnostico.contingencia" rows="3"></textarea-->
                                 </div>
                                 <div class="form-group col-md-12">
-                                    <div class="alert alert-danger"  ng-if="mensaje_diagnostico=='error'">warning</div>
-                                    <div class="alert alert-success" ng-if="mensaje_diagnostico=='ok'">Se ha guardado exitosamente!</div>
+                                    <div class="alert alert-danger"  ng-if="mensaje_diagnostico=='error'"><div class="col-sm-1"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></div>Los datos no fueron almacenados.</div>
+                                    <div class="alert alert-success" ng-if="mensaje_diagnostico=='ok'"><div class="col-sm-1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>Datos almacenados correctamente.</div>
                                 </div>
                                 <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4" ng-show="bl_buscado">
                                     <button type="button" class="btn btn-default" ng-click="agregarDiagnostico()" ng-disabled="vista"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Agregar</button>

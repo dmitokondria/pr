@@ -373,9 +373,7 @@ controllers.controller('medicinaCTRL', function($scope, $http, $location, $cooki
                 data: $scope.motivo,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).then(function(result){
-                //alert(JSON.stringify(result.data.estado));
-                $scope.mensaje_motivo = "ok";
-                //agregar span con mensaje de pestaña guardada!
+                $scope.mensaje_motivo = result.data.estado;
             });
         };
 
@@ -392,9 +390,7 @@ controllers.controller('medicinaCTRL', function($scope, $http, $location, $cooki
                 data: $scope.antecedentes,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).then(function(result){
-                //console.log(result.data.estado);
-                $scope.mensaje_antecedentes = 'ok';
-                //$scope.mensaje_antecedentes = result.data.estado;
+                $scope.mensaje_antecedentes = result.data.estado;
             });
         };
 
@@ -411,9 +407,7 @@ controllers.controller('medicinaCTRL', function($scope, $http, $location, $cooki
                 data: $scope.examenfisico,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).then(function(result){
-                //console.log(result.data.estado);
-                $scope.mensaje_examenfisico = 'ok';
-                //$scope.mensaje_examenfisico = result.data.estado;
+                $scope.mensaje_examenfisico = result.data.estado;
             });
         };
         $scope.enviarDiagnosticos = function(){
@@ -430,10 +424,8 @@ controllers.controller('medicinaCTRL', function($scope, $http, $location, $cooki
                 data: $scope.cita_diagnosticos,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).then(function(result){
-                //console.log(result.data.estado);
                 $scope.mensaje = result.data.mensaje;
-                $scope.mensaje_diagnosticos = 'ok';
-                //$scope.mensaje_examenfisico = result.data.estado;
+                $scope.mensaje_diagnosticos = result.data.estado;
             });
         };
 
