@@ -596,6 +596,8 @@ controllers.controller('medicinaCTRL', function($scope, $http, $location, $cooki
                 $scope.evoluciones_cita.push(evolucionTemp);
                 $scope.limpiarEvolucion();
                 $scope.evolucion_invalida = true;
+                $scope.mensaje = result.data.mensaje;
+                $scope.mensaje_borrar = result.data.mensaje_borrar;
             });
         };
         $scope.eliminarEvolucion = function(_index){
@@ -613,6 +615,8 @@ controllers.controller('medicinaCTRL', function($scope, $http, $location, $cooki
             }).then(function(result){
                 if ( result.data.status == "OK" ){
                     $scope.evoluciones_cita.splice(_index, 1);
+                    $scope.mensaje_borrar = result.data.mensaje_borrar;
+                    $scope.mensaje = '';
                 }
             });
         };
@@ -620,6 +624,11 @@ controllers.controller('medicinaCTRL', function($scope, $http, $location, $cooki
             //
             $scope.evolucion = {};
         };
+        //Limpiar mensajes
+        $scope.reset = function(){
+            $scope.mensaje = '';
+            $scope.mensaje_borrar = '';
+        }
 
         //medicamentos
         $scope.filtro_pos = 2;
@@ -638,6 +647,7 @@ controllers.controller('medicinaCTRL', function($scope, $http, $location, $cooki
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).then(function(result){
                 $scope.limpiarMedicamento();
+                $scope.mensaje = result.data.mensaje;
             });
             $scope.medicamentos_formula.push($scope.busqueda.medicamento);
         };
@@ -671,6 +681,8 @@ controllers.controller('medicinaCTRL', function($scope, $http, $location, $cooki
                 $scope.ordenes.push($scope.orden.seleccionada);
                 $scope.orden = {};
                 $scope.bl_buscado = false;
+                $scope.mensaje = result.data.mensaje;
+                $scope.status = result.data.status;
             });
             
 

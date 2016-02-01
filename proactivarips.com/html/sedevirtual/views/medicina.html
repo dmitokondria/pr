@@ -42,7 +42,7 @@
         <div class="col-md-10">
             <div class="titulo_hc">Historia Clínica</div>
             <tabset justified="true">
-                <tab heading="Datos Personales">
+                <tab heading="Datos Personales" ng-click="reset()">
                     <!--div id="datos_paciente"></div-->
                     <form class="col-md-12">
                         <div class="subtitulo">Datos Personales</div>
@@ -224,7 +224,7 @@
                         <!--div class="col-md-12">{{motivo | json}}-{{mensaje_antecedentes | json}}-</div-->
                     </form>
                 </tab><!--FIN TAB 1 UNO-->
-                <tab heading="Antecedentes">
+                <tab heading="Antecedentes" ng-click="reset()">
                     <div id="datos_paciente"></div>
                     <!--div class="subtitulo">Antecedentes</div-->
                     <form class="col-md-12">
@@ -345,7 +345,7 @@
                         <!--div class="col-md-12">{{antecedentes | json}}</div-->
                     </form>
                 </tab><!--FIN TAB 2 DOS-->
-                <tab heading="Exámen Físico">
+                <tab heading="Exámen Físico" ng-click="reset()">
                     <!--div id="datos_paciente"></div-->
                     <form class="col-md-12">
                         <div class="subtitulo">Módulo de Examen Físico</div>
@@ -733,9 +733,9 @@
                             <!--button type="button" class="btn btn-default" ng-click="" ng-disabled="vista">Continuar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button-->
                         </div>
                     </form>
-                    <div class="col-md-12"><pre>{{examenfisico | json}}</pre></div>
+                    <!--div class="col-md-12"><pre>{{examenfisico | json}}</pre></div-->
                 </tab><!--FIN TAB 3 TRES-->
-                <tab heading="Diagnósticos">
+                <tab heading="Diagnósticos" ng-click="reset()">
                     <form class="col-md-12">
                         <div class="subtitulo">Diagnósticos</div>
                         <div ng-hide="vista">
@@ -811,7 +811,7 @@
                         </div>
                     </form>
                 </tab><!--FIN TAB 4 CUATRO-->
-                <tab heading="Evoluciones">
+                <tab heading="Evoluciones" ng-click="reset()">
                     <form class="col-md-12">
                         <div class="subtitulo">Evoluciones</div>
                         <div ng-hide="vista">
@@ -825,6 +825,9 @@
                                     <button type="button" class="btn btn-default" ng-click="limpiarEvolucion()"><span class="glyphicon glyphicon-erase" aria-hidden="true"></span> Limpiar</button>
                                 </div>
                             </form>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="alert alert-success" role="alert" type="danger" ng-show="mensaje"><div class="col-sm-1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>{{mensaje}}</div>
                         </div>
                         <form class="col-md-12">
                             <label class="subrayado">Evoluciones Actuales</label>
@@ -846,9 +849,12 @@
                             </div>
                             <!--pre class="col-md-12">{{evolucion|json}}{{evoluciones_cita|json}}</pre-->
                         </form>
+                        <div class="col-md-12">
+                            <div class="alert alert-success" role="alert" type="danger" ng-show="mensaje_borrar"><div class="col-sm-1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>{{mensaje_borrar}}</div>
+                        </div>
                     </form>
                 </tab><!--FIN TAB 5 CINCO-->
-                <tab heading="Medicamentos">
+                <tab heading="Medicamentos" ng-click="reset()">
                     <!--div id="datos_paciente"></div-->
                     <form class="col-md-12">
                         <div class="subtitulo">Medicamentos</div>
@@ -930,20 +936,22 @@
                                 <label class="col-xs-4 btn btn-default" ng-model="radioModel" btn-radio="'Right'" uncheckable><span class="glyphicon glyphicon-print" style="cursor: pointer;"></span></label>
                             </div>
                         </div>
-                                
+                        <div class="col-md-12">
+                            <div class="alert alert-success" role="alert" type="danger" ng-show="mensaje"><div class="col-sm-1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>{{mensaje}}</div>
+                        </div>
                         <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones" ng-hide="vista">
                             <button type="button" class="btn btn-default" ng-disabled="vista"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
                             <!--button type="button" class="btn btn-default" ng-disabled="vista">Continuar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button-->
                         </div>
                     </form>
                 </tab><!--FIN TAB 6 SEIS-->
-                <tab heading="Órdenes">
+                <tab heading="Órdenes" ng-click="reset()">
                     <!--div id="datos_paciente"></div-->
                     <div ng-hide="vista">
                         <form class="col-md-12">
-                            <label class="subrayado">Agregar Órden</label>
+                            <label class="subrayado">Agregar Orden</label>
                             <div class="form-group">
-                                <label class="titulo">Buscar Órden</label>
+                                <label class="titulo">Buscar Orden</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control" my-enter="buscarCUP(orden.buscar)" placeholder="Nombre o código CUP" ng-model="orden.buscar" ng-disabled="vista">
                                     <span class="input-group-btn">
@@ -951,13 +959,17 @@
                                     </span>
                                 </div>
                                 <div class="form-group" ng-show="bl_buscado">
-                                    <label class="titulo">Seleccione la Órden</label>
+                                    <label class="titulo">Seleccione la Orden</label>
                                     <select class="form-control" ng-model="orden.seleccionada" ng-options='cup as cup.nombre for cup in cups'></select>
                                     <br>
-                                    <button class="btn btn-default" type="submit" ng-click="agregarOrden()">Agregar órden</button>
+                                    <button class="btn btn-default" type="submit" ng-click="agregarOrden()">Agregar Orden</button>
                                 </div>
                             </div>
                         </form>
+                        <div class="col-md-12">
+                            <div class="alert alert-danger" role="alert" type="danger" ng-show="mensaje" ng-if="status=='ERROR'"><div class="col-sm-1"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></div>{{mensaje}}</div>
+                            <div class="alert alert-success" role="alert" type="danger" ng-show="mensaje" ng-if="status=='OK'"><div class="col-sm-1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>{{mensaje}}</div>
+                        </div>
                         <pre style="float: left; width:100%">{{orden | json}}</pre>
                         <div class="col-md-12">
                             <div class="table-responsive">
@@ -966,11 +978,6 @@
                                         <th class="centrado_vertical">Código CUP</th>
                                         <th class="centrado_vertical">Procedimiento</th>
                                         <th class="centrado_vertical" ng-hide="vista">Eliminar</th>
-                                    </tr>
-                                    <tr>
-                                        <td class="centrado_vertical">111</td>
-                                        <td class="centrado_vertical">Imágenes diagnósticos sobre el cerebro</td>
-                                        <td class="centrado_vertical" ng-hide="vista"><span class="glyphicon glyphicon-remove suave"></span></td>
                                     </tr>
                                     <tr ng-repeat="orden in ordenes">
                                         <td class="centrado_vertical">{{orden.cups}}</td>

@@ -302,7 +302,7 @@ if ( isset($_GET['listados']) ){
 										rel_cintura = '".$formulario->relacion."',
 										creatinina = '".$formulario->creatinina."',
 										tfg = '".$formulario->tfg."',
-										sl_imc = '".$formulario->imc_clasif."',
+										sl_imc = '".$formulario->imc_clasificacion."',
 										imc = '".$formulario->imc."',
 										examen_fisico = '".$formulario->observaciones_ef."',
 										adicionales_examen_fisico = '".$formulario->adicionales_ef."'
@@ -354,10 +354,14 @@ if ( isset($_GET['listados']) ){
 			if ( strcmp($formulario->accion, 'crear') == 0 ){
 				$SQLInsertar = "INSERT INTO hc_evoluciones (id, id_cita, descripcion) VALUES (NULL,".$formulario->id_cita.",'".$formulario->descripcion."')";
 				$datos[numero] = insertarFila($SQLInsertar);
+				$datos[mensaje] = "La evolución Nº ".$datos[numero]." ha sido almacenada correctamente.";
 			}else if ( strcmp($formulario->accion, 'eliminar') == 0 ){
 				$SQLEliminar = "DELETE FROM hc_evoluciones WHERE id = ".$formulario->id_evolucion;
 				$gg = eliminarFilas($SQLEliminar);
-				if ( $gg != 0 ) $datos[status] = "OK";
+				if ( $gg != 0 ) {
+					$datos[status] = "OK";
+					$datos[mensaje_borrar] = "La evolución ha sido eliminada correctamente.";
+				}
 			}
 		} else if ( intval($formulario->pagina) == 5 ){
 			if ( strcmp($formulario->accion, 'agregar_medicamento') == 0 ){
@@ -378,6 +382,8 @@ if ( isset($_GET['listados']) ){
 				                     	//echo "{{$SQLCrearMedicamento}}";
 				$id_medicamento_formula = insertarFila($SQLCrearMedicamento);
 				$datos[id_medicamento_formula] = $id_medicamento_formula;
+
+				$datos[mensaje] = "Medicamento agredado correctamente.";
 			}
 		} else if ( intval($formulario->pagina) == 6 ){
 			if ( strcmp($formulario->accion, 'agregar_orden') == 0 ){
@@ -389,15 +395,15 @@ if ( isset($_GET['listados']) ){
 					$SQLInsertCitaOrden = "INSERT INTO citas_ordenes(id_cita, id_cup) VALUES(".$formulario->id_cita.", ".$formulario->orden->id.")";
 					if (insertarFila($SQLInsertCitaOrden) != 0 ){
 						$datos[status] = "OK";
-						$datos[mensaje] = "Orden creado correctamente";
+						$datos[mensaje] = "La orden ha sido agregada correctamente.";
 					}else{
 						$datos[status] = "ERROR";
-						$datos[mensaje] = "Orden creado correctamente";
+						$datos[mensaje] = "La orden no ha sido agregada.";
 					}
 				}else{
 					//ERROR
 					$datos[status] = "ERROR";
-					$datos[mensaje] = "La orden ya ha sido generada";
+					$datos[mensaje] = "La orden ya ha sido generada previamente.";
 				}
 				/*{
 				    "id_cita": "93",
