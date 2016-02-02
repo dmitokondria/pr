@@ -28,7 +28,7 @@
         <div class="informacion col-md-12">
             <div class="col-md-4">Profesional: {{usuario.nombres}}</div>
             <div class="col-md-4">Especialidad: {{usuario.especialidad}}</div>
-            <div class="col-md-4">Hora: 00:00:00</div>
+            <div class="col-md-4">Hora: {{hora}}</div>
         </div>
         <div class="menu_lateral" ng-controller="menu_lateralCTRL">
             <accordion close-others="true" class="col-md-2">
@@ -43,7 +43,6 @@
             <div class="titulo_hc">Historia Clínica</div>
             <tabset justified="true">
                 <tab heading="Datos Personales" ng-click="reset()">
-                    <!--div id="datos_paciente"></div-->
                     <form class="col-md-12">
                         <div class="subtitulo">Datos Personales</div>
                         <div class="col-md-6">
@@ -221,6 +220,7 @@
                             <button type="button" class="btn btn-default" ng-click="enviarMotivo()" ng-disabled="vista"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
                             <!--button type="button" class="btn btn-default" ng-click="siguiente()" ng-disabled="vista">Continuar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button-->
                         </div>
+                        <div class="col-md-12">{{ formulario | json }}-</div>
                         <!--div class="col-md-12">{{motivo | json}}-{{mensaje_antecedentes | json}}-</div-->
                     </form>
                 </tab><!--FIN TAB 1 UNO-->
@@ -579,10 +579,10 @@
                                     Tórax
                                 </label>
                             </div>
-                            <div class="checkbox">
+                            <div class="checkbox" ng-if="formulario.genero==1">
                                 <label>
                                 <input type="checkbox" value="" ng-change="examenFisicoCheck('senos')" ng-model="examenfisico.ch_senos" ng-disabled="vista">
-                                    Senos *Si Corresponde*
+                                    Senos
                                 </label>
                             </div>
                             <div class="checkbox">
@@ -611,10 +611,10 @@
                                     Genitales Externos
                                 </label>
                             </div>
-                            <div class="checkbox">
+                            <div class="checkbox" ng-if="formulario.genero==1">
                                 <label>
                                 <input type="checkbox" value="" ng-change="examenFisicoCheck('ginecologico')" ng-model="examenfisico.ch_ginecologico" ng-disabled="vista">
-                                    Exámen Ginecológico *Si Corresponde*
+                                    Exámen Ginecológico
                                 </label>
                             </div>
                             <div class="checkbox">

@@ -273,6 +273,11 @@ controllers.controller('medicinaCTRL', function($scope, $http, $location, $cooki
     $scope.seccion = "Profesional";
     $http.get('json/fecha.php').then(function(result) {
         $scope.fecha = result.data.info;
+        $scope.fecha_hoy = result.data.info;
+    });
+
+    $http.get('json/hora.php').then(function(result) {
+        $scope.hora = result.data.hora_hoy;
     });
 
     //datos básicos del doctor
@@ -711,6 +716,7 @@ controllers.controller('medicinaVerCTRL', function($scope, $http, $cookieStore, 
     $scope.seccion = "Ver Medicina";
     $http.get('json/fecha.php').then(function(result) {
         $scope.fecha = result.data.info;
+        $scope.fecha_hoy = result.data.info;
     });
 
     $scope.vista = true;

@@ -95,6 +95,7 @@ controllers.controller('psicologiaCTRL', function($scope, $http, $location, $coo
     $scope.seccion = "Profesional";
     $http.get('json/fecha.php').then(function(result) {
         $scope.fecha = result.data.info;
+        $scope.fecha_hoy = result.data.info;
     });
 
     //datos básicos del doctor
@@ -276,6 +277,7 @@ controllers.controller('psicologiaVerCTRL', function($scope, $http, $cookieStore
     $scope.seccion = "Profesional";
     $http.get('json/fecha.php').then(function(result) {
         $scope.fecha = result.data.info;
+        $scope.fecha_hoy = result.data.info;
     });
 
     //datos básicos del paciente y de la cita
@@ -366,6 +368,7 @@ controllers.controller('nutricionCTRL', function($scope, $http, $location, $cook
     $scope.seccion = "Profesional";
     $http.get('json/fecha.php').then(function(result) {
         $scope.fecha = result.data.info;
+        $scope.fecha_hoy = result.data.info;
     });
 
     //datos básicos del doctor
@@ -572,6 +575,11 @@ controllers.controller('nutricionVerCTRL', function($scope, $http, $location, $c
 
     $scope.vista = true;
     $scope.diagnostico = {};
+
+    $http.get('json/fecha.php').then(function(result) {
+        $scope.fecha = result.data.info;
+        $scope.fecha_hoy = result.data.info;
+    });
 
 });
 ////////
