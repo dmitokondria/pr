@@ -42,7 +42,7 @@
         <div class="col-md-10">
             <div class="titulo_hc">Historia Clínica</div>
             <tabset justified="true">
-                <tab heading="Datos Personales">
+                <tab heading="Datos Personales" ng-click="reset()">
                     <!--div id="datos_paciente"></div-->
                     <form class="col-md-12">
                         <div class="subtitulo">Datos Personales</div>
@@ -214,8 +214,8 @@
                             </select>
                         </div>
                         <div class="form-group col-md-12">
-                            <div class="alert alert-danger"  ng-if="mensaje_motivo=='error'">warning</div>
-                            <div class="alert alert-success" ng-if="mensaje_motivo=='ok'">Se ha guardado exitosamente!</div>
+                            <div class="alert alert-danger"  ng-if="mensaje_motivo=='error'"><div class="col-sm-1"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></div>Los datos no fueron almacenados.</div>
+                            <div class="alert alert-success" ng-if="mensaje_motivo=='ok'"><div class="col-sm-1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>Datos almacenados correctamente.</div>
                         </div>
                         <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
                             <button type="button" class="btn btn-default" ng-click="enviarMotivo()" ng-disabled="vista"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
@@ -224,7 +224,7 @@
                         <!--div class="col-md-12">{{motivo | json}}-{{mensaje_antecedentes | json}}-</div-->
                     </form>
                 </tab><!--FIN TAB 1 UNO-->
-                <tab heading="Antecedentes">
+                <tab heading="Antecedentes" ng-click="reset()">
                     <div id="datos_paciente"></div>
                     <!--div class="subtitulo">Antecedentes</div-->
                     <form class="col-md-12">
@@ -335,8 +335,8 @@
                             </div>
                         </div>
                         <div class="form-group col-md-12">
-                            <div class="alert alert-danger"  ng-if="mensaje_antecedentes=='error'">warning</div>
-                            <div class="alert alert-success" ng-if="mensaje_antecedentes=='ok'">Se ha guardado exitosamente!</div>
+                            <div class="alert alert-danger"  ng-if="mensaje_antecedentes=='error'"><div class="col-sm-1"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></div>Los datos no fueron almacenados.</div>
+                            <div class="alert alert-success" ng-if="mensaje_antecedentes=='ok'"><div class="col-sm-1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>Datos almacenados correctamente.</div>
                         </div>
                         <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
                             <button type="button" class="btn btn-default" ng-click="enviarAntecedentes()" ng-disabled="vista"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
@@ -345,7 +345,7 @@
                         <!--div class="col-md-12">{{antecedentes | json}}</div-->
                     </form>
                 </tab><!--FIN TAB 2 DOS-->
-                <tab heading="Exámen Físico">
+                <tab heading="Exámen Físico" ng-click="reset()">
                     <!--div id="datos_paciente"></div-->
                     <form class="col-md-12">
                         <div class="subtitulo">Módulo de Examen Físico</div>
@@ -513,12 +513,12 @@
                                 </div>
                             </div>
                             <div class="form-group col-md-12">
-                                <label class="col-md-5 no-padding">IMC</label>
-                                <div class="col-md-7 no-padding">
-                                    <div class="form-group col-md-7">
-                                        <select class="form-control" ng-model="examenfisico.imc_clasificacion" ng-options='imc_clasificacion.id as imc_clasificacion.nombre for imc_clasificacion in imc_clasificaciones' disabled>
-                                        </select>
-                                    </div>
+                                <label class="col-md-2 no-padding">IMC</label>
+                                <div class="form-group col-md-8">
+                                    <select class="form-control" ng-model="examenfisico.imc_clasificacion" ng-options='imc_clasificacion.id as imc_clasificacion.nombre for imc_clasificacion in imc_clasificaciones' disabled>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-2 no-padding">
                                     <input type="text" class="form-control campo_imc" ng-model="examenfisico.imc" disabled>
                                 </div>
                             </div>
@@ -725,50 +725,49 @@
                             <textarea class="form-control" rows="3" ng-model='examenfisico.adicionales_ef' ng-disabled="vista"></textarea>
                         </div>
                         <div class="form-group col-md-12">
-                            <div class="alert alert-danger"  ng-if="mensaje_examenfisico=='error'">warning</div>
-                            <div class="alert alert-success" ng-if="mensaje_examenfisico=='ok'">Se ha guardado exitosamente!</div>
+                            <div class="alert alert-danger"  ng-if="mensaje_examenfisico=='error'"><div class="col-sm-1"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></div>Los datos no fueron almacenados.</div>
+                            <div class="alert alert-success" ng-if="mensaje_examenfisico=='ok'"><div class="col-sm-1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>Datos almacenados correctamente.</div>
                         </div>
                         <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
                             <button type="button" class="btn btn-default" ng-click="enviarExamenFisico()" ng-disabled="vista"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
                             <!--button type="button" class="btn btn-default" ng-click="" ng-disabled="vista">Continuar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button-->
                         </div>
                     </form>
-                    <!--div class="col-md-12">{{examenfisico | json}}</div-->
+                    <!--div class="col-md-12"><pre>{{examenfisico | json}}</pre></div-->
                 </tab><!--FIN TAB 3 TRES-->
-                <tab heading="Diagnósticos">
-                    <!--div id="datos_paciente"></div-->
+                <tab heading="Diagnósticos" ng-click="reset()">
                     <form class="col-md-12">
                         <div class="subtitulo">Diagnósticos</div>
                         <div ng-hide="vista">
                             <form class="col-md-12">
                                 <label class="subrayado">Agregar Diagnóstico</label>
-                                <div class="form-group">
+                                <div class="form-group  col-md-12">
                                     <label class="titulo">Buscar Diagnóstico</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" my-enter="buscarCies(diagnostico.buscar)" placeholder="Nombre o código" ng-model="diagnostico.buscar" ng-disabled="vista">
                                         <span class="input-group-btn">
-                                            <button class="btn btn-default" ng-click="buscarCies(diagnostico.buscar)" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                                            <button class="btn btn-default" ng-click="buscarCies(diagnostico.buscar)" type="button" ng-disabled="!diagnostico.buscar"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                                         </span>
                                     </div>
                                 </div>
-                                <div class="form-group" ng-show="bl_buscado">
+                                <div class="form-group col-md-12" ng-show="bl_buscado">
                                     <label class="titulo">Seleccione el diagnóstico</label>
                                     <!--input type="text" class="form-control" placeholder="Nombre o código" ng-model="diagnostico.nombre" typeahead="cie as cie.nombre for cie in cies | filter:$viewValue" typeahead-on-select=""-->
                                     <select class="form-control" ng-model="diagnostico.nombre" ng-options='cie as cie.nombre for cie in cies'></select>
                                 </div>
-                                <div class="form-group" ng-show="bl_buscado">
+                                <div class="form-group col-md-6" ng-show="bl_buscado">
                                     <label class="titulo">Tipo</label>
                                     <select class="form-control" ng-model="diagnostico.tipo" ng-options='tipo as tipo.nombre for tipo in tipos_diagnostico'>
                                     </select>
                                 </div>
-                                <div class="form-group" ng-show="bl_buscado">
+                                <div class="form-group col-md-6" ng-show="bl_buscado">
                                     <label class="titulo">Contingencia</label>
                                     <select class="form-control" ng-model="diagnostico.tipo_contingencia" ng-options='tipo_contingencia as tipo_contingencia.nombre for tipo_contingencia in tipos_contingencia'></select>
                                     <!--textarea class="form-control" ng-model="diagnostico.contingencia" rows="3"></textarea-->
                                 </div>
                                 <div class="form-group col-md-12">
-                                    <div class="alert alert-danger"  ng-if="mensaje_diagnostico=='error'">warning</div>
-                                    <div class="alert alert-success" ng-if="mensaje_diagnostico=='ok'">Se ha guardado exitosamente!</div>
+                                    <div class="alert alert-danger"  ng-if="mensaje_diagnostico=='error'"><div class="col-sm-1"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></div>Los datos no fueron almacenados.</div>
+                                    <div class="alert alert-success" ng-if="mensaje_diagnostico=='ok'"><div class="col-sm-1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>Datos almacenados correctamente.</div>
                                 </div>
                                 <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4" ng-show="bl_buscado">
                                     <button type="button" class="btn btn-default" ng-click="agregarDiagnostico()" ng-disabled="vista"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Agregar</button>
@@ -801,6 +800,9 @@
                                         <td class="centrado_vertical" ng-hide="vista"><span class="glyphicon glyphicon-remove suave" ng-click="eliminarDiagnostico($index)"></span></td>
                                     </tr>
                                 </table>
+                                <div class="col-md-12">
+                                    <div class="alert alert-success" role="alert" type="danger" ng-show="mensaje"><div class="col-sm-1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>{{mensaje}}</div>
+                                </div>
                                 <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
                                     <button type="button" class="btn btn-default" ng-click="enviarDiagnosticos()" ng-disabled="vista"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
                                     <!--button type="button" class="btn btn-default" ng-click="" ng-disabled="vista">Continuar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button-->
@@ -809,7 +811,7 @@
                         </div>
                     </form>
                 </tab><!--FIN TAB 4 CUATRO-->
-                <tab heading="Evoluciones">
+                <tab heading="Evoluciones" ng-click="reset()">
                     <form class="col-md-12">
                         <div class="subtitulo">Evoluciones</div>
                         <div ng-hide="vista">
@@ -823,6 +825,9 @@
                                     <button type="button" class="btn btn-default" ng-click="limpiarEvolucion()"><span class="glyphicon glyphicon-erase" aria-hidden="true"></span> Limpiar</button>
                                 </div>
                             </form>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="alert alert-success" role="alert" type="danger" ng-show="mensaje"><div class="col-sm-1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>{{mensaje}}</div>
                         </div>
                         <form class="col-md-12">
                             <label class="subrayado">Evoluciones Actuales</label>
@@ -844,9 +849,12 @@
                             </div>
                             <!--pre class="col-md-12">{{evolucion|json}}{{evoluciones_cita|json}}</pre-->
                         </form>
+                        <div class="col-md-12">
+                            <div class="alert alert-success" role="alert" type="danger" ng-show="mensaje_borrar"><div class="col-sm-1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>{{mensaje_borrar}}</div>
+                        </div>
                     </form>
                 </tab><!--FIN TAB 5 CINCO-->
-                <tab heading="Medicamentos">
+                <tab heading="Medicamentos" ng-click="reset()">
                     <!--div id="datos_paciente"></div-->
                     <form class="col-md-12">
                         <div class="subtitulo">Medicamentos</div>
@@ -854,52 +862,47 @@
                             <div class="form-inline col-xs-12 col-sm-12 col-md-6 col-md-offset-3" ng-hide="vista">
                                 <label class="titulo">Filtro de búsqueda:</label>
                                 <div class="radio">
-                                    <label class="titulo">
-                                        <input type="radio" name="filtro_pos" value="1" ng-model="filtro_pos" ng-click="limpiarMedicamento()" ng-disabled="vista">
-                                        P.O.S.
+                                    <label class="titulo"><input type="radio" name="filtro_pos" value="1" ng-model="filtro_pos" ng-click="limpiarMedicamento()" ng-disabled="vista">P.O.S.
                                     </label>
                                 </div>
                                 <div class="radio">
-                                    <label class="titulo">
-                                        <input type="radio" name="filtro_pos" value="0" ng-model="filtro_pos" ng-click="limpiarMedicamento()" ng-disabled="vista">
-                                        No P.O.S.
+                                    <label class="titulo"><input type="radio" name="filtro_pos" value="0" ng-model="filtro_pos" ng-click="limpiarMedicamento()" ng-disabled="vista">No P.O.S.
                                     </label>
                                 </div>
                             </div>
-                            Actual: {{actual}}
-                            <a ng-click="medicamento.actual=false">off</a>
-                            <a ng-click="medicamento.actual=true">on</a>
                             <div class="form-group" ng-if="filtro_pos!=2" ng-hide="vista">
                                 <label class="subrayado">Buscar Medicamentos</label>
-                                <input type="text" class="form-control" placeholder="Buscar Medicamento" ng-model="medicamento.actual" typeahead="medicamento as medicamento.nombre for medicamento in medicamentos | filter:$viewValue | filter:{pos:filtro_pos}" ng-disabled="vista"/>
-                                <div ng-show="medicamento.actual">
-                                    <label class="subrayado">Medicamento seleccionado</label>
-                                    <label class="col-md-12">Descripcion: {{actual.descripcion}}</label>
-                                    <label class="col-md-12">Principio activo: {{actual.principio_activo}}</label>
-                                    <label class="col-md-12">Concentración: {{actual.concentracion}}</label>
-                                    <label class="col-md-12">Forma Farmaceutica: {{actual.forma_farmaceutica}}</label>
-                                    <label class="col-md-12" ng-if="actual.aclaracion">Aclaración: {{actual.aclaracion}}</label>
-                                    <label class="col-md-12" >Verificar:</label>
-                                    <div class="col-md-offset-2 col-md-4">
-                                        <div class="radio">
-                                            <input type="radio" value="1" ng-model="actual.verificar"><label>Sí</label>
-                                        </div>
-                                        <div class="radio">
-                                            <input type="radio" value="0" ng-model="actual.verificar"><label>No</label>
-                                        </div>
+                                <input type="text" class="form-control" placeholder="Buscar Medicamento" ng-model="busqueda.medicamento" typeahead-on-select="" typeahead="medicamento as medicamento.nombre for medicamento in medicamentos | filter:$viewValue | filter:{pos:filtro_pos}" ng-disabled="vista"/>
+                            </div>
+                            <div ng-show="busqueda.medicamento">
+                                <label class="subrayado">Medicamento seleccionado</label>
+                                <label class="col-md-12">Descripcion: {{busqueda.medicamento.descripcion}}</label>
+                                <label class="col-md-12">Principio activo: {{busqueda.medicamento.principio_activo}}</label>
+                                <label class="col-md-12">Concentración: {{busqueda.medicamento.concentracion}}</label>
+                                <label class="col-md-12">Forma Farmaceutica: {{busqueda.medicamento.forma_farmaceutica}}</label>
+                                <label class="col-md-12" ng-if="busqueda.medicamento.aclaracion">Aclaración: {{busqueda.medicamento.aclaracion}}</label>
+                                <label class="col-md-12" >Verificar:</label>
+                                <div class="col-md-offset-2 col-md-4">
+                                    <div class="radio">
+                                        <input type="radio" value="1" ng-model="busqueda.medicamento.verificar"><label>Sí</label>
                                     </div>
-                                    <label class="col-md-12">Cantidad</label>
-                                    <input type="text" class="form-control" ng-model="actual.cantidad">
-                                    <label class="col-md-12">Dosis</label>
-                                    <input type="text" class="form-control" ng-model="actual.dosis">
-                                    <label class="col-md-12">Salidas</label>
-                                    <input type="text" class="form-control" ng-model="actual.salidas">
+                                    <div class="radio">
+                                        <input type="radio" value="0" ng-model="busqueda.medicamento.verificar"><label>No</label>
+                                    </div>
                                 </div>
-                                <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4" ng-if="actual" style="margin: 10px 0px 10px 0px">
-                                    <button type="button" class="btn btn-default" ng-click="agregarMedicamento(actual)" ng-disabled="vista"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Agregar</button>
+                                <label class="col-md-12">Cantidad</label>
+                                <input type="text" class="form-control" ng-model="busqueda.medicamento.cantidad">
+                                <label class="col-md-12">Dosis</label>
+                                <input type="text" class="form-control" ng-model="busqueda.medicamento.dosis">
+                                <label class="col-md-12">Salidas</label>
+                                <input type="text" class="form-control" ng-model="busqueda.medicamento.salidas">
+                                <br>
+                                <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4" style="margin: 10px 0px 10px 0px">
+                                    <button type="button" class="btn btn-default" ng-click="agregarMedicamento()" ng-disabled="vista"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Agregar </button>
                                 </div>
                             </div>
                         </div>
+                        <pre class="col-md-12">Busqueda.medicamento{{busqueda.medicamento | json}}</pre>
                         <div class="col-md-12">
                             <div class="table-responsive">
                                 <table class="table table-hover">
@@ -933,56 +936,63 @@
                                 <label class="col-xs-4 btn btn-default" ng-model="radioModel" btn-radio="'Right'" uncheckable><span class="glyphicon glyphicon-print" style="cursor: pointer;"></span></label>
                             </div>
                         </div>
+                        <div class="col-md-12">
+                            <div class="alert alert-success" role="alert" type="danger" ng-show="mensaje"><div class="col-sm-1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>{{mensaje}}</div>
+                        </div>
                         <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones" ng-hide="vista">
                             <button type="button" class="btn btn-default" ng-disabled="vista"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
                             <!--button type="button" class="btn btn-default" ng-disabled="vista">Continuar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button-->
                         </div>
                     </form>
                 </tab><!--FIN TAB 6 SEIS-->
-                <tab heading="Órdenes">
+                <tab heading="Órdenes" ng-click="reset()">
                     <!--div id="datos_paciente"></div-->
-                    <form class="col-md-12">
-                        <div class="subtitulo">Órdenes Médicas</div>
-                        <div class="col-md-12">
+                    <div ng-hide="vista">
+                        <form class="col-md-12">
+                            <label class="subrayado">Agregar Orden</label>
                             <div class="form-group">
-                                <label class="subrayado">Tipo de Orden</label>
-                                <input type="text" class="form-control" placeholder="AUTOCOMPLETAR Tipo de Orden">
+                                <label class="titulo">Buscar Orden</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" my-enter="buscarCUP(orden.buscar)" placeholder="Nombre o código CUP" ng-model="orden.buscar" ng-disabled="vista">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" ng-click="buscarCUP(orden.buscar)" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                                    </span>
+                                </div>
+                                <div class="form-group" ng-show="bl_buscado">
+                                    <label class="titulo">Seleccione la Orden</label>
+                                    <select class="form-control" ng-model="orden.seleccionada" ng-options='cup as cup.nombre for cup in cups'></select>
+                                    <br>
+                                    <button class="btn btn-default" type="submit" ng-click="agregarOrden()">Agregar Orden</button>
+                                </div>
                             </div>
+                        </form>
+                        <div class="col-md-12">
+                            <div class="alert alert-danger" role="alert" type="danger" ng-show="mensaje" ng-if="status=='ERROR'"><div class="col-sm-1"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></div>{{mensaje}}</div>
+                            <div class="alert alert-success" role="alert" type="danger" ng-show="mensaje" ng-if="status=='OK'"><div class="col-sm-1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>{{mensaje}}</div>
                         </div>
+                        <pre style="float: left; width:100%">{{orden | json}}</pre>
                         <div class="col-md-12">
                             <div class="table-responsive">
                                 <table class="table table-hover">
                                     <tr class="info">
-                                        <th class="centrado_vertical">Nº Fórmula</th>
-                                        <th class="centrado_vertical">Medicamento</th>
-                                        <th class="centrado_vertical">Clase</th>
+                                        <th class="centrado_vertical">Código CUP</th>
+                                        <th class="centrado_vertical">Procedimiento</th>
                                         <th class="centrado_vertical" ng-hide="vista">Eliminar</th>
                                     </tr>
-                                    <tr>
-                                        <td class="centrado_vertical">111</td>
-                                        <td class="centrado_vertical">PIROXICAM GEL</td>
-                                        <td class="centrado_vertical">NO POS</td>
-                                        <td class="centrado_vertical" ng-hide="vista"><span class="glyphicon glyphicon-remove suave"></span></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="centrado_vertical">222</td>
-                                        <td class="centrado_vertical">METOCARBAMOL 750MG</td>
-                                        <td class="centrado_vertical">POS</td>
+                                    <tr ng-repeat="orden in ordenes">
+                                        <td class="centrado_vertical">{{orden.cups}}</td>
+                                        <td class="centrado_vertical">{{orden.procedimiento}}</td>
                                         <td class="centrado_vertical" ng-hide="vista"><span class="glyphicon glyphicon-remove suave"></span></td>
                                     </tr>
                                 </table>
                             </div>
                             <div class="btn-group col-xs-12 col-md-offset-4 col-md-4">
-                                <label class="col-xs-4 btn btn-default" ng-model="radioModel" btn-radio="'Left'" uncheckable><span class="glyphicon glyphicon-save" style="cursor: pointer;"></span></label>
-                                <label class="col-xs-4 btn btn-default" ng-model="radioModel" btn-radio="'Middle'" uncheckable><span class="glyphicon glyphicon-refresh" style="cursor: pointer;"></span></label>
-                                <label class="col-xs-4 btn btn-default" ng-model="radioModel" btn-radio="'Right'" uncheckable><span class="glyphicon glyphicon-print" style="cursor: pointer;"></span></label>
+                                <label class="col-xs-2 btn btn-default" ng-model="radioModel" btn-radio="'Left'" uncheckable><span class="glyphicon glyphicon-save" style="cursor: pointer;"></span></label>
+                                <label class="col-xs-5 btn btn-default" ng-model="radioModel" btn-radio="'Middle'" uncheckable><span class="glyphicon glyphicon-refresh" style="cursor: pointer;"></span></label>
+                                <label class="col-xs-2 btn btn-default" ng-model="radioModel" btn-radio="'Right'" uncheckable><span class="glyphicon glyphicon-print" style="cursor: pointer;"></span></label>
                             </div>
                         </div>
-                        <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones" ng-hide="vista">
-                            <button type="button" class="btn btn-default" ng-disabled="vista"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
-                            <button type="button" class="btn btn-default" ng-disabled="vista">Finalizar <span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span></button>
-                        </div>
-                    </form>
+                    </div>
                 </tab><!--FIN TAB 7 SIETE-->
             </tabset>
         </div>

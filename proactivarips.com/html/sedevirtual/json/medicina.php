@@ -383,7 +383,7 @@ if ( isset($_GET['listados']) ){
 				$id_medicamento_formula = insertarFila($SQLCrearMedicamento);
 				$datos[id_medicamento_formula] = $id_medicamento_formula;
 
-				$datos[mensaje] = "Medicamento agredado correctamente.";
+				$datos[mensaje] = "Medicamento agregado correctamente.";
 			}
 		} else if ( intval($formulario->pagina) == 6 ){
 			if ( strcmp($formulario->accion, 'agregar_orden') == 0 ){

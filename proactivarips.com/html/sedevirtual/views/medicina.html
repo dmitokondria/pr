@@ -859,50 +859,60 @@
                     <form class="col-md-12">
                         <div class="subtitulo">Medicamentos</div>
                         <div class="col-md-12">
-                            <div class="form-inline col-xs-12 col-sm-12 col-md-6 col-md-offset-3" ng-hide="vista">
-                                <label class="titulo">Filtro de búsqueda:</label>
-                                <div class="radio">
-                                    <label class="titulo"><input type="radio" name="filtro_pos" value="1" ng-model="filtro_pos" ng-click="limpiarMedicamento()" ng-disabled="vista">P.O.S.
-                                    </label>
+                            <div class="form-inline col-xs-12 col-sm-12 col-md-12 centrado no_margin" ng-hide="vista">
+                                <label class="titulo col-md-12 subrayado">Filtro de Búsqueda</label>
+                                <div class="radio col-md-6 centrado">
+                                    <label class="titulo">P.O.S. <input type="radio" name="filtro_pos" value="1" ng-model="filtro_pos" ng-click="limpiarMedicamento()" ng-disabled="vista"></label>
                                 </div>
-                                <div class="radio">
-                                    <label class="titulo"><input type="radio" name="filtro_pos" value="0" ng-model="filtro_pos" ng-click="limpiarMedicamento()" ng-disabled="vista">No P.O.S.
-                                    </label>
+                                <div class="radio col-md-6 centrado">
+                                    <label class="titulo">No P.O.S. <input type="radio" name="filtro_pos" value="0" ng-model="filtro_pos" ng-click="limpiarMedicamento()" ng-disabled="vista"></label>
                                 </div>
                             </div>
                             <div class="form-group" ng-if="filtro_pos!=2" ng-hide="vista">
                                 <label class="subrayado">Buscar Medicamentos</label>
-                                <input type="text" class="form-control" placeholder="Buscar Medicamento" ng-model="busqueda.medicamento" typeahead-on-select="" typeahead="medicamento as medicamento.nombre for medicamento in medicamentos | filter:$viewValue | filter:{pos:filtro_pos}" ng-disabled="vista"/>
+                                <input type="text" class="form-control" placeholder="Buscar Medicamento" ng-click="reset()" ng-model="busqueda.medicamento" typeahead-on-select="" typeahead="medicamento as medicamento.nombre for medicamento in medicamentos | filter:$viewValue | filter:{pos:filtro_pos}" ng-disabled="vista"/>
                             </div>
                             <div ng-show="busqueda.medicamento">
-                                <label class="subrayado">Medicamento seleccionado</label>
-                                <label class="col-md-12">Descripcion: {{busqueda.medicamento.descripcion}}</label>
-                                <label class="col-md-12">Principio activo: {{busqueda.medicamento.principio_activo}}</label>
-                                <label class="col-md-12">Concentración: {{busqueda.medicamento.concentracion}}</label>
-                                <label class="col-md-12">Forma Farmaceutica: {{busqueda.medicamento.forma_farmaceutica}}</label>
-                                <label class="col-md-12" ng-if="busqueda.medicamento.aclaracion">Aclaración: {{busqueda.medicamento.aclaracion}}</label>
-                                <label class="col-md-12" >Verificar:</label>
-                                <div class="col-md-offset-2 col-md-4">
-                                    <div class="radio">
-                                        <input type="radio" value="1" ng-model="busqueda.medicamento.verificar"><label>Sí</label>
+                                <label class="subrayado">Medicamento Seleccionado</label>
+                                <label class="titulo col-md-6 info_medicina"><span style="font-weight:800">Descripción:</span> {{busqueda.medicamento.descripcion}}</label>
+                                <label class="titulo col-md-6 info_medicina"><span style="font-weight:800">Principio activo:</span> {{busqueda.medicamento.principio_activo}}</label>
+                                <label class="titulo col-md-12 info_medicina"><span style="font-weight:800">Forma Farmaceutica:</span> {{busqueda.medicamento.forma_farmaceutica}}</label>
+                                <label class="titulo col-md-6 info_medicina"><span style="font-weight:800">Concentración:</span> {{busqueda.medicamento.concentracion}}</label>
+                                <label class="titulo col-md-12 info_medicina" ng-if="busqueda.medicamento.aclaracion"><span style="font-weight:800">Aclaración:</span> {{busqueda.medicamento.aclaracion}}</label>
+                                <label class="titulo col-md-6 info_medicina">
+                                    <span class="titulo col-md-6" style="font-weight:800">Verificar Salida:</span>
+                                    <div class="form-inline col-md-6 no_margin">
+                                        <div class="radio">
+                                            <input type="radio" value="1" ng-model="busqueda.medicamento.verificar"><label><span style="font-weight:800; margin-left: 4px;">Sí</span></label>
+                                        </div>
+                                        <div class="radio">
+                                            <input type="radio" value="0" ng-model="busqueda.medicamento.verificar"><label><span style="font-weight:800; margin-left: 4px;"> No</span></label>
+                                        </div>
                                     </div>
-                                    <div class="radio">
-                                        <input type="radio" value="0" ng-model="busqueda.medicamento.verificar"><label>No</label>
-                                    </div>
+                                </label>
+                                <label class="subrayado">Dosificación del Medicamento</label>
+                                <div class="form-group col-md-4 titulo" ng-hide="vista">
+                                    <label class="titulo">Dosis</label>
+                                    <input type="text" class="form-control" ng-model="busqueda.medicamento.dosis">
                                 </div>
-                                <label class="col-md-12">Cantidad</label>
-                                <input type="text" class="form-control" ng-model="busqueda.medicamento.cantidad">
-                                <label class="col-md-12">Dosis</label>
-                                <input type="text" class="form-control" ng-model="busqueda.medicamento.dosis">
-                                <label class="col-md-12">Salidas</label>
-                                <input type="text" class="form-control" ng-model="busqueda.medicamento.salidas">
+                                <div class="form-group col-md-4 titulo" ng-hide="vista">
+                                    <label class="titulo">Cantidad</label>
+                                    <input type="text" class="form-control" ng-model="busqueda.medicamento.cantidad">
+                                </div>
+                                <div class="form-group col-md-4 titulo" ng-hide="vista">
+                                    <label class="titulo">Salidas</label>
+                                    <input type="text" class="form-control" ng-model="busqueda.medicamento.salidas">
+                                </div>
                                 <br>
-                                <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4" style="margin: 10px 0px 10px 0px">
-                                    <button type="button" class="btn btn-default" ng-click="agregarMedicamento()" ng-disabled="vista"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Agregar </button>
+                                <div class="col-md-12 centrado subrayado" style="margin-bottom: 12px; padding-bottom: 12px;">
+                                    <button type="button" class="btn btn-default" ng-click="agregarMedicamento()" ng-disabled="vista"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Agregar Medicamento</button>
                                 </div>
                             </div>
+                            <div class="col-md-12">
+                                <div class="alert alert-success" role="alert" type="danger" ng-show="mensaje"><div class="col-sm-1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>{{mensaje}}</div>
+                            </div>
                         </div>
-                        <pre class="col-md-12">Busqueda.medicamento{{busqueda.medicamento | json}}</pre>
+                        <!--pre class="col-md-12">Busqueda.medicamento{{busqueda.medicamento | json}}</pre-->
                         <div class="col-md-12">
                             <div class="table-responsive">
                                 <table class="table table-hover">
@@ -912,19 +922,19 @@
                                         <th class="centrado_vertical">Clase</th>
                                         <th class="centrado_vertical">Verificar</th>
                                         <th class="centrado_vertical">Presentación</th>
-                                        <th class="centrado_vertical">Cant.</th>
                                         <th class="centrado_vertical">Dosis</th>
+                                        <th class="centrado_vertical">Cant.</th>
                                         <th class="centrado_vertical">Salidas</th>
                                         <th class="centrado_vertical" ng-hide="vista">Eliminar</th>
                                     </tr>
                                     <tr ng-repeat="medicamento_formula in medicamentos_formula">
                                         <td class="centrado_vertical">111</td>
                                         <td class="centrado_vertical">{{medicamento_formula.nombre}}</td>
-                                        <td class="centrado_vertical"><span ng-if="medicamento_formula.pos==1">Pos</span><span ng-if="medicamento_formula.pos==0">No Pos</span></td>
+                                        <td class="centrado_vertical"><span ng-if="medicamento_formula.pos==1">POS</span><span ng-if="medicamento_formula.pos==0">No POS</span></td>
                                         <td class="centrado_vertical"><span ng-if="medicamento_formula.verificar==1">Si</span><span ng-if="medicamento_formula.verificar==0">No</span></td>
                                         <td class="centrado_vertical">{{medicamento_formula.forma_farmaceutica}}</td>
-                                        <td class="centrado_vertical">{{medicamento_formula.cantidad}}</td>
                                         <td class="centrado_vertical">{{medicamento_formula.dosis}}</td>
+                                        <td class="centrado_vertical">{{medicamento_formula.cantidad}}</td>
                                         <td class="centrado_vertical">{{medicamento_formula.salidas}}</td>
                                         <td class="centrado_vertical" ng-hide="vista"><span class="glyphicon glyphicon-remove suave"></span></td>
                                     </tr>
@@ -935,9 +945,6 @@
                                 <label class="col-xs-4 btn btn-default" ng-model="radioModel" btn-radio="'Middle'" uncheckable><span class="glyphicon glyphicon-refresh" style="cursor: pointer;"></span></label>
                                 <label class="col-xs-4 btn btn-default" ng-model="radioModel" btn-radio="'Right'" uncheckable><span class="glyphicon glyphicon-print" style="cursor: pointer;"></span></label>
                             </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="alert alert-success" role="alert" type="danger" ng-show="mensaje"><div class="col-sm-1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>{{mensaje}}</div>
                         </div>
                         <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones" ng-hide="vista">
                             <button type="button" class="btn btn-default" ng-disabled="vista"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
