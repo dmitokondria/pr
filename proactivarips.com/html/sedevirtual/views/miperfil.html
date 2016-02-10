@@ -145,6 +145,8 @@
                     </div>
                 </div>
             </form>
+            <!--div class="col-md-12"><pre>{{formulario | json}}</pre></div-->
+            <!--div class="col-md-12"><pre>{{paciente | json}}</pre></div-->
         </div>
         <div ng-if="seccion == 'Mi Contraseña'">
             <div class="titulo_seccion">Mi Contraseña</div>
@@ -152,27 +154,32 @@
                 <div class="col-md-offset-3 col-md-6">
                     <div class="form-group">
                         <label>Contraseña Actual</label>
-                        <input type="password" class="form-control" name="form_clave_actual" ng-model="formulario.clave_actual" ng-minlength="8" ng-maxlength="20" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])(?=.*[0-9])/" required>
+                        <input type="password" class="form-control" name="form_clave_actual" ng-model="formulario.clave_actual" required><!--ng-minlength="8" ng-maxlength="20" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])(?=.*[0-9])/"-->
                         <span class="help-inline" ng-show="form_clave.form_clave_actual.$error.required && form_clave.form_clave_actual.$dirty">Requerido.</span>
                     </div>
                     <div class="form-group">
                         <label>Nueva Contraseña</label>
-                        <input type="password" class="form-control" ng-change="validarClaves()" ng-style="estilo_claves" name="form_clave1" ng-model="formulario.clave1" ng-minlength="8" ng-maxlength="20" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])(?=.*[0-9])/" required>
+                        <input type="password" class="form-control" ng-change="validarClaves()" ng-style="estilo_claves" name="form_clave1" ng-model="formulario.clave1" required><!--ng-minlength="8" ng-maxlength="20" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])(?=.*[0-9])/"-->
                         <span class="help-inline" ng-show="form_clave.form_clave1.$error.required && form_clave.form_clave1.$dirty">Requerido.</span>
                         <span class="help-inline" ng-show="form_clave.form_clave1.$error.pattern">Debe tener más de 8 caracteres e incluir (0-9, A-Z, a-z).</span>
                     </div>
                     <div class="form-group">
                         <label>Confirmar Contraseña</label>
-                        <input type="password" class="form-control" ng-change="validarClaves()" ng-style="estilo_claves" name="form_clave2" ng-model="formulario.clave2" ng-minlength="8" ng-maxlength="20" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])(?=.*[0-9])/" required>
+                        <input type="password" class="form-control" ng-change="validarClaves()" ng-style="estilo_claves" name="form_clave2" ng-model="formulario.clave2" required><!--ng-minlength="8" ng-maxlength="20" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])(?=.*[0-9])/"-->
                         <span class="help-inline" ng-show="form_clave.form_clave2.$error.required && form_clave.form_clave2.$dirty">Requerido</span>
                         <span class="help-inline" ng-show="form_clave.form_clave2.$error.pattern">Debe tener más de 8 caracteres e incluir (0-9, A-Z, a-z).</span>
                         <span class="help-inline" ng-show="formulario.clave1!=formulario.clave2">Tus contraseñas deben coincidir.</span>
                     </div>
                     <div class="col-xs-offset-1 col-xs-10 col-sm-offset-2 col-sm-8 col-md-offset-2 col-md-8 dos-botones">
-                        <button type="button" class="btn btn-default" ng-click=""><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar Contraseña</button>
+                        <button type="button" class="btn btn-default" ng-click="guardarClave()" ng-disabled=""><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar Contraseña</button>
                     </div>
                 </div>
             </form>
+            <div class="col-md-offset-2 col-md-8">
+                <div class="alert alert-danger"  ng-if="estado=='ERROR'"><div class="col-sm-1"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></div>{{mensaje}}</div>
+                <div class="alert alert-success" ng-if="estado=='OK'"><div class="col-sm-1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>{{mensaje}}</div>
+            </div>
+            <!--div class="col-md-12">Formulario<pre>{{formulario | json}}</pre></div-->
         </div>
         <div ng-if="seccion == 'historial'">
             <div class="titulo_seccion">Mi Historial de Atención</div>

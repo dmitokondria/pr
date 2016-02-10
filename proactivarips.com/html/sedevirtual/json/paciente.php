@@ -74,10 +74,32 @@ if ( !isset($formulario->accion) ){//información transversal
 						 WHERE p.id = ".$formulario->usuario->id;
 	insertarTablaArray_v2($datos, $SQLDatosPaciente, 'paciente');
 	$datos[paciente] = $datos[paciente][0];
-}else if ( strcmp($formulario->accion, 'paciente') == 0 && strcmp($formulario->seccion, 'clave') == 0 ){
-	echo "clave<pre>";
-	print_r($formulario);
-	echo "</pre>";
+}else if ( strcmp($formulario->accion, 'paciente') == 0 && strcmp($formulario->seccion, 'Mi Contraseña') == 0 ){/***DAVID HIZO ESTA SECCIÓN MI CONTRASEÑA***/
+	
+	$SQLClavePaciente = "SELECT p.primer_nombre, p.clave 
+						FROM pacientes p  
+						WHERE p.id = ".$formulario->usuario->id;
+
+	insertarTablaArray_v2($datos, $SQLClavePaciente, 'paciente');
+	$datos[paciente] = $datos[paciente][0];
+
+	if ( $datos[paciente][clave] == $formulario->clave_actual && $formulario->clave1 == $formulario->clave2 ) {
+		# code...
+		$usuario = $formulario->usuario;
+		$SQLUpdateClave = "UPDATE pacientes SET clave = '$formulario->clave2' WHERE id = '$usuario->id'";
+		
+		if ( ejecutarQuery_v2($SQLUpdateClave) == true ) {
+			$datos[estado] = "OK";
+			$datos[mensaje] = "La contraseña ha sido actualizada correctamente.";
+		}else{
+			$datos[estado] = "ERROR";
+			$datos[mensaje] = "La contraseña no ha sido actualizada.";
+		}
+
+		/*echo "clave<pre>";
+		print_r($datos);
+		echo "</pre>";*/
+	}
 }else if ( strcmp($formulario->accion, 'paciente') == 0 && strcmp($formulario->seccion, 'historial') == 0 ){
 	echo "historial<pre>";
 	print_r($formulario);

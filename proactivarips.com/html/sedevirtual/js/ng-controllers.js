@@ -1068,7 +1068,6 @@ controllers.controller('miperfilCTRL', function($scope, $http, $location, $cooki
         $scope.seccion = "Mi Contraseña";
     }
 
-
     $scope.usuario = $cookieStore.get('usuario');
 
     $scope.formulario = {};
@@ -1076,8 +1075,9 @@ controllers.controller('miperfilCTRL', function($scope, $http, $location, $cooki
     $scope.formulario.seccion = $scope.seccion;
     $scope.formulario.usuario = $scope.usuario;
 
-    $scope.formulario.clave1 = '';
+    /*$scope.formulario.clave1 = '';
     $scope.formulario.clave2 = '';
+    $scope.formulario.clave_actual = '';*/
 
     //datos básicos del paciente y de la cita
     $http({
@@ -1097,6 +1097,30 @@ controllers.controller('miperfilCTRL', function($scope, $http, $location, $cooki
             $scope.estilo_claves = {'background-color': 'rgba(242, 203, 203, 0.38)'};
         }
     };
+    
+    
+    $scope.guardarClave = function(){
+        if ($scope.paciente.clave == $scope.formulario.clave_actual && $scope.formulario.clave1 == $scope.formulario.clave2) {
+            alert("guardarClave");
+            $scope.mensaje = "";
+            $scope.estado = "";
+            /*$scope.formulario = {};
+            $scope.formulario.accion = "cambiar_clave";
+            $scope.formulario.clave1 = $scope.clave1;*/
+            
+
+            $http({
+                url: 'json/paciente.php',
+                method: 'POST',
+                data: $scope.formulario,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).then(function(result){
+                $scope.mensaje = result.data.mensaje;
+                $scope.estado = result.data.estado;
+            });
+        };
+
+    }
 
     $scope.cerrarSesion = function(){
         $cookieStore.remove("user");
