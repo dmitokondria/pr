@@ -47,10 +47,6 @@ controllers.controller('barraUsuarioCTRL', function($scope, $cookieStore){
 
 controllers.controller('registro_rapidoCTRL', function($scope, $http, $location, $cookieStore, $route){
 
-    /*if(typeof $scope.user === "undefined") {
-        $location.path('/ingreso');
-    }*/
-
     $scope.seccion = "Registro Rápido";
     $http.get('json/fecha.php').then(function(result) {
         $scope.fecha = result.data.info;
@@ -72,7 +68,10 @@ controllers.controller('registro_rapidoCTRL', function($scope, $http, $location,
     };
 
     $scope.cerrarSesion = function(){
-        $cookieStore.remove("user");
+        $cookieStore.remove("usuario");
+        $location.path('/ingreso');
+    };
+    if (typeof $scope.usuario === 'undefined') {
         $location.path('/ingreso');
     };
 });
@@ -180,11 +179,7 @@ controllers.controller('agendaCTRL', function($scope, $http, $location, $cookieS
     }else if ( $scope.usuario.tipo_usuario == 'Recepción' ) {
         $scope.seccion = "Recepción";
         $scope.filtro_profesional.id = $scope.usuario.id;
-    }
-
-    /*if(typeof $scope.user === "undefined") {
-        $location.path('/ingreso');
-    }*/
+    };
 
 
     $http.get('json/fecha.php').then(function(result) {
@@ -248,17 +243,16 @@ controllers.controller('agendaCTRL', function($scope, $http, $location, $cookieS
     };
 
     $scope.cerrarSesion = function(){
-        $cookieStore.remove("user");
+        $cookieStore.remove("usuario");
+        $location.path('/ingreso');
+    };
+    if (typeof $scope.usuario === 'undefined') {
         $location.path('/ingreso');
     };
 });
 
 /////MEDICINA
 controllers.controller('medicinaCTRL', function($scope, $http, $location, $cookieStore, $route, $routeParams){
-
-    /*if(typeof $scope.user === "undefined") {
-        $location.path('/ingreso');
-    }*/
 
     $scope.vista = false;
 
@@ -702,16 +696,15 @@ controllers.controller('medicinaCTRL', function($scope, $http, $location, $cooki
         //$('.nav-tabs > .active').next('li').find('a').trigger('click');
     };
     $scope.cerrarSesion = function(){
-        $cookieStore.remove("user");
+        $cookieStore.remove("usuario");
+        $location.path('/ingreso');
+    };
+    if (typeof $scope.usuario === 'undefined') {
         $location.path('/ingreso');
     };
 });
 
 controllers.controller('medicinaVerCTRL', function($scope, $http, $cookieStore, $routeParams){
-
-    /*if(typeof $scope.user === "undefined") {
-        $location.path('/ingreso');
-    }*/
 
     $scope.seccion = "Ver Medicina";
     $http.get('json/fecha.php').then(function(result) {
@@ -849,21 +842,22 @@ controllers.controller('medicinaVerCTRL', function($scope, $http, $cookieStore, 
     });
 
      $scope.cerrarSesion = function(){
-        $cookieStore.remove("user");
+        $cookieStore.remove("usuario");
+        $location.path('/ingreso');
+    };
+    if (typeof $scope.usuario === 'undefined') {
         $location.path('/ingreso');
     };
 });
 
 controllers.controller('seguimientoCTRL', function($scope, $http, $location, $cookieStore, $route){
 
-    /*if(typeof $scope.user === "undefined") {
-        $location.path('/ingreso');
-    }*/
-
     $scope.seccion = "Seguimiento";
     $http.get('json/fecha.php').then(function(result) {
         $scope.fecha = result.data.info;
     });
+
+    $scope.usuario = $cookieStore.get('usuario');
 
     $scope.formulario = {motivo:''};
     $scope.inactivo = true;
@@ -909,7 +903,10 @@ controllers.controller('seguimientoCTRL', function($scope, $http, $location, $co
     }, true);
 
     $scope.cerrarSesion = function(){
-        $cookieStore.remove("user");
+        $cookieStore.remove("usuario");
+        $location.path('/ingreso');
+    };
+    if (typeof $scope.usuario === 'undefined') {
         $location.path('/ingreso');
     };
 });
@@ -920,6 +917,8 @@ controllers.controller('crearpacienteCTRL', function($scope, $http, $cookieStore
     $http.get('json/fecha.php').then(function(result) {
         $scope.fecha = result.data.info;
     });
+
+    $scope.usuario = $cookieStore.get('usuario');
 
     $scope.formulario = {};
     $scope.formulario.tipo_identificacion = "-1";
@@ -999,7 +998,10 @@ controllers.controller('crearpacienteCTRL', function($scope, $http, $cookieStore
     }, true);
 
     $scope.cerrarSesion = function(){
-        $cookieStore.remove("user");
+        $cookieStore.remove("usuario");
+        $location.path('/ingreso');
+    };
+    if (typeof $scope.usuario === 'undefined') {
         $location.path('/ingreso');
     };
 });
@@ -1010,6 +1012,8 @@ controllers.controller('consultarpacienteCTRL', function($scope, $http, $locatio
     $http.get('json/fecha.php').then(function(result) {
         $scope.fecha = result.data.info;
     });
+
+    $scope.usuario = $cookieStore.get('usuario');
 
     $scope.formulario = {};
 
@@ -1047,7 +1051,10 @@ controllers.controller('consultarpacienteCTRL', function($scope, $http, $locatio
     };
 
     $scope.cerrarSesion = function(){
-        $cookieStore.remove("user");
+        $cookieStore.remove("usuario");
+        $location.path('/ingreso');
+    };
+    if (typeof $scope.usuario === 'undefined') {
         $location.path('/ingreso');
     };
 });
@@ -1123,7 +1130,10 @@ controllers.controller('miperfilCTRL', function($scope, $http, $location, $cooki
     }
 
     $scope.cerrarSesion = function(){
-        $cookieStore.remove("user");
+        $cookieStore.remove("usuario");
+        $location.path('/ingreso');
+    };
+    if (typeof $scope.usuario === 'undefined') {
         $location.path('/ingreso');
     };
 });
@@ -1135,7 +1145,7 @@ controllers.controller('crearcitaCTRL', function($scope, $http, $cookieStore, $l
         $scope.fecha = result.data.info;
     });
     //barra usuario
-    //$scope.usuario = $cookieStore.get('ususario');
+    //$scope.usuario = $cookieStore.get('usuario');
     $scope.barra_usuario = $cookieStore.get('usuario');
 
     $scope.datepickerOptions = {
@@ -1250,7 +1260,10 @@ controllers.controller('crearcitaCTRL', function($scope, $http, $cookieStore, $l
     }, true);
 
     $scope.cerrarSesion = function(){
-        $cookieStore.remove("user");
+        $cookieStore.remove("usuario");
+        $location.path('/ingreso');
+    };
+    if (typeof $scope.usuario === 'undefined') {
         $location.path('/ingreso');
     };
 });
@@ -1278,7 +1291,10 @@ controllers.controller('miscitasCTRL', function($scope, $http, $cookieStore, $lo
     });
 
     $scope.cerrarSesion = function(){
-        $cookieStore.remove("user");
+        $cookieStore.remove("usuario");
+        $location.path('/ingreso');
+    };
+    if (typeof $scope.usuario === 'undefined') {
         $location.path('/ingreso');
     };
 });

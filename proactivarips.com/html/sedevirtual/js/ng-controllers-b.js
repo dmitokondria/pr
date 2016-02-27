@@ -263,7 +263,10 @@ controllers.controller('psicologiaCTRL', function($scope, $http, $location, $coo
     }
 
     $scope.cerrarSesion = function(){
-        $cookieStore.remove("user");
+        $cookieStore.remove("usuario");
+        $location.path('/ingreso');
+    };
+    if (typeof $scope.usuario === 'undefined') {
         $location.path('/ingreso');
     };
 });
@@ -279,6 +282,8 @@ controllers.controller('psicologiaVerCTRL', function($scope, $http, $cookieStore
         $scope.fecha = result.data.info;
         $scope.fecha_hoy = result.data.info;
     });
+
+    $scope.usuario = $cookieStore.get('usuario');
 
     //datos básicos del paciente y de la cita
     $scope.formulario = {};
@@ -351,17 +356,16 @@ controllers.controller('psicologiaVerCTRL', function($scope, $http, $cookieStore
     });
 
     $scope.cerrarSesion = function(){
-        $cookieStore.remove("user");
+        $cookieStore.remove("usuario");
+        $location.path('/ingreso');
+    };
+    if (typeof $scope.usuario === 'undefined') {
         $location.path('/ingreso');
     };
 });
 
 ////NUTRICION
 controllers.controller('nutricionCTRL', function($scope, $http, $location, $cookieStore, $route, $routeParams){
-
-    /*if(typeof $scope.user === "undefined") {
-        $location.path('/ingreso');
-    }*/
 
     $scope.diagnostico = {};
 
@@ -566,7 +570,10 @@ controllers.controller('nutricionCTRL', function($scope, $http, $location, $cook
     }
 
     $scope.cerrarSesion = function(){
-        $cookieStore.remove("user");
+        $cookieStore.remove("usuario");
+        $location.path('/ingreso');
+    };
+    if (typeof $scope.usuario === 'undefined') {
         $location.path('/ingreso');
     };
 });
@@ -580,6 +587,5 @@ controllers.controller('nutricionVerCTRL', function($scope, $http, $location, $c
         $scope.fecha = result.data.info;
         $scope.fecha_hoy = result.data.info;
     });
-
 });
 ////////
