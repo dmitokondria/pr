@@ -11,7 +11,7 @@ $formulario = json_decode(file_get_contents("php://input"));
 if ( strcmp($formulario->accion, 'iniciales') == 0 ){
 	$SQLEspecialidades = "SELECT id, nombre
 						  FROM especialidades
-						  WHERE id != 0";
+						  WHERE id != 0 AND id != 4";
 	insertarTablaArray_v2($datos, $SQLEspecialidades, 'especialidades');
 
 	$SQLProfesionales = "SELECT id, CONCAT(nombres,' ',apellidos) AS nombre, sl_profesional
@@ -77,7 +77,7 @@ if ( strcmp($formulario->accion, 'iniciales') == 0 ){
 	$id_cita_agendada = insertarFila($SQLInsertarCita);
 	if ( intval($id_cita_agendada) != 0 ){
 		$datos[estado] = "OK";
-		$datos[mensaje] = "La cita se ha agendado satisfactoriamente!";
+		$datos[mensaje] = "¡La cita se ha agendado satisfactoriamente!";
 	}else{
 		$datos[estado] = "ERROR";
 		$datos[mensaje] = "----";

@@ -6,6 +6,9 @@ app.config(function($routeProvider) {
         .when('/registro_rapido', {controller: 'registro_rapidoCTRL', templateUrl: 'views/registro_rapido.html'})
         .when('/recepcion/agenda/:semana/:anio', {controller: 'agendaCTRL', templateUrl: 'views/agenda.html'})
         .when('/recepcion/crearcita', {controller: 'crearcitaCTRL', templateUrl: 'views/crearcita.html'})
+        //Agregada por David para corregir errores de los nombres en barra_usuario
+        .when('/profesional/crearcita',{controller: 'crearcitaCTRL', templateUrl: 'views/crearcita.html'})
+        //
         .when('/profesional/agenda/:semana/:anio', {controller: 'agendaCTRL', templateUrl: 'views/agenda.html'})
     	//
         .when('/medicina/:cita', {controller: 'medicinaCTRL', templateUrl: 'views/medicina.html'})

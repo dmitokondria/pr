@@ -31,7 +31,7 @@ controllers.controller('ingresoCTRL', function($scope, $http, $location, $cookie
                 $cookieStore.put('usuario', {tipo_usuario: result.data.tipo_usuario, id: result.data.id, nombres: result.data.nombres, mensaje: result.data.mensaje, especialidad:result.data.especialidad});
                 $location.path('/profesional/agenda/'+$scope.semana+'/'+$scope.anio);
             }else if (result.data.tipo_usuario=='Paciente' ){
-                $cookieStore.put('usuario', {tipo_usuario: result.data.tipo_usuario, id: result.data.id, nombres: result.data.nombres, mensaje: result.data.mensaje, especialidad:result.data.especialidad, edad: result.data.edad, ocupacion: result.data.ocupacion});
+                $cookieStore.put('usuario', {tipo_usuario: result.data.tipo_usuario, id: result.data.id, nombres: result.data.nombres, mensaje: result.data.mensaje, especialidad:result.data.especialidad, edad: result.data.edad_actual, ocupacion: result.data.ocupacion});
                 $location.path('/miperfil/datos/');
             }else {
                 $scope.mensaje = '¡Datos de acceso incorrectos!';
@@ -114,7 +114,7 @@ controllers.controller('menu_lateralCTRL', function($scope, $http, $cookieStore)
                 opciones:
                 [
                     {nombre:'Agenda',vinculo:'#/profesional/agenda/'+$scope.semana+'/'+$scope.anio},
-                    {nombre:'Asignar Cita',vinculo:'#/recepcion/crearcita'} //////****************************************
+                    {nombre:'Asignar Cita',vinculo:'#/profesional/crearcita'} //////****************************************
                 ]
             },
             {
@@ -1135,6 +1135,7 @@ controllers.controller('crearcitaCTRL', function($scope, $http, $cookieStore, $l
         $scope.fecha = result.data.info;
     });
     //barra usuario
+    //$scope.usuario = $cookieStore.get('ususario');
     $scope.barra_usuario = $cookieStore.get('usuario');
 
     $scope.datepickerOptions = {
@@ -1171,7 +1172,7 @@ controllers.controller('crearcitaCTRL', function($scope, $http, $cookieStore, $l
                 $scope.primer_apellido = result.data.info.primer_apellido;
                 $scope.segundo_apellido = result.data.info.segundo_apellido;
                 $scope.ocupacion = result.data.info.ocupacion;
-                $scope.edad = result.data.info.edad;
+                $scope.edad_actual = result.data.info.edad_actual;
                 //almacenar la respuesta del php y ... mostrarla en la vista
                 //$scope.paciente = result.data.paciente;
             //
@@ -1202,8 +1203,9 @@ controllers.controller('crearcitaCTRL', function($scope, $http, $cookieStore, $l
         $scope.titulo_seccion = 'Mis Citas';
         $scope.usuario = $cookieStore.get('usuario');
     } else if ( $location.path() == '/recepcion/crearcita' ){
-
         $scope.titulo_seccion = 'Asignar Cita';
+    } else if ( $location.path() == '/profesional/crearcita'){
+        $scope.titulo_seccion = 'Asignar Cita Profesional';
     }
 
     $scope.disponibles = function(){

@@ -35,7 +35,7 @@ controllers.controller('menu_lateralCTRL', function($scope, $http, $cookieStore)
                 opciones:
                 [
                     {nombre:'Agenda',vinculo:'#/profesional/agenda/'+$scope.semana+'/'+$scope.anio},
-                    {nombre:'Asignar Cita',vinculo:'#/recepcion/crearcita'} //////****************************************
+                    {nombre:'Asignar Cita',vinculo:'#/profesional/crearcita'} //////****************************************
                 ]
             },
             {

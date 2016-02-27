@@ -28,7 +28,7 @@
         <div class="informacion col-md-12" ng-controller="barraUsuarioCTRL">
             <div class="col-md-3">{{barra_usuario.tipo_usuario}}: {{barra_usuario.nombres}}</div>
             <div class="col-md-3">Ocupación: {{barra_usuario.ocupacion}}</div>
-            <div class="col-md-3">Edad: {{barra_usuario.edad}} años</div>
+            <div class="col-md-3">Edad: {{paciente.edad_actual}} años</div>
             <div class="col-md-3">Hora: 00:00:00</div>
         </div>
         <div class="menu_lateral" ng-controller="menu_lateralCTRL">
@@ -75,7 +75,7 @@
                     </div>
                     <div class="form-group">
                         <label>Edad</label>
-                        <input type="text" class="form-control" ng-model="paciente.edad" readonly>
+                        <input type="text" class="form-control" ng-model="paciente.edad_actual" readonly>
                     </div>
                     <div class="form-group">
                         <label>Estado Civil</label>

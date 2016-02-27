@@ -26,9 +26,11 @@
     <div id="container_border">
         <div class="margen_clear"></div>
         <div class="informacion col-md-12" ng-controller="barraUsuarioCTRL">
-            <div class="col-md-3">{{barra_usuario.tipo_usuario}}: {{barra_usuario.nombres}}</div>
-            <div class="col-md-3">Ocupación: {{barra_usuario.ocupacion}}</div>
-            <div class="col-md-3">Edad: {{barra_usuario.edad}} años</div>
+            <div class="col-md-4">{{barra_usuario.tipo_usuario}}: {{barra_usuario.nombres}}</div>
+            <div class="col-md-4" ng-if="barra_usuario.tipo_usuario == 'Profesional'">Especialidad: {{barra_usuario.especialidad}}</div>
+            <div class="col-md-4" ng-if="barra_usuario.tipo_usuario == 'Recepción'">Cargo: {{barra_usuario.tipo_usuario}}</div>
+            <div class="col-md-3" ng-if="barra_usuario.tipo_usuario == 'Paciente'">Ocupación: {{barra_usuario.ocupacion}}</div>
+            <div class="col-md-2" ng-if="barra_usuario.tipo_usuario == 'Paciente'">Edad: {{barra_usuario.edad}} años</div>
             <div class="col-md-3">Hora: 00:00:00</div>
         </div>
     <div class="menu_lateral" ng-controller="menu_lateralCTRL">
@@ -59,7 +61,7 @@
             <div class="col-md-12 titulo_azul centrado">Paciente</div>
             <div class="col-md-12 subrayado centrado titulo_azul"><span>{{primer_nombre}}</span> <span>{{segundo_nombre}}</span> <span>{{primer_apellido}}</span> <span>{{segundo_apellido}}</span></div>
             <div class="col-md-6 titulo_azul centrado">Ocupación: {{ocupacion}}</div>
-            <div class="col-md-6 titulo_azul centrado">Edad: {{edad}} años</div>
+            <div class="col-md-6 titulo_azul centrado">Edad: {{edad_actual}} años</div>
         </div>
 
         <!--SI SOY PACIENTE Y YA TENGO MI ID PARA PODER PEDIR CITA.... -->

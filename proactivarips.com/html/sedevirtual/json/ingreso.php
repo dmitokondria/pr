@@ -23,7 +23,7 @@ $SQLUsuario  = "SELECT u.id, CONCAT(u.nombres,' ', u.apellidos) as nombre, u_t.n
 insertarTablaArray_v2($usuarios, $SQLUsuario,'usuarios');
 
 //Buscando el paciente
-$SQLPaciente = "SELECT id, CONCAT(primer_nombre,' ', primer_apellido) as nombre, 'paciente' as tipo_usuario, edad, ocupacion
+$SQLPaciente = "SELECT id, CONCAT(primer_nombre,' ', primer_apellido) as nombre, 'paciente' as tipo_usuario, ocupacion, YEAR(CURDATE())-YEAR(da_nacimiento) + IF(DATE_FORMAT(CURDATE(),'%m-%d') > DATE_FORMAT(da_nacimiento,'%m-%d'), 0, -1) AS edad_actual
 				FROM pacientes
 				WHERE numero_identificacion='".$usuario."' AND clave='".$clave."'";
 insertarTablaArray_v2($pacientes, $SQLPaciente, 'pacientes');
@@ -45,7 +45,7 @@ if ( sizeof($usuarios[usuarios]) != 0 ){
 	$login[tipo_usuario] = 'Paciente';
 	$login[id] = $pacientes[pacientes][0][id];
 	$login[nombres] = $pacientes[pacientes][0][nombre];
-	$login[edad] = $pacientes[pacientes][0][edad];
+	$login[edad_actual] = $pacientes[pacientes][0][edad_actual];
 	$login[ocupacion] = $pacientes[pacientes][0][ocupacion];
 	$login[mensaje] = 'OK';
 }else if ( strcmp($usuario, 'campaña') == 0 && strcmp($clave, 'c4mp4ñ4') == 0){

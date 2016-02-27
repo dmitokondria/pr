@@ -32,7 +32,7 @@ $usuario = json_decode($cookie_usuario, true);
 
 	$datos[dias_semana] = $semana;
 
-	$SQLCitasHoy = "SELECT r2pc.id, r2pc.dt_fecha, u.id AS doctor_id, e.nombre AS especialidad, CONCAT(u.nombres,' ',u.apellidos) AS doctor, p.numero_identificacion AS identificacion, CONCAT(p.primer_nombre, ' ', p.primer_apellido) AS paciente, p.edad, ce.id AS estado_id, ce.nombre AS estado
+	$SQLCitasHoy = "SELECT r2pc.id, r2pc.dt_fecha, u.id AS doctor_id, e.nombre AS especialidad, CONCAT(u.nombres,' ',u.apellidos) AS doctor, p.numero_identificacion AS identificacion, CONCAT(p.primer_nombre, ' ', p.primer_apellido) AS paciente, ce.id AS estado_id, ce.nombre AS estado, YEAR(CURDATE())-YEAR(p.da_nacimiento) + IF(DATE_FORMAT(CURDATE(),'%m-%d') > DATE_FORMAT(p.da_nacimiento,'%m-%d'), 0, -1) AS edad_actual
 					FROM r2_pacientes_citas r2pc
 					LEFT JOIN citas_estado ce ON ce.id = r2pc.rd_estado
 					LEFT JOIN pacientes p ON p.id = r2pc.hd_pacientes 
@@ -73,7 +73,7 @@ $usuario = json_decode($cookie_usuario, true);
 		$citaTemp[dt_fecha] = substr($citas_hoy[citas_hoy][$key][dt_fecha],11,5);
 		$citaTemp[identificacion] = $citas_hoy[citas_hoy][$key][identificacion];
 		$citaTemp[paciente] = $citas_hoy[citas_hoy][$key][paciente];
-		$citaTemp[edad] = $citas_hoy[citas_hoy][$key][edad];
+		$citaTemp[edad_actual] = $citas_hoy[citas_hoy][$key][edad_actual];
 		$citaTemp[estado_id] = $citas_hoy[citas_hoy][$key][estado_id];
 		$citaTemp[estado] = $citas_hoy[citas_hoy][$key][estado];
 		array_push($datos[dias_semana][$pos_dia][profesionales][ $citas_hoy[citas_hoy][$key][doctor_id] ][citas], $citaTemp);

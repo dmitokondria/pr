@@ -46,8 +46,8 @@ if ( !isset($formulario->accion) ){//información transversal
 	$SQLAfiliacionEstados = "SELECT * FROM afiliacion_estados ORDER BY nombre ASC";
 	insertarTablaArray_v2($datos, $SQLAfiliacionEstados, 'afiliacion_estados');
 }else if ( strcmp($formulario->accion, 'crear') == 0 ){
-	$SQLInsertPaciente = "INSERT INTO pacientes (id, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, rd_tipo_identificacion, numero_identificacion, sl_departamento, sl_municipio, da_nacimiento, edad, email, clave, sl_cliente, rd_genero, sl_estado_civil, ocupacion, direccion, telefono, celular, sl_eps, sl_tipo_vinculacion, sl_escolaridad, acudiente, acudiente_parentesco, acudiente_celular, servicios, sl_estado_afiliacion) VALUES
-												(NULL, '".$formulario->primer_nombre."', '".$formulario->segundo_nombre."', '".$formulario->primer_apellido."', '".$formulario->segundo_apellido."', ".$formulario->tipo_identificacion.", ".$formulario->identificacion.", ".$formulario->departamento.", ".$formulario->ciudad.", '".$formulario->anio."-".$formulario->mes."-".$formulario->dia."', 100, '".$formulario->email."', '1234', 1, ".$formulario->genero.", ".$formulario->estadocivil.", '".$formulario->ocupacion."', '".$formulario->direccion."', '".$formulario->telefono."', '".$formulario->celular."', ".$formulario->entidad.", ".$formulario->tipovinculacion.", ".$formulario->escolaridad.", '".$formulario->acudiente."', '".$formulario->parentesco."', '".$formulario->celacudiente."', ".$formulario->paquete.", ".$formulario->afiliacion.")";
+	$SQLInsertPaciente = "INSERT INTO pacientes (id, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, rd_tipo_identificacion, numero_identificacion, sl_departamento, sl_municipio, da_nacimiento, email, clave, sl_cliente, rd_genero, sl_estado_civil, ocupacion, direccion, telefono, celular, sl_eps, sl_tipo_vinculacion, sl_escolaridad, acudiente, acudiente_parentesco, acudiente_celular, servicios, sl_estado_afiliacion) VALUES
+												(NULL, '".$formulario->primer_nombre."', '".$formulario->segundo_nombre."', '".$formulario->primer_apellido."', '".$formulario->segundo_apellido."', ".$formulario->tipo_identificacion.", ".$formulario->identificacion.", ".$formulario->departamento.", ".$formulario->ciudad.", '".$formulario->anio."-".$formulario->mes."-".$formulario->dia."', '".$formulario->email."', '1234', 1, ".$formulario->genero.", ".$formulario->estadocivil.", '".$formulario->ocupacion."', '".$formulario->direccion."', '".$formulario->telefono."', '".$formulario->celular."', ".$formulario->entidad.", ".$formulario->tipovinculacion.", ".$formulario->escolaridad.", '".$formulario->acudiente."', '".$formulario->parentesco."', '".$formulario->celacudiente."', ".$formulario->paquete.", ".$formulario->afiliacion.")";
 	$id_paciente = insertarFila($SQLInsertPaciente);
 
 	if ( intval($id_paciente) != 0 ){
@@ -59,7 +59,7 @@ if ( !isset($formulario->accion) ){//información transversal
 	}
 }else if ( strcmp($formulario->accion, 'paciente') == 0 && strcmp($formulario->seccion, 'Datos Personales') == 0 ){
 
-	$SQLDatosPaciente = "SELECT p.*, it.nombre, it.alias, d.nombre dpto, m.nombre municipio, ec.nombre estadocivil, e.nombre escolaridad, g.nombre genero, epss.nombre eps, v.nombre vinculacion, paq.nombre servicio, ae.nombre estadoafiliacion
+	$SQLDatosPaciente = "SELECT p.*, it.nombre, it.alias, d.nombre dpto, m.nombre municipio, ec.nombre estadocivil, e.nombre escolaridad, g.nombre genero, epss.nombre eps, v.nombre vinculacion, paq.nombre servicio, ae.nombre estadoafiliacion, YEAR(CURDATE())-YEAR(p.da_nacimiento) + IF(DATE_FORMAT(CURDATE(),'%m-%d') > DATE_FORMAT(p.da_nacimiento,'%m-%d'), 0, -1) AS edad_actual
 						 FROM pacientes p 
 						 LEFT JOIN identificacion_tipos it ON it.id = p.rd_tipo_identificacion
 						 LEFT JOIN departamentos d ON d.id = p.sl_departamento
@@ -117,7 +117,7 @@ if ( !isset($formulario->accion) ){//información transversal
 
 		$informacion_paciente = array();
 		$informacion_paciente[nombre_completo] = $existe_paciente[existe_paciente][0][primer_nombre]." ".$existe_paciente[existe_paciente][0][segundo_nombre]." ".$existe_paciente[existe_paciente][0][primer_apellido]." ".$existe_paciente[existe_paciente][0][segundo_apellido];
-		$informacion_paciente[edad] = $existe_paciente[existe_paciente][0][edad];
+		$informacion_paciente[edad_actual] = $existe_paciente[existe_paciente][0][edad_actual];
 		$informacion_paciente[ocupacion] = $existe_paciente[existe_paciente][0][ocupacion];
 		$datos[informacion_paciente] = $informacion_paciente;
 
@@ -155,7 +155,9 @@ if ( !isset($formulario->accion) ){//información transversal
 }else if( strcmp($formulario->accion, 'basica_paciente') == 0 ){
 	$identificacion = $formulario->identificacion;
 
-	$SQLExistePaciente = "SELECT * FROM pacientes WHERE numero_identificacion = $identificacion";
+	$SQLExistePaciente = "SELECT *, YEAR(CURDATE())-YEAR(da_nacimiento) + IF(DATE_FORMAT(CURDATE(),'%m-%d') > DATE_FORMAT(da_nacimiento,'%m-%d'), 0, -1) AS edad_actual
+						  FROM pacientes 
+						  WHERE numero_identificacion = $identificacion";
 	insertarTablaArray_v2($existe_paciente, $SQLExistePaciente, 'existe_paciente');
 
 	if ( $existe_paciente[existe_paciente] == null ){
