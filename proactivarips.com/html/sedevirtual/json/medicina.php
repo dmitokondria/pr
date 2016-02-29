@@ -26,7 +26,7 @@ if ( isset($_GET['listados']) ){
 	if ( isset($formulario->cita) ){
 		$id_cita = $formulario->cita;
 
-		$SQLInfoPaciente = "SELECT p.*
+		$SQLInfoPaciente = "SELECT p.*, YEAR(CURDATE())-YEAR(p.da_nacimiento) + IF(DATE_FORMAT(CURDATE(),'%m-%d') > DATE_FORMAT(p.da_nacimiento,'%m-%d'), 0, -1) AS edad_actual
 							FROM r2_pacientes_citas r2pc
 							LEFT JOIN pacientes p ON p.id = r2pc.hd_pacientes
 							WHERE r2pc.id = ".$id_cita;
@@ -34,8 +34,8 @@ if ( isset($_GET['listados']) ){
 		$datos[paciente] = $pacientes[pacientes][0];
 
 		//descomponer fecha de nacimiento
-		$fecha_nacimiento = $datos[paciente][da_nacimiento];
-		$explode_fecha = explode("-", $fecha_nacimiento);
+		$fecha_nac = $datos[paciente][da_nacimiento];
+		$explode_fecha = explode("-", $fecha_nac);
 		$datos[paciente][da_nacimiento] = array();
 		$datos[paciente][da_nacimiento][dia] = $explode_fecha[2];
 		$datos[paciente][da_nacimiento][mes] = intval($explode_fecha[1]);

@@ -309,11 +309,13 @@ controllers.controller('medicinaCTRL', function($scope, $http, $location, $cooki
             $scope.formulario.s_apellido = $scope.paciente.segundo_apellido;
             $scope.formulario.tipo_id = $scope.paciente.rd_tipo_identificacion;
             $scope.formulario.identificacion = $scope.paciente.numero_identificacion;
+            
             $scope.formulario.fecha_nac = {};
+            $scope.formulario.fecha_nac.anio = $scope.paciente.da_nacimiento.anio;
             $scope.formulario.fecha_nac.dia = $scope.paciente.da_nacimiento.dia;
             $scope.formulario.fecha_nac.mes = $scope.paciente.da_nacimiento.mes;
-            $scope.formulario.fecha_nac.anio = $scope.paciente.da_nacimiento.anio;
-            $scope.formulario.edad = $scope.paciente.edad;
+            
+            $scope.formulario.edad_actual = $scope.paciente.edad_actual;
             $scope.formulario.estado_civil = $scope.paciente.sl_estado_civil;
             $scope.formulario.sl_departamento = $scope.paciente.sl_departamento;
             $scope.formulario.sl_municipio = $scope.paciente.sl_municipio;
