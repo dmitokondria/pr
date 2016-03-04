@@ -31,7 +31,7 @@ if ( isset($_GET['listados']) ){
 	if ( isset($paquete->cita) ){
 		$id_cita = $paquete->cita;
 
-		$SQLInfoPaciente = "SELECT p.*
+		$SQLInfoPaciente = "SELECT p.*, YEAR(CURDATE())-YEAR(p.da_nacimiento) + IF(DATE_FORMAT(CURDATE(),'%m-%d') > DATE_FORMAT(p.da_nacimiento,'%m-%d'), 0, -1) AS edad_actual 
 							FROM r2_pacientes_citas r2pc
 							LEFT JOIN pacientes p ON p.id = r2pc.hd_pacientes
 							WHERE r2pc.id = ".$id_cita;
@@ -93,34 +93,59 @@ if ( isset($_GET['listados']) ){
 		$datos[fecha][dias] = array();
 		for ($i=1; $i < 32; $i++) array_push($datos[fecha][dias], $i);
 
-		/// DAVID TRATÓ DE HACER ESTO Consulta para ver la historia clinica diligenciada en la cita N | Revisar la accion 'VER' pues probablemente se dañó al realizar los insert.
+		/// DAVID HIZO ESTO Consulta para ver la historia clinica diligenciada en la cita N | Revisar la accion 'VER' pues probablemente se dañó al realizar los insert.
 		if ( strcmp($paquete->accion, 'ver') == 0 ){
 			$SQLInfoCita = "SELECT * FROM hcpsi_ WHERE id_cita = $id_cita";
 			insertarTablaArray_v2($info_cita, $SQLInfoCita, 'info_cita');
 			$info_cita = $info_cita[info_cita][0];
 
-			$datos[basicos] = array();
-			$datos[basicos][acompanante][nombre] = $info_cita[anombre];
-			$datos[basicos][acompanante][celular] = $info_cita[acelular];
-			$datos[basicos][acompanante][parentesco] = $info_cita[aparentesco];
-			$datos[basicos][motivo] = $info_cita[motivo];
-			$datos[basicos][observaciones] = $info_cita[observaciones];
+			$SQLInfoDiag = "SELECT hcd.*, descripcion, dt.nombre AS tipo_diag, hcc.nombre AS cont_nombre 
+							FROM hc_cita_diagnosticos hcd
+							LEFT JOIN cie ON cie.id = hcd.id 
+							LEFT JOIN diagnostico_tipos dt ON dt.id = hcd.tipo 
+							LEFT JOIN hc_causaext hcc ON hcc.id = hcd.contingencia
+							WHERE hcd.id_cita = $id_cita";
+			insertarTablaArray_v2($info_diag, $SQLInfoDiag, 'info_diag');
+			$info_diag = $info_diag[info_diag][0];
+			/*echo "<pre>";
+			print_r($info_diag);
+			echo "</pre>";*/
 
-			$datos[emocionalidad] = array();
-			$datos[emocionalidad][ansiedad] = $info_cita[rd_ansiedad];
-			$datos[emocionalidad][tristeza] = $info_cita[rd_tristeza];
-			$datos[emocionalidad][irritabilidad] = $info_cita[rd_irritable];
-			$datos[emocionalidad][dolor] = $info_cita[rd_dolor];
-			$datos[emocionalidad][ajuste][familiar] = $info_cita[familiar];
-			$datos[emocionalidad][ajuste][social] = $info_cita[social];
-			$datos[emocionalidad][ajuste][laboral] = $info_cita[laboral];
-			$datos[emocionalidad][ajuste][academica] = $info_cita[academica];
-			$datos[emocionalidad][ajuste][afectiva] = $info_cita[afectiva];
-			$datos[emocionalidad][ajuste][recreacion] = $info_cita[recreacion];
-			$datos[emocionalidad][analisis] = $info_cita[analisis_prof];
+			$datos[acompanante] = array();
+			$datos[acompanante][nombre] = $info_cita[anombre];
+			$datos[acompanante][celular] = $info_cita[acelular];
+			$datos[acompanante][parentesco] = $info_cita[aparentesco];
+			
+			$datos[motivo] = $info_cita[motivo];
+			$datos[observaciones] = $info_cita[observaciones];
 
-			$datos[recomendaciones] = array();
+			$datos[ansiedad] = $info_cita[rd_ansiedad];
+			$datos[tristeza] = $info_cita[rd_tristeza];
+			$datos[irritable] = $info_cita[rd_irritable];
+			$datos[dolor] = $info_cita[rd_dolor];
+			
+			$datos[ajuste] = array();
+			
+			$datos[ajuste][tristeza] = $info_cita[rd_tristeza];
+			$datos[ajuste][irritabilidad] = $info_cita[rd_irritable];
+			$datos[ajuste][dolor] = $info_cita[rd_dolor];
+			$datos[ajuste][familiar] = $info_cita[familiar];
+			$datos[ajuste][social] = $info_cita[social];
+			$datos[ajuste][laboral] = $info_cita[laboral];
+			$datos[ajuste][academica] = $info_cita[academica];
+			$datos[ajuste][afectiva] = $info_cita[afectiva];
+			$datos[ajuste][recreacion] = $info_cita[recreacion];
+
+			$datos[analisis_prof] = $info_cita[analisis_prof];
+
 			$datos[recomendaciones] = $info_cita[recomendaciones];
+
+			$datos[diagnostico_cita] = array();
+			$datos[diagnostico_cita][ppal] = $info_diag[bl_principal];
+			$datos[diagnostico_cita][codigo] = $info_diag[codigo];
+			$datos[diagnostico_cita][diagnostico] = $info_diag[descripcion];
+			$datos[diagnostico_cita][tipo] = $info_diag[tipo_diag];
+			$datos[diagnostico_cita][contingencia] = $info_diag[cont_nombre];
 		}
 	}else{
 		$accion = $paquete->accion;

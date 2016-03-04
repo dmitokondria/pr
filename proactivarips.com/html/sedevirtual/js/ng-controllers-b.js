@@ -309,50 +309,60 @@ controllers.controller('psicologiaVerCTRL', function($scope, $http, $cookieStore
         $scope.paquetes = result.data.paquetes;
         $scope.afiliaciones = result.data.afiliacion_estados;
 
-        /*$scope.paciente = result.data.paciente;
-        $scope.formulario.p_nombre = $scope.paciente.primer_nombre;
-        $scope.formulario.p_apellido = $scope.paciente.primer_apellido;
-        $scope.formulario.s_nombre = $scope.paciente.segundo_nombre;
-        $scope.formulario.s_apellido = $scope.paciente.segundo_apellido;
-        $scope.formulario.tipo_id = $scope.paciente.rd_tipo_identificacion;
-        $scope.formulario.identificacion = $scope.paciente.numero_identificacion;
-        $scope.formulario.fecha_nac = {};
-        $scope.formulario.fecha_nac.dia = $scope.paciente.da_nacimiento.dia;
-        $scope.formulario.fecha_nac.mes = $scope.paciente.da_nacimiento.mes;
-        $scope.formulario.fecha_nac.anio = $scope.paciente.da_nacimiento.anio;
-        $scope.formulario.edad = $scope.paciente.edad;
-        $scope.formulario.estado_civil = $scope.paciente.sl_estado_civil;
+        $scope.paciente = result.data.paciente;
+        $scope.formulario.primer_nombre = $scope.paciente.primer_nombre;
+        $scope.formulario.primer_apellido = $scope.paciente.primer_apellido;
+        $scope.formulario.segundo_nombre = $scope.paciente.segundo_nombre;
+        $scope.formulario.segundo_apellido = $scope.paciente.segundo_apellido;
+        $scope.formulario.rd_tipo_identificacion = $scope.paciente.rd_tipo_identificacion;
+        $scope.formulario.numero_identificacion = $scope.paciente.numero_identificacion;
+        $scope.formulario.da_nacimiento = {};
+        $scope.formulario.da_nacimiento.dia = $scope.paciente.da_nacimiento.dia;
+        $scope.formulario.da_nacimiento.mes = $scope.paciente.da_nacimiento.mes;
+        $scope.formulario.da_nacimiento.anio = $scope.paciente.da_nacimiento.anio;
+        $scope.formulario.edad_actual = $scope.paciente.edad_actual;
+        $scope.formulario.sl_estado_civil = $scope.paciente.sl_estado_civil;
         $scope.formulario.sl_departamento = $scope.paciente.sl_departamento;
         $scope.formulario.sl_municipio = $scope.paciente.sl_municipio;
         $scope.formulario.ocupacion = $scope.paciente.ocupacion;
-        $scope.formulario.escolaridad = $scope.paciente.sl_escolaridad;
-        $scope.formulario.genero = $scope.paciente.rd_genero;
+        $scope.formulario.sl_escolaridad = $scope.paciente.sl_escolaridad;
+        $scope.formulario.rd_genero = $scope.paciente.rd_genero;
         $scope.formulario.direccion = $scope.paciente.direccion;
         $scope.formulario.telefono = $scope.paciente.telefono;
         $scope.formulario.celular = $scope.paciente.celular;
         $scope.formulario.acudiente = $scope.paciente.acudiente;
-        $scope.formulario.acu_parentesco = $scope.paciente.acudiente_parentesco;
-        $scope.formulario.cel_acudiente = $scope.paciente.acudiente_celular;
-        $scope.formulario.eps = $scope.paciente.sl_eps;
-        $scope.formulario.paquete = $scope.paciente.servicios;
-        $scope.formulario.vinculacion = $scope.paciente.sl_tipo_vinculacion;
-        $scope.formulario.afiliacion = $scope.paciente.sl_estado_afiliacion;*/
+        $scope.formulario.acudiente_parentesco = $scope.paciente.acudiente_parentesco;
+        $scope.formulario.acudiente_celular = $scope.paciente.acudiente_celular;
+        $scope.formulario.sl_eps = $scope.paciente.sl_eps;
+        $scope.formulario.servicios = $scope.paciente.servicios;
+        $scope.formulario.sl_tipo_vinculacion = $scope.paciente.sl_tipo_vinculacion;
+        $scope.formulario.sl_estado_afiliacion = $scope.paciente.sl_estado_afiliacion;
 
     });
 
- ////// DAVID INTENTÓ HACER ESTO
-    $scope.mensaje = {};
-    $scope.mensaje.accion = "ver";
-    $scope.mensaje.cita = $routeParams.cita;
+ ////// DAVID HIZO ESTO
+    $scope.formulario = {};
+    $scope.formulario.accion = "ver";
+    $scope.formulario.cita = $routeParams.cita;
     $http({
         url: 'json/psicologia.php',
         method: 'POST',
-        data: $scope.mensaje,
+        data: $scope.formulario,
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     }).then(function(result){
-        $scope.basicos = result.data.basicos;
-        $scope.emocionalidad = result.data.emocionalidad;
-        $scope.recomendaciones = result.data.recomendaciones;
+        //$scope.basicos = result.data.basicos;
+        $scope.formulario.ajuste = result.data.ajuste;
+        $scope.formulario.analisis_prof = result.data.analisis_prof;
+        $scope.formulario.rd_ansiedad = result.data.ansiedad;
+        $scope.formulario.rd_tristeza = result.data.tristeza;
+        $scope.formulario.rd_irritable = result.data.irritable;
+        $scope.formulario.rd_dolor = result.data.dolor;
+        $scope.formulario.acompanante = result.data.acompanante;
+        $scope.formulario.motivo = result.data.motivo;
+        $scope.formulario.observaciones = result.data.observaciones;
+        $scope.formulario.recomendaciones = result.data.recomendaciones;
+
+        $scope.diagnostico_cita = result.data.diagnostico_cita;
     });
 
     $scope.cerrarSesion = function(){
