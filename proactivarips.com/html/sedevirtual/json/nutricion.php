@@ -14,7 +14,7 @@ if ( isset($_GET['listados']) ){
 	if ( isset($paquete->cita) ){
 		$id_cita = $paquete->cita;
 
-		$SQLInfoPaciente = "SELECT p.*
+		$SQLInfoPaciente = "SELECT p.*, YEAR(CURDATE())-YEAR(p.da_nacimiento) + IF(DATE_FORMAT(CURDATE(),'%m-%d') > DATE_FORMAT(p.da_nacimiento,'%m-%d'), 0, -1) AS edad_actual 
 							FROM r2_pacientes_citas r2pc
 							LEFT JOIN pacientes p ON p.id = r2pc.hd_pacientes
 							WHERE r2pc.id = ".$id_cita;
