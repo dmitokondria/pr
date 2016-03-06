@@ -48,7 +48,7 @@
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Ingrese el número de identificación del paciente" ng-model="identificacion">
                     <span class="input-group-btn">
-                        <button class="btn btn-default" ng-click="buscarPaciente()" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                        <button class="btn btn-default" ng-click="buscarPaciente()" type="button" ng-disabled="!identificacion"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                     </span>
                 </div>
             <alert class="alert alert-danger" ng-if="mensaje">{{mensaje}}</alert>
@@ -58,7 +58,7 @@
             <div class="col-md-12 titulo_azul centrado">Histórico de Citas</div>
             <div class="col-md-12 subrayado centrado titulo_azul">{{informacion_paciente.nombre_completo}}</div>
             <div class="col-md-6 titulo_azul centrado">Ocupación: {{informacion_paciente.ocupacion}}</div>
-            <div class="col-md-6 titulo_azul centrado">Edad: {{informacion_paciente.edad}} años</div>
+            <div class="col-md-6 titulo_azul centrado">Edad: {{informacion_paciente.edad_actual}} años</div>
 
             <accordion close-others="true" class="col-xs-12 col-sm-12 col-md-12">
                 <accordion-group ng-repeat="especialidad in especialidades" heading="{{especialidad.nombre}}">

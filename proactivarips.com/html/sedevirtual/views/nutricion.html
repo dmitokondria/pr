@@ -99,16 +99,16 @@
                     </div>
                     <div class="form-group">
                         <label>Estado Civil</label>
-                        <select class="form-control" ng-model='formulario.sl_estado_civil' ng-options='estado_civil.id as estado_civil.nombre for estado_civil in estados_civiles'>
+                        <select class="form-control" ng-model='formulario.sl_estado_civil' ng-options='estado_civil.id as estado_civil.nombre for estado_civil in estados_civiles' ng-disabled="vista">
                         </select>
                     </div>
                     <div class="form-group">
                         <label>Ocupación</label>
-                        <input type="text" class="form-control" ng-model="formulario.ocupacion">
+                        <input type="text" class="form-control" ng-model="formulario.ocupacion" ng-disabled="vista">
                     </div>
                     <div class="form-group">
                         <label>Nivel de Escolaridad</label>
-                        <select class="form-control" ng-model='formulario.sl_escolaridad' ng-options='nivel_escolaridad.id as nivel_escolaridad.nombre for nivel_escolaridad in niveles_escolaridad'>
+                        <select class="form-control" ng-model='formulario.sl_escolaridad' ng-options='nivel_escolaridad.id as nivel_escolaridad.nombre for nivel_escolaridad in niveles_escolaridad' ng-disabled="vista">
                         </select>
                     </div>
                     <div class="form-group">
@@ -131,27 +131,27 @@
                     </div>
                     <div class="form-group">
                         <label>Dirección</label>
-                        <input type="text" class="form-control" ng-model="formulario.direccion">
+                        <input type="text" class="form-control" ng-model="formulario.direccion" ng-disabled="vista">
                     </div>
                     <div class="form-group">
                         <label>Teléfono Fijo</label>
-                        <input type="text" class="form-control" ng-model="formulario.telefono">
+                        <input type="text" class="form-control" ng-model="formulario.telefono" ng-disabled="vista">
                     </div>
                     <div class="form-group">
                         <label>Celular</label>
-                        <input type="text" class="form-control" ng-model="formulario.celular">
+                        <input type="text" class="form-control" ng-model="formulario.celular" ng-disabled="vista">
                     </div>
                     <div class="form-group">
                         <label>Acudiente</label>
-                        <input type="text" class="form-control" ng-model="formulario.acudiente">
+                        <input type="text" class="form-control" ng-model="formulario.acudiente" ng-disabled="vista">
                     </div>
                     <div class="form-group">
                         <label>Parentesco Acudiente</label>
-                        <input type="text" class="form-control" ng-model="formulario.acudiente_parentesco">
+                        <input type="text" class="form-control" ng-model="formulario.acudiente_parentesco" ng-disabled="vista">
                     </div>
                     <div class="form-group">
                         <label>Celular Acudiente</label>
-                        <input type="text" class="form-control" ng-model="formulario.acudiente_celular">
+                        <input type="text" class="form-control" ng-model="formulario.acudiente_celular" ng-disabled="vista">
                     </div>
                     <div class="form-group">
                         <label>EPS / Aseguradora</label>
@@ -177,64 +177,64 @@
                 <div class="subtitulo">Acompañante</div>
                 <div class="form-group col-md-12">
                     <label>Nombre Completo</label>
-                    <input type="text" class="form-control" ng-model="formulario.acompanante.anombre">
+                    <input type="text" class="form-control" ng-model="formulario.acompanante.anombre" ng-disabled="vista">
                 </div>
                 <div class="form-group col-md-12">
                     <label>Celular</label>
-                    <input type="text" class="form-control" ng-model="formulario.acompanante.acelular">
+                    <input type="text" class="form-control" ng-model="formulario.acompanante.acelular" ng-disabled="vista">
                 </div>
                 <div class="form-group col-md-12">
                     <label>Parentesco</label>
-                    <input type="text" class="form-control" ng-model="formulario.acompanante.aparentesco">
+                    <input type="text" class="form-control" ng-model="formulario.acompanante.aparentesco" ng-disabled="vista">
                 </div>
                 <div class="subtitulo">Antecedentes Personales</div>
                 <div class="form-group col-md-12">
                     <div class="form-group col-md-4">
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" ng-model="formulario.ant.ch_bajopeso" value=""> Bajo peso al nacer
+                                <input type="checkbox" ng-model="formulario.ant.ch_bajopeso" ng-disabled="vista" ng-checked="formulario.ant.ch_bajopeso == '1'"> Bajo peso al nacer
                             </label>
                         </div>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" ng-model="formulario.ant.ch_alteraciones" value=""> Alteraciones del desarrollo
+                                <input type="checkbox" ng-model="formulario.ant.ch_alteraciones" ng-disabled="vista" ng-checked="formulario.ant.ch_alteraciones == '1'"> Alteraciones del desarrollo
                             </label>
                         </div>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" ng-model="formulario.ant.ch_sobrepeso" value=""> Sobrepeso u obesidad
+                                <input type="checkbox" ng-model="formulario.ant.ch_sobrepeso" ng-disabled="vista" ng-checked="formulario.ant.ch_sobrepeso == '1'"> Sobrepeso u obesidad
                             </label>
                         </div>
                     </div>
                     <div class="form-group col-md-4">
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" ng-model="formulario.ant.ch_hipertension" value=""> Hipertensión arterial
+                                <input type="checkbox" ng-model="formulario.ant.ch_hipertension" ng-disabled="vista" ng-checked="formulario.ant.ch_hipertension == '1'"> Hipertensión arterial
                             </label>
                         </div>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" ng-model="formulario.ant.ch_diabetes" value=""> Diabetes Mellitus
+                                <input type="checkbox" ng-model="formulario.ant.ch_diabetes" ng-disabled="vista" ng-checked="formulario.ant.ch_diabetes == '1'"> Diabetes Mellitus
                             </label>
                         </div>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" ng-model="formulario.ant.ch_hipotiroidismo" value=""> Hipotiroidismo
+                                <input type="checkbox" ng-model="formulario.ant.ch_hipotiroidismo" ng-disabled="vista" ng-checked="formulario.ant.ch_hipotiroidismo == '1'"> Hipotiroidismo
                             </label>
                         </div>
                     </div>
                     <div class="form-group col-md-4">
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" ng-model="formulario.ant.ch_insufrenal" value=""> Insuficiencia renal
+                                <input type="checkbox" ng-model="formulario.ant.ch_insufrenal" ng-disabled="vista" ng-checked="formulario.ant.ch_insufrenal == '1'"> Insuficiencia renal
                             </label>
                         </div>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" ng-model="formulario.ant.ch_otros" value=""> Otros
+                                <input type="checkbox" ng-model="formulario.ant.ch_otros" ng-disabled="vista" ng-checked="formulario.ant.ch_otros == '1'"> Otros
                             </label>
                         </div>
-                        <input type="text" ng-model="formulario.ant.otro_cual" class="form-control" ng-if="formulario.ant.ch_otros" placeholder="¿Cuáles?">
+                        <input type="text" ng-model="formulario.ant.otro_cual" class="form-control" ng-if="formulario.ant.ch_otros" placeholder="¿Cuáles?" ng-disabled="vista">
                     </div>
                 </div>
                 <!--div class="col-md-12"><pre>{{ formulario | json }}</pre></div-->
@@ -242,7 +242,7 @@
                     <div class="alert alert-success" role="alert" type="danger" ng-show="mensaje"><div class="col-sm-1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>{{mensaje}}</div>
                 </div>
                 <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
-                    <button type="button" class="btn btn-default" ng-disabled="vista" ng-click="accion('guardar_basicos_nutri')"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
+                    <button type="button" class="btn btn-default" ng-disabled="vista" ng-click="accion('guardar_basicos_nutri')" ng-disabled="vista"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
                     <!--button type="button" class="btn btn-default">Continuar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button-->
                 </div>
             </form>
@@ -267,48 +267,53 @@
                 <div class="form-group col-md-12">
                     <label class="col-md-5 no-padding">Perímetro torácico</label>
                     <div class="col-md-7 no-padding">
-                        <input type="text" class="form-control campo_medio" ng-model="formulario.per_toracico">
+                        <input type="text" class="form-control campo_medio" ng-model="formulario.per_toracico" ng-disabled="vista">
                         <label class="unidades">cms.</label>
                     </div>
                 </div>
                 <div class="form-group col-md-12">
                     <label class="col-md-5 no-padding">Perímetro abdominal</label>
                     <div class="col-md-7 no-padding">
-                        <input type="text" class="form-control campo_medio" ng-model="formulario.per_abdomen">
+                        <input type="text" class="form-control campo_medio" ng-model="formulario.per_abdomen" ng-disabled="vista">
                         <label class="unidades">cms.</label>
                     </div>
                 </div>
                 <div class="form-group col-md-12">
                     <label class="col-md-5 no-padding">Perímetro cadera</label>
                     <div class="col-md-7 no-padding">
-                        <input type="text" class="form-control campo_medio" ng-model="formulario.per_cadera">
+                        <input type="text" class="form-control campo_medio" ng-model="formulario.per_cadera" ng-disabled="vista">
                         <label class="unidades">cms.</label>
                     </div>
                 </div>
                 <div class="form-group col-md-12">
                     <label class="col-md-5 no-padding">Relación Cintura/Cadera</label>
                     <div class="col-md-7 no-padding">
-                        <input type="text" class="form-control campo_medio" ng-model="formulario.rel_cintura">
+                        <input type="text" class="form-control campo_medio" ng-model="formulario.rel_cintura" ng-disabled="vista">
                         <label class="unidades">cms.</label>
                     </div>
                 </div>
                 <div class="form-group col-md-12">
                     <label class="col-md-5 no-padding">Creatinina</label>
                     <div class="col-md-7 no-padding">
-                        <input type="text" class="form-control campo_medio" ng-model="formulario.creatinina" placeholder="Sale de Laboratorio">
+                        <input type="text" class="form-control campo_medio" ng-model="formulario.creatinina" placeholder="Sale de Laboratorio" ng-disabled="vista">
                         <label class="unidades">mg/dL</label>
                     </div>
                 </div>
                 <div class="form-group col-md-12">
                     <label class="col-md-5 no-padding">TFG</label>
                     <div class="col-md-7 no-padding">
-                        <input type="text" class="form-control campo_medio" ng-model="formulario.tfg" placeholder="Edad, peso y creatinina (fórmula mujer <> hombre)">
+                        <input type="text" class="form-control campo_medio" ng-model="formulario.tfg" placeholder="Edad, peso y creatinina (fórmula mujer <> hombre)" ng-disabled="vista">
                     </div>
                 </div>
                 <div class="form-group col-md-12">
                     <label class="col-md-5 no-padding">IMC</label>
-                    <div class="col-md-3 no-padding">
+                    <div class="col-md-3 no-padding" ng-hide="vista">
                         <select class="form-control" ng-model="formulario.imc_clasificacion" ng-options='imc_clasificacion.id as imc_clasificacion.nombre for imc_clasificacion in imc_clasificaciones' disabled></select>
+                    </div>
+                    <div class="col-md-3 no-padding" ng-if="vista">
+                        <select class="form-control" ng-model="formulario.imc_clasificacion" ng-disabled="vista">
+                            <option ng-disabled="vista">{{formulario.imc_clasificacion}}</option>
+                        </select>
                     </div>
                     <div class="col-md-2">    
                         <input type="text" class="form-control campo_imc" ng-model="formulario.imc" disabled>
@@ -318,7 +323,7 @@
                     <div class="alert alert-success" role="alert" type="danger" ng-show="mensaje"><div class="col-sm-1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>{{mensaje}}</div>
                 </div>
                 <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
-                    <button type="button" class="btn btn-default" ng-disabled="vista" ng-click="accion('guardar_antropo')"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
+                    <button type="button" class="btn btn-default" ng-disabled="vista" ng-click="accion('guardar_antropo')" ng-disabled="vista"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
                     <!--button type="button" class="btn btn-default">Continuar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button-->
                 </div>
                 <!--div class="col-md-12"><pre>{{ formulario | json }}</pre></div-->
@@ -331,49 +336,49 @@
                 <div class="form-group col-md-12">
                     <label class="col-md-5">Cereales, raíces, tubérculos y plátanos</label>
                     <div class="col-md-7">
-                        <input type="text" class="form-control campo_medio" ng-model="formulario.semanal.cereales">
+                        <input type="text" class="form-control campo_medio" ng-model="formulario.semanal.cereales" ng-disabled="vista">
                         <label class="unidades">Veces</label>
                     </div>
                 </div>
                 <div class="form-group col-md-12">
                     <label class="col-md-5">Hortalizas y verduras</label>
                     <div class="col-md-7">
-                        <input type="text" class="form-control campo_medio" ng-model="formulario.semanal.verduras">
+                        <input type="text" class="form-control campo_medio" ng-model="formulario.semanal.verduras" ng-disabled="vista">
                         <label class="unidades">Veces</label>
                     </div>
                 </div>
                 <div class="form-group col-md-12">
                     <label class="col-md-5">Frutas</label>
                     <div class="col-md-7">
-                        <input type="text" class="form-control campo_medio" ng-model="formulario.semanal.frutas">
+                        <input type="text" class="form-control campo_medio" ng-model="formulario.semanal.frutas" ng-disabled="vista">
                         <label class="unidades">Veces</label>
                     </div>
                 </div>
                 <div class="form-group col-md-12">
                     <label class="col-md-5">Carnes, huevos y leguminosas</label>
                     <div class="col-md-7">
-                        <input type="text" class="form-control campo_medio" ng-model="formulario.semanal.carnes">
+                        <input type="text" class="form-control campo_medio" ng-model="formulario.semanal.carnes" ng-disabled="vista">
                         <label class="unidades">Veces</label>
                     </div>
                 </div>
                 <div class="form-group col-md-12">
                     <label class="col-md-5">Lácteos y derivados</label>
                     <div class="col-md-7">
-                        <input type="text" class="form-control campo_medio" ng-model="formulario.semanal.lacteos">
+                        <input type="text" class="form-control campo_medio" ng-model="formulario.semanal.lacteos" ng-disabled="vista">
                         <label class="unidades">Veces</label>
                     </div>
                 </div>
                 <div class="form-group col-md-12">
                     <label class="col-md-5">Azúcares</label>
                     <div class="col-md-7">
-                        <input type="text" class="form-control campo_medio" ng-model="formulario.semanal.azucares">
+                        <input type="text" class="form-control campo_medio" ng-model="formulario.semanal.azucares" ng-disabled="vista">
                         <label class="unidades">Veces</label>
                     </div>
                 </div>
                 <div class="form-group col-md-12">
                     <label class="col-md-5">Grasas</label>
                     <div class="col-md-7">
-                        <input type="text" class="form-control campo_medio" ng-model="formulario.semanal.grasas">
+                        <input type="text" class="form-control campo_medio" ng-model="formulario.semanal.grasas" ng-disabled="vista">
                         <label class="unidades">Veces</label>
                     </div>
                 </div>
@@ -381,60 +386,60 @@
                     <div class="col-md-12">
                         <label class="col-md-5">Desayuno</label>
                         <div class="form-group col-md-7">
-                            <input type="text" class="form-control campo_medio" ng-model="formulario.diaria.desayuno">
+                            <input type="text" class="form-control campo_medio" ng-model="formulario.diaria.desayuno" ng-disabled="vista">
                             <label class="unidades">Veces</label>
                         </div>
                         <div class="col-md-5"></div>
                         <div class="col-md-7">
-                            <input type="text" class="form-control campo_medio" ng-model="formulario.diaria.des_hora" placeholder="HH:MM am / pm">
+                            <input type="text" class="form-control campo_medio" ng-model="formulario.diaria.des_hora" placeholder="HH:MM am / pm" ng-disabled="vista">
                             <label class="unidades">Horarios</label>
                         </div>
                     </div>
                     <div class="col-md-12"><hr>
                         <label class="col-md-5">Merienda</label>
                         <div class="form-group col-md-7">
-                            <input type="text" class="form-control campo_medio" ng-model="formulario.diaria.merienda">
+                            <input type="text" class="form-control campo_medio" ng-model="formulario.diaria.merienda" ng-disabled="vista"
                             <label class="unidades">Veces</label>
                         </div>
                         <div class="col-md-5"></div>
                         <div class="col-md-7">
-                            <input type="text" class="form-control campo_medio" ng-model="formulario.diaria.mer_hora" placeholder="HH:MM am / pm">
+                            <input type="text" class="form-control campo_medio" ng-model="formulario.diaria.mer_hora" placeholder="HH:MM am / pm" ng-disabled="vista">
                             <label class="unidades">Horarios</label>
                         </div>
                     </div>
                     <div class="col-md-12"><hr>
                         <label class="col-md-5">Almuerzo</label>
                         <div class="form-group col-md-7">
-                            <input type="text" class="form-control campo_medio" ng-model="formulario.diaria.almuerzo">
+                            <input type="text" class="form-control campo_medio" ng-model="formulario.diaria.almuerzo" ng-disabled="vista">
                             <label class="unidades">Veces</label>
                         </div>
                         <div class="col-md-5"></div>
                         <div class="col-md-7">
-                            <input type="text" class="form-control campo_medio" ng-model="formulario.diaria.alm_hora" placeholder="HH:MM am / pm">
+                            <input type="text" class="form-control campo_medio" ng-model="formulario.diaria.alm_hora" placeholder="HH:MM am / pm" ng-disabled="vista">
                             <label class="unidades">Horarios</label>
                         </div>
                     </div>
                     <div class="col-md-12"><hr>
                         <label class="col-md-5">Onces</label>
                         <div class="form-group col-md-7">
-                            <input type="text" class="form-control campo_medio" ng-model="formulario.diaria.onces">
+                            <input type="text" class="form-control campo_medio" ng-model="formulario.diaria.onces" ng-disabled="vista">
                             <label class="unidades">Veces</label>
                         </div>
                         <div class="col-md-5"></div>
                         <div class="col-md-7">
-                            <input type="text" class="form-control campo_medio" ng-model="formulario.diaria.onc_hora" placeholder="HH:MM am / pm">
+                            <input type="text" class="form-control campo_medio" ng-model="formulario.diaria.onc_hora" placeholder="HH:MM am / pm" ng-disabled="vista">
                             <label class="unidades">Horarios</label>
                         </div>
                     </div>
                     <div class="col-md-12"><hr>
                         <label class="col-md-5">Cena</label>
                         <div class="form-group col-md-7">
-                            <input type="text" class="form-control campo_medio" ng-model="formulario.diaria.cena">
+                            <input type="text" class="form-control campo_medio" ng-model="formulario.diaria.cena" ng-disabled="vista">
                             <label class="unidades">Veces</label>
                         </div>
                         <div class="col-md-5"></div>
                         <div class="form-group col-md-7">
-                            <input type="text" class="form-control campo_medio" ng-model="formulario.diaria.cen_hora" placeholder="HH:MM am / pm">
+                            <input type="text" class="form-control campo_medio" ng-model="formulario.diaria.cen_hora" placeholder="HH:MM am / pm" ng-disabled="vista">
                             <label class="unidades">Horarios</label>
                         </div>
                     </div>
@@ -443,10 +448,10 @@
                     <label>¿En el último mes faltó dinero en su hogar para comprar alimentos?</label>
                     <div class="col-md-offset-4 col-md-4">
                         <div class="radio">
-                            <input type="radio" value="1" ng-model="formulario.habitos.falto_dinero"><label>Sí</label>
+                            <input type="radio" value="1" ng-model="formulario.habitos.falto_dinero" ng-disabled="vista"><label>Sí</label>
                         </div>
                         <div class="radio">
-                            <input type="radio" value="0" ng-model="formulario.habitos.falto_dinero"><label>No</label>
+                            <input type="radio" value="0" ng-model="formulario.habitos.falto_dinero" ng-disabled="vista"><label>No</label>
                         </div>
                     </div>
                 </div>
@@ -454,10 +459,10 @@
                     <label>¿En el último mes se disminuyó el número de comidas por falta de dinero para comprar los alimentos?</label>
                     <div class="col-md-offset-4 col-md-4">
                         <div class="radio">
-                            <input type="radio" value="1" ng-model="formulario.habitos.menos_comida"><label>Sí</label>
+                            <input type="radio" value="1" ng-model="formulario.habitos.menos_comida" ng-disabled="vista"><label>Sí</label>
                         </div>
                         <div class="radio">
-                            <input type="radio" value="0" ng-model="formulario.habitos.menos_comida"><label>No</label>
+                            <input type="radio" value="0" ng-model="formulario.habitos.menos_comida" ng-disabled="vista"><label>No</label>
                         </div>
                     </div>
                 </div>
@@ -465,13 +470,13 @@
                     <label>¿Qué comidas preparadas fuera de casa consume?</label>
                     <div class="col-md-offset-4 col-md-4">
                         <div class="radio">
-                            <input type="checkbox" ng-model="formulario.habitos.fuera_desa"><label>Desayuno</label>
+                            <input type="checkbox" ng-model="formulario.habitos.fuera_desa" ng-disabled="vista" ng-checked="formulario.habitos.fuera_desa == '1'"><label>Desayuno</label>
                         </div>
                         <div class="radio">
-                            <input type="checkbox" ng-model="formulario.habitos.fuera_almu"><label>Almuerzo</label>
+                            <input type="checkbox" ng-model="formulario.habitos.fuera_almu" ng-disabled="vista" ng-checked="formulario.habitos.fuera_almu == '1'"><label>Almuerzo</label>
                         </div>
                         <div class="radio">
-                            <input type="checkbox" ng-model="formulario.habitos.fuera_cena"><label>Cena</label>
+                            <input type="checkbox" ng-model="formulario.habitos.fuera_cena" ng-disabled="vista" ng-checked="formulario.habitos.fuera_cena == '1'"><label>Cena</label>
                         </div>
                     </div>
                 </div>
@@ -480,23 +485,23 @@
                         <label>¿En qué lugar consume estos alimentos?</label>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" ng-model="formulario.habitos.lugar_consumo">
+                        <input type="text" class="form-control" ng-model="formulario.habitos.lugar_consumo" ng-disabled="vista">
                     </div>
                 </div>
                 <div class="form-group col-md-12"><hr>
                     <label>¿Cuántas veces a la semana consume alimentos preparados fuera de casa?</label>
                     <div class="col-md-offset-4 col-md-4">
                         <div class="radio">
-                            <input type="radio" value="1" ng-model="formulario.habitos.rd_frecuencia"><label>Ocasionalmente</label>
+                            <input type="radio" value="1" ng-model="formulario.habitos.rd_frecuencia" ng-disabled="vista"><label>Ocasionalmente</label>
                         </div>
                         <div class="radio">
-                            <input type="radio" value="2" ng-model="formulario.habitos.rd_frecuencia"><label>1 - 2 veces</label>
+                            <input type="radio" value="2" ng-model="formulario.habitos.rd_frecuencia" ng-disabled="vista"><label>1 - 2 veces</label>
                         </div>
                         <div class="radio">
-                            <input type="radio" value="3" ng-model="formulario.habitos.rd_frecuencia"><label>3 - 5 veces</label>
+                            <input type="radio" value="3" ng-model="formulario.habitos.rd_frecuencia" ng-disabled="vista"><label>3 - 5 veces</label>
                         </div>
                         <div class="radio">
-                            <input type="radio" value="4" ng-model="formulario.habitos.rd_frecuencia"><label>Todos los días</label>
+                            <input type="radio" value="4" ng-model="formulario.habitos.rd_frecuencia" ng-disabled="vista"><label>Todos los días</label>
                         </div>
                     </div>
                 </div>
@@ -504,27 +509,27 @@
                     <label>¿Cuáles son los alimentos que consume con mayor frecuencia fuera de casa?</label>
                     <div class="col-md-offset-4 col-md-8">
                         <div class="radio">
-                            <input type="checkbox" ng-model="formulario.habitos.ch_paquete"><label>Productos de paquete</label>
+                            <input type="checkbox" ng-model="formulario.habitos.ch_paquete" ng-disabled="vista" ng-checked="formulario.habitos.ch_paquete == '1'"><label>Productos de paquete</label>
                         </div>
                         <div class="radio">
-                            <input type="checkbox" ng-model="formulario.habitos.ch_panaderia"><label>Productos de panadería</label>
+                            <input type="checkbox" ng-model="formulario.habitos.ch_panaderia" ng-disabled="vista" ng-checked="formulario.habitos.ch_panaderia == '1'"><label>Productos de panadería</label>
                         </div>
                         <div class="radio">
-                            <input type="checkbox" ng-model="formulario.habitos.ch_rapidas"><label>Comidas rápidas</label>
+                            <input type="checkbox" ng-model="formulario.habitos.ch_rapidas" ng-disabled="vista" ng-checked="formulario.habitos.ch_rapidas == '1'"><label>Comidas rápidas</label>
                         </div>
                         <div class="radio">
-                            <input type="checkbox" ng-model="formulario.habitos.ch_gaseosas"><label>Gaseosas o refrescos</label>
+                            <input type="checkbox" ng-model="formulario.habitos.ch_gaseosas" ng-disabled="vista" ng-checked="formulario.habitos.ch_gaseosas == '1'"><label>Gaseosas o refrescos</label>
                         </div>
                         <div class="radio">
-                            <input type="checkbox" ng-model="formulario.habitos.ch_fritos"><label>Alimentos fritos</label>
+                            <input type="checkbox" ng-model="formulario.habitos.ch_fritos" ng-disabled="vista" ng-checked="formulario.habitos.ch_fritos == '1'"><label>Alimentos fritos</label>
                         </div>
                         <div class="radio">
-                            <input type="checkbox" ng-model="formulario.habitos.ch_ffc_otros"><label>Otros</label>
+                            <input type="checkbox" ng-model="formulario.habitos.ch_ffc_otros" ng-disabled="vista" ng-checked="formulario.habitos.ch_ffc_otros == '1'"><label>Otros</label>
                         </div>
                         <div class="col-md-12" ng-if="formulario.habitos.ch_ffc_otros">
                             <label class="col-md-4">¿Cuáles?</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" placeholder="Cuáles Otros" ng-model="formulario.habitos.ffc_cuales">
+                                <input type="text" class="form-control" placeholder="Cuáles Otros" ng-model="formulario.habitos.ffc_cuales" ng-disabled="vista">
                             </div>
                         </div>
                     </div>
@@ -534,7 +539,7 @@
                 </div>
                 <!--div class="col-md-12"><pre>{{ formulario | json }}</pre></div-->
                 <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
-                    <button type="button" class="btn btn-default" ng-disabled="vista" ng-click="accion('guardar_nutricion')"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
+                    <button type="button" class="btn btn-default" ng-disabled="vista" ng-click="accion('guardar_nutricion')" ng-disabled="vista"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
                     <!--button type="button" class="btn btn-default">Continuar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button-->
                 </div>
             </form>
@@ -547,55 +552,55 @@
                         <label>¿Actualmente recibe lactancia materna?</label>
                         <div class="col-md-offset-4 col-md-4">
                             <div class="radio">
-                                <input type="radio" value="1" ng-model="formulario.lactancia.recibe"><label>Sí</label>
+                                <input type="radio" value="1" ng-model="formulario.lactancia.recibe" ng-disabled="vista"><label>Sí</label>
                             </div>
                             <div class="radio">
-                                <input type="radio" value="0" ng-model="formulario.lactancia.recibe" ng-click="formulario.lactancia.recibe_dia=''"><label>No</label>
+                                <input type="radio" value="0" ng-model="formulario.lactancia.recibe" ng-click="formulario.lactancia.recibe_dia=''" ng-disabled="vista"><label>No</label>
                             </div>
                         </div>
                     </div>
                     <div class="form-group col-md-12" ng-if="formulario.lactancia.recibe">
                         <label for="inputEmail3" class="control-label">¿Cuántas veces al día?</label>
-                        <input type="text" class="form-control" ng-model="formulario.lactancia.recibe_dia">
+                        <input type="text" class="form-control" ng-model="formulario.lactancia.recibe_dia" ng-disabled="vista">
                     </div>
                     <div class="form-group col-md-12"><hr>
                         <label>¿También hay lactancia durante la noche?</label>
                         <div class="col-md-offset-4 col-md-4">
                             <div class="radio">
-                                <input type="radio" value="1" ng-model="formulario.lactancia.noche" ng-click="formulario.lactancia.noche_motivo=''"><label>Sí</label>
+                                <input type="radio" value="1" ng-model="formulario.lactancia.noche" ng-click="formulario.lactancia.noche_motivo=''" ng-disabled="vista"><label>Sí</label>
                             </div>
                             <div class="radio">
-                                <input type="radio" value="0" ng-model="formulario.lactancia.noche"><label>No</label>
+                                <input type="radio" value="0" ng-model="formulario.lactancia.noche" ng-disabled="vista"><label>No</label>
                             </div>
                         </div>
                     </div>
                     <div class="form-group col-md-12" ng-if="formulario.lactancia.noche == 0">
                         <label for="inputEmail3" class="control-label">¿Cuál es el motivo por el que no lacta de noche?</label>
-                        <input type="text" class="form-control" ng-model="formulario.lactancia.noche_motivo">
+                        <input type="text" class="form-control" ng-model="formulario.lactancia.noche_motivo" ng-disabled="vista">
                     </div>
                     <div class="form-group col-md-12"><hr>
                         <label>¿Ha tenido problemas con la lactancia materna?</label>
                         <div class="col-md-offset-4 col-md-4">
                             <div class="radio">
-                                <input type="radio" value="1" ng-model="formulario.lactancia.problemas"><label>Sí</label>
+                                <input type="radio" value="1" ng-model="formulario.lactancia.problemas" ng-disabled="vista"><label>Sí</label>
                             </div>
                             <div class="radio">
-                                <input type="radio" value="0" ng-model="formulario.lactancia.problemas" ng-click="formulario.lactancia.problemas_cuales=''"><label>No</label>
+                                <input type="radio" value="0" ng-model="formulario.lactancia.problemas" ng-click="formulario.lactancia.problemas_cuales=''" ng-disabled="vista"><label>No</label>
                             </div>
                         </div>
                     </div>
                     <div class="form-group col-md-12" ng-if="formulario.lactancia.problemas">
                         <label for="inputEmail3" class="control-label">¿Qué problemas se han presentado en la lactancia?</label>
-                        <input type="text" class="form-control" ng-model="formulario.lactancia.problemas_cuales">
+                        <input type="text" class="form-control" ng-model="formulario.lactancia.problemas_cuales" ng-disabled="vista">
                     </div>
                     <div class="form-group col-md-12"><hr>
                         <label>¿Recibió capacitación en lactancia materna antes del nacimiento o posterior a el?</label>
                         <div class="col-md-offset-4 col-md-4">
                             <div class="radio">
-                                <input type="radio" value="1" ng-model="formulario.lactancia.capacitacion"><label>Sí</label>
+                                <input type="radio" value="1" ng-model="formulario.lactancia.capacitacion" ng-disabled="vista"><label>Sí</label>
                             </div>
                             <div class="radio">
-                                <input type="radio" value="0" ng-model="formulario.lactancia.capacitacion"><label>No</label>
+                                <input type="radio" value="0" ng-model="formulario.lactancia.capacitacion" ng-disabled="vista"><label>No</label>
                             </div>
                         </div>
                     </div>
@@ -603,25 +608,25 @@
                         <label>¿Actualmente recibe alimentos diferentes a la lactancia materna?</label>
                         <div class="col-md-offset-4 col-md-4">
                             <div class="radio">
-                                <input type="radio" value="1" ng-model="formulario.lactancia.alimentos"><label>Sí</label>
+                                <input type="radio" value="1" ng-model="formulario.lactancia.alimentos" ng-disabled="vista"><label>Sí</label>
                             </div>
                             <div class="radio">
-                                <input type="radio" value="0" ng-model="formulario.lactancia.alimentos" ng-click="formulario.lactancia.alimentos_que=''"><label>No</label>
+                                <input type="radio" value="0" ng-model="formulario.lactancia.alimentos" ng-click="formulario.lactancia.alimentos_que=''" ng-disabled="vista"><label>No</label>
                             </div>
                         </div>
                     </div>
                     <div class="form-group col-md-12" ng-if="formulario.lactancia.alimentos">
                         <label class="control-label">¿Qué alimentos recibe?</label>
-                        <input type="text" class="form-control" ng-model="formulario.lactancia.alimentos_que">
+                        <input type="text" class="form-control" ng-model="formulario.lactancia.alimentos_que" ng-disabled="vista">
                     </div>
                     <div class="form-group col-md-12"><hr>
                         <label>¿El niño(a) consume leche entera o de fórmula?</label>
                         <div class="col-md-offset-4 col-md-4">
                             <div class="radio">
-                                <input type="radio" value="1" ng-model="formulario.lactancia.leche"><label>Sí</label>
+                                <input type="radio" value="1" ng-model="formulario.lactancia.leche" ng-disabled="vista"><label>Sí</label>
                             </div>
                             <div class="radio">
-                                <input type="radio" value="0" ng-model="formulario.lactancia.leche"><label>No</label>
+                                <input type="radio" value="0" ng-model="formulario.lactancia.leche" ng-disabled="vista"><label>No</label>
                             </div>
                         </div>
                     </div>
@@ -629,38 +634,38 @@
                         <label>¿Actualmente recibe suplementación?</label>
                         <div class="col-md-offset-4 col-md-4">
                             <div class="radio">
-                                <input type="radio" value="1" ng-model="formulario.lactancia.suplementacion"><label>Sí</label>
+                                <input type="radio" value="1" ng-model="formulario.lactancia.suplementacion" ng-disabled="vista"><label>Sí</label>
                             </div>
                             <div class="radio">
-                                <input type="radio" value="0" ng-model="formulario.lactancia.suplementacion" ng-click="formulario.lactancia.suplementacion_tipo=''"><label>No</label>
+                                <input type="radio" value="0" ng-model="formulario.lactancia.suplementacion" ng-click="formulario.lactancia.suplementacion_tipo=''" ng-disabled="vista"><label>No</label>
                             </div>
                         </div>
                     </div>
                     <div class="form-group col-md-12" ng-if="formulario.lactancia.suplementacion">
                         <label for="inputEmail3" class="control-label">¿Qué tipo de suplementación recibe?</label>
-                        <input type="text" class="form-control" ng-model="formulario.lactancia.suplementacion_tipo">
+                        <input type="text" class="form-control" ng-model="formulario.lactancia.suplementacion_tipo" ng-disabled="vista">
                     </div>
                     <div class="form-group col-md-12"><hr>
                         <label>¿En el día de ayer o anoche el niño(a) bebió algo en biberón?</label>
                         <div class="col-md-offset-4 col-md-4">
                             <div class="radio">
-                                <input type="radio" value="1" ng-model="formulario.lactancia.biberon"><label>Sí</label>
+                                <input type="radio" value="1" ng-model="formulario.lactancia.biberon" ng-disabled="vista"><label>Sí</label>
                             </div>
                             <div class="radio">
-                                <input type="radio" value="0" ng-model="formulario.lactancia.biberon" ng-click="formulario.lactancia.bebida_que=''"><label>No</label>
+                                <input type="radio" value="0" ng-model="formulario.lactancia.biberon" ng-click="formulario.lactancia.bebida_que=''" ng-disabled="vista"><label>No</label>
                             </div>
                         </div>
                     </div>
                     <div class="form-group col-md-12" ng-if="formulario.lactancia.biberon">
                         <label for="inputEmail3" class="control-label">¿Qué bebida tomó por este medio?</label>
-                        <input type="text" class="form-control" ng-model="formulario.lactancia.bebida_que">
+                        <input type="text" class="form-control" ng-model="formulario.lactancia.bebida_que" ng-disabled="vista">
                     </div>
                 </div>
                 <div class="col-md-12">
                     <div class="alert alert-success" role="alert" type="danger" ng-show="mensaje"><div class="col-sm-1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>{{mensaje}}</div>
                 </div>
                 <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
-                    <button type="button" class="btn btn-default" ng-disabled="vista" ng-click="accion('guardar_lactancia')"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
+                    <button type="button" class="btn btn-default" ng-disabled="vista" ng-click="accion('guardar_lactancia')" ng-disabled="vista"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
                     <!--button type="button" class="btn btn-default">Continuar <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button-->
                 </div>
                 <!--div class="col-md-12"><pre>{{ formulario | json }}</pre></div-->
@@ -684,16 +689,16 @@
                         <div class="form-group col-md-12" ng-show="bl_buscado">
                             <label class="titulo">Seleccione el diagnóstico</label>
                             <!--input type="text" class="form-control" placeholder="Nombre o código" ng-model="diagnostico.nombre" typeahead="cie as cie.nombre for cie in cies | filter:$viewValue" typeahead-on-select=""-->
-                            <select class="form-control" ng-model="diagnostico.nombre" ng-options='cie as cie.nombre for cie in cies'></select>
+                            <select class="form-control" ng-model="diagnostico.nombre" ng-options='cie as cie.nombre for cie in cies' ng-disabled="vista"></select>
                         </div>
                         <div class="form-group col-md-6" ng-show="bl_buscado">
                             <label class="titulo">Tipo</label>
-                            <select class="form-control" ng-model="diagnostico.tipo" ng-options='tipo as tipo.nombre for tipo in tipos_diagnostico'>
+                            <select class="form-control" ng-model="diagnostico.tipo" ng-options='tipo as tipo.nombre for tipo in tipos_diagnostico' ng-disabled="vista">
                             </select>
                         </div>
                         <div class="form-group col-md-6" ng-show="bl_buscado">
                             <label class="titulo">Contingencia</label>
-                            <select class="form-control" ng-model="diagnostico.tipo_contingencia" ng-options='tipo_contingencia as tipo_contingencia.nombre for tipo_contingencia in tipos_contingencia'></select>
+                            <select class="form-control" ng-model="diagnostico.tipo_contingencia" ng-options='tipo_contingencia as tipo_contingencia.nombre for tipo_contingencia in tipos_contingencia' ng-disabled="vista"></select>
                         </div>
                         <div class="form-group col-md-12">
                             <div class="alert alert-danger"  ng-if="mensaje_diagnostico=='error'">warning</div>
@@ -720,14 +725,26 @@
                             <tr ng-repeat="diagnostico_cita in diagnosticos_cita">
                                 <td>
                                     <div class="checkbox_table">
-                                        <input type="checkbox" ng-click="diagnosticoPrincipal()" ng-model="diagnostico_cita.ppal">
+                                        <input type="checkbox" ng-click="diagnosticoPrincipal()" ng-model="diagnostico_cita.ppal" ng-disabled="vista">
                                     </div>
                                 </td>
                                 <td class="centrado_vertical">{{diagnostico_cita.codigo}}</td>
                                 <td class="centrado_vertical">{{diagnostico_cita.diagnostico}}</td>
                                 <td class="centrado_vertical">{{diagnostico_cita.tipo.nombre}}</td>
                                 <td class="centrado_vertical">{{diagnostico_cita.contingencia.nombre}}</td>
-                                <td class="centrado_vertical" ng-hide="vista"><span class="glyphicon glyphicon-remove suave" ng-click="eliminarDiagnostico($index)"></span></td>
+                                <td class="centrado_vertical" ng-hide="vista" ng-disabled="vista"><span class="glyphicon glyphicon-remove suave" ng-click="eliminarDiagnostico($index)"></span></td>
+                            </tr>
+                            <tr ng-if="vista"><!--ng-repeat="diagnostico_cita in diagnosticos_cita" -->
+                                <td>
+                                    <div class="checkbox_table">
+                                        <input type="checkbox" ng-click="diagnosticoPrincipal()" ng-checked="diagnostico_cita.ppal == '1'" ng-model="diagnostico_cita.ppal" ng-disabled="vista">
+                                    </div>
+                                </td>
+                                <td class="centrado_vertical">{{diagnostico_cita.codigo}}</td>
+                                <td class="centrado_vertical">{{diagnostico_cita.diagnostico}}</td>
+                                <td class="centrado_vertical">{{diagnostico_cita.tipo}}</td>
+                                <td class="centrado_vertical">{{diagnostico_cita.contingencia}}</td>
+                                <td class="centrado_vertical" ng-hide="vista" ng-disabled="vista"><span class="glyphicon glyphicon-remove suave" ng-click="eliminarDiagnostico($index)"></span></td>
                             </tr>
                         </table>
                         <div class="col-md-12">
@@ -745,17 +762,17 @@
             <form class="col-md-12">
                 <div class="subtitulo">Hallazgos y Conducta</div>
                 <div class="form-group col-md-12">
-                    <textarea class="form-control" rows="3" ng-model="formulario.hallazgos.conducta"></textarea>
+                    <textarea class="form-control" rows="3" ng-model="formulario.hallazgos.conducta" ng-disabled="vista"></textarea>
                 </div>
                 <div class="subtitulo">Recomendaciones Nutricionales</div>
                 <div class="form-group col-md-12">
-                    <textarea class="form-control" rows="3" ng-model="formulario.hallazgos.recomendacion"></textarea>
+                    <textarea class="form-control" rows="3" ng-model="formulario.hallazgos.recomendacion" ng-disabled="vista"></textarea>
                 </div>
                 <div class="col-md-12">
                     <div class="alert alert-success" role="alert" type="danger" ng-show="mensaje"><div class="col-sm-1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>{{mensaje}}</div>
                 </div>
                 <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 dos-botones">
-                    <button type="button" class="btn btn-default" ng-disabled="vista" ng-click="accion('guardar_hallazgos')"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
+                    <button type="button" class="btn btn-default" ng-disabled="vista" ng-click="accion('guardar_hallazgos')" ng-disabled="vista"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
                     <!--button type="button" class="btn btn-default">Finalizar <span class="glyphicon glyphicon-cloud-upload" aria-hidden="true"></span></button-->
                 </div>
                 <!--div class="col-md-12"><pre>{{ hallazgos | json }}</pre></div-->

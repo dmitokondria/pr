@@ -80,6 +80,120 @@ if ( isset($_GET['listados']) ){
 		for ($i=1; $i < 32; $i++) array_push($datos[fecha][dias], $i);
 
 		if ( strcmp ($paquete->accion, 'ver') == 0 ){
+			$SQLVerCita = "SELECT hcn.*, hc_imc.id AS imc_id, hc_imc.nombre AS imc_clasificacion  
+						   FROM hcnutri_ hcn
+						   LEFT JOIN hc_imc ON hc_imc.id = hcn.imc_clasificacion 
+						   WHERE id_cita = $id_cita";
+			insertarTablaArray_v2($verCita, $SQLVerCita, 'ver_cita');
+			$verCita = $verCita[ver_cita][0];
+
+			$SQLInfoDiag = "SELECT hcd.*, descripcion, dt.nombre AS tipo_diag, hcc.nombre AS cont_nombre 
+							FROM hc_cita_diagnosticos hcd
+							LEFT JOIN cie ON cie.id = hcd.id 
+							LEFT JOIN diagnostico_tipos dt ON dt.id = hcd.tipo 
+							LEFT JOIN hc_causaext hcc ON hcc.id = hcd.contingencia
+							WHERE hcd.id_cita = $id_cita";
+			insertarTablaArray_v2($info_diag, $SQLInfoDiag, 'info_diag');
+			$info_diag = $info_diag[info_diag];
+		/*
+			echo "<pre>";
+			print_r ($info_diag);
+			echo "</pre>";
+*/
+			$datos[acompanante] = array();
+
+			$datos[acompanante][anombre] = $verCita[anombre];
+			$datos[acompanante][acelular] = $verCita[acelular];
+			$datos[acompanante][aparentesco] = $verCita[aparentesco];
+
+			$datos[ant] = array();
+
+			$datos[ant][ch_bajopeso] = $verCita[ch_bajopeso];
+			$datos[ant][ch_alteraciones] = $verCita[ch_alteraciones];
+			$datos[ant][ch_sobrepeso] = $verCita[ch_sobrepeso];
+			$datos[ant][ch_hipertension] = $verCita[ch_hipertension];
+			$datos[ant][ch_diabetes] = $verCita[ch_diabetes];
+			$datos[ant][ch_hipotiroidismo] = $verCita[ch_hipotiroidismo];
+			$datos[ant][ch_insufrenal] = $verCita[ch_insufrenal];
+			$datos[ant][ch_otros] = $verCita[ch_otros];
+			$datos[ant][otro_cual] = $verCita[otro_cual];
+
+			$datos[peso] = $verCita[peso];
+			$datos[talla] = $verCita[talla];
+			$datos[per_toracico] = $verCita[per_toracico];
+			$datos[per_abdomen] = $verCita[per_abdomen];
+			$datos[per_cadera] = $verCita[per_cadera];
+			$datos[rel_cintura] = $verCita[rel_cintura];
+			$datos[creatinina] = $verCita[creatinina];
+			$datos[tfg] = $verCita[tfg];
+			$datos[imc_clasificacion] = $verCita[imc_clasificacion];
+			//$datos[imc_nombre] = $verCita[imc_nombre]; // Pendiente de mostrar el JSON trae la info bien, pero no se muestra.			
+			$datos[imc] = $verCita[imc];
+
+			$datos[semanal] = array();
+			$datos[semanal][cereales] = $verCita[cereales];
+			$datos[semanal][verduras] = $verCita[verduras];
+			$datos[semanal][frutas] = $verCita[frutas];
+			$datos[semanal][carnes] = $verCita[carnes];
+			$datos[semanal][lacteos] = $verCita[lacteos];
+			$datos[semanal][azucares] = $verCita[azucares];
+			$datos[semanal][grasas] = $verCita[grasas];
+
+			$datos[diaria] = array();
+			$datos[diaria][desayuno] = $verCita[desayuno];
+			$datos[diaria][des_hora] = $verCita[des_hora];
+			$datos[diaria][merienda] = $verCita[merienda];
+			$datos[diaria][mer_hora] = $verCita[mer_hora];
+			$datos[diaria][almuerzo] = $verCita[almuerzo];
+			$datos[diaria][alm_hora] = $verCita[alm_hora];
+			$datos[diaria][onces] = $verCita[onces];
+			$datos[diaria][onc_hora] = $verCita[onc_hora];
+			$datos[diaria][cena] = $verCita[cena];
+			$datos[diaria][cen_hora] = $verCita[cen_hora];
+
+			$datos[habitos] = array();
+			$datos[habitos][falto_dinero] = $verCita[falto_dinero];
+			$datos[habitos][menos_comida] = $verCita[menos_comida];
+			$datos[habitos][fuera_desa] = $verCita[fuera_desa]; //Pendiente por misma razon
+			$datos[habitos][fuera_almu] = $verCita[fuera_almu]; //Pendiente por misma razon
+			$datos[habitos][fuera_cena] = $verCita[fuera_cena]; //Pendiente por misma razon
+			$datos[habitos][lugar_consumo] = $verCita[lugar_consumo];
+			$datos[habitos][rd_frecuencia] = $verCita[rd_frecuencia];
+			$datos[habitos][ch_paquete] = $verCita[ch_paquete]; //Pendiente por misma razon
+			$datos[habitos][ch_panaderia] = $verCita[ch_panaderia]; //Pendiente por misma razon
+			$datos[habitos][ch_rapidas] = $verCita[ch_rapidas]; //Pendiente por misma razon
+			$datos[habitos][ch_gaseosas] = $verCita[ch_gaseosas]; //Pendiente por misma razon
+			$datos[habitos][ch_fritos] = $verCita[ch_fritos]; //Pendiente por misma razon
+			$datos[habitos][ch_ffc_otros] = $verCita[ch_ffc_otros]; //Pendiente por misma razon
+			$datos[habitos][ffc_cuales] = $verCita[ffc_cuales];
+
+			
+			$datos[lactancia] = array();
+			$datos[lactancia][recibe] = $verCita[recibe];
+			$datos[lactancia][recibe_dia] = $verCita[recibe_dia];
+			$datos[lactancia][noche] = $verCita[noche];
+			$datos[lactancia][noche_motivo] = $verCita[noche_motivo];
+			$datos[lactancia][problemas] = $verCita[problemas];
+			$datos[lactancia][problemas_cuales] = $verCita[problemas_cuales];
+			$datos[lactancia][capacitacion] = $verCita[capacitacion];
+			$datos[lactancia][alimentos] = $verCita[alimentos];
+			$datos[lactancia][alimentos_que] = $verCita[alimentos_que];
+			$datos[lactancia][leche] = $verCita[leche];
+			$datos[lactancia][suplementacion] = $verCita[suplementacion];
+			$datos[lactancia][suplementacion_tipo] = $verCita[suplementacion_tipo];
+			$datos[lactancia][biberon] = $verCita[biberon];
+			$datos[lactancia][bebida_que] = $verCita[bebida_que];
+
+			$datos[diagnostico_cita] = $info_diag;
+			/*$datos[diagnostico_cita][ppal] = $info_diag[0][bl_principal];
+			$datos[diagnostico_cita][codigo] = $info_diag[0][codigo];
+			$datos[diagnostico_cita][diagnostico] = $info_diag[0][descripcion];
+			$datos[diagnostico_cita][tipo] = $info_diag[0][tipo_diag];
+			$datos[diagnostico_cita][contingencia] = $info_diag[0][cont_nombre];*/
+
+			$datos[hallazgos] = array();
+			$datos[hallazgos][conducta] = $verCita[conducta];
+			$datos[hallazgos][recomendacion] = $verCita[recomendacion];
 		}
 
 	}else{

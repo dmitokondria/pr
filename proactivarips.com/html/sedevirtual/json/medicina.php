@@ -118,19 +118,20 @@ if ( isset($_GET['listados']) ){
 
 		//----------------------------------ver la historia clinica para la cita N
 		if ( strcmp($formulario->accion, 'ver') == 0 ){
-			$SQLInfoCita = "SELECT * FROM hc WHERE id_cita = $id_cita";
+			$SQLInfoCita = "SELECT hc.*, hc_imc.nombre AS imc_clasificacion 
+							FROM hc
+							LEFT JOIN hc_imc ON hc_imc.id = hc.sl_imc 
+							WHERE id_cita = $id_cita";
 			insertarTablaArray_v2($info_cita, $SQLInfoCita, 'info_cita');
 			$info_cita = $info_cita[info_cita][0];
 
 			$SQLEvoluciones = "SELECT id AS numero, descripcion FROM hc_evoluciones WHERE id_cita = $id_cita";
 			insertarTablaArray_v2($datos, $SQLEvoluciones, 'evoluciones_cita');
 			/*echo "evoluciones<pre>";
-			print_r($datos[evoluciones]);
-			echo "</pre>";*/
-			/*Array
+			print_r($info_cita);
+			echo "</pre>";
+			Array
 			(
-			    [id] => 5
-			    [id_cita] => 71
 			    [anombre] => nombre 71
 			    [acelular] => celular 71
 			    [aparentesco] => parentesco 71
@@ -207,7 +208,7 @@ if ( isset($_GET['listados']) ){
 			$datos[examenfisico][relacion] = $info_cita[rel_cintura];
 			$datos[examenfisico][creatinina] = $info_cita[creatinina];
 			$datos[examenfisico][tfg] = $info_cita[tfg];
-			$datos[examenfisico][imc_clasificacion] = $info_cita[sl_imc];
+			$datos[examenfisico][imc_clasificacion] = $info_cita[imc_clasificacion];
 			$datos[examenfisico][imc] = $info_cita[imc];
 			$datos[examenfisico][observaciones_ef] = $info_cita[examen_fisico];
 			$datos[examenfisico][adicionales_ef] = $info_cita[adicionales_examen_fisico];

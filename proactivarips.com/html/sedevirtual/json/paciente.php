@@ -107,7 +107,8 @@ if ( !isset($formulario->accion) ){//información transversal
 }else if ( strcmp($formulario->accion, 'resumen_paciente') == 0 ){
 	$identificacion = $formulario->identificacion;
 
-	$SQLExistePaciente = "SELECT * FROM pacientes WHERE numero_identificacion = $identificacion";
+	$SQLExistePaciente = "SELECT *, YEAR(CURDATE())-YEAR(da_nacimiento) + IF(DATE_FORMAT(CURDATE(),'%m-%d') > DATE_FORMAT(da_nacimiento,'%m-%d'), 0, -1) AS edad_actual 
+						  FROM pacientes WHERE numero_identificacion = $identificacion";
 	insertarTablaArray_v2($existe_paciente, $SQLExistePaciente, 'existe_paciente');
 
 	if ( $existe_paciente[existe_paciente] == null ){
@@ -124,7 +125,7 @@ if ( !isset($formulario->accion) ){//información transversal
 		$id_paciente = $existe_paciente[existe_paciente][0][id];
 
 
-		$SQLCitasAtendidas = "	SELECT r2pc.id, r2pc.dt_fecha, e.nombre AS especialidad, CONCAT(u.nombres,' ', u.apellidos) AS profesional, e.id AS id_especialidad
+		$SQLCitasAtendidas = "	SELECT r2pc.id, r2pc.dt_fecha, e.nombre AS especialidad, CONCAT(u.nombres,' ', u.apellidos) AS profesional, e.id AS id_especialidad 
 								FROM r2_pacientes_citas r2pc
 								LEFT JOIN usuarios u ON u.id = r2pc.sl_usuario
 								LEFT JOIN especialidades e ON e.id = u.sl_profesional

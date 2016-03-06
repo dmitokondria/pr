@@ -271,7 +271,7 @@ controllers.controller('psicologiaCTRL', function($scope, $http, $location, $coo
     };
 });
 ///No tocar el VER
-controllers.controller('psicologiaVerCTRL', function($scope, $http, $cookieStore, $routeParams){
+controllers.controller('psicologiaVerCTRL', function($scope, $http, $location, $cookieStore, $routeParams){
 
     $scope.vista = true;
 
@@ -597,5 +597,86 @@ controllers.controller('nutricionVerCTRL', function($scope, $http, $location, $c
         $scope.fecha = result.data.info;
         $scope.fecha_hoy = result.data.info;
     });
+
+    $scope.usuario = $cookieStore.get('usuario');
+
+    //datos básicos del paciente y de la cita
+    $scope.formulario = {};
+    $scope.formulario.cita = $routeParams.cita;
+    $http({
+        url: 'json/nutricion.php',
+        method: 'POST',
+        data: $scope.formulario,
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    }).then(function(result){
+        $scope.datosInicialesPestañas = function(){
+            $scope.tipos_id = result.data.tipos_identificacion;
+            $scope.departamentos = result.data.departamentos;
+            $scope.ciudades = result.data.ciudades;
+            $scope.fecha = {};
+            $scope.fecha.dias = result.data.fecha.dias;
+            $scope.fecha.meses = result.data.fecha.meses;
+            $scope.fecha.anios = result.data.fecha.anios;
+            $scope.estados_civiles = result.data.estados_civiles;
+            $scope.niveles_escolaridad = result.data.niveles_escolaridad;
+            $scope.generos = result.data.generos;
+            $scope.epss = result.data.epss;
+            $scope.tipos_vinculacion = result.data.tipos_vinculacion;
+            $scope.paquetes = result.data.paquetes;
+            $scope.afiliaciones = result.data.afiliacion_estados;
+
+            $scope.formulario = result.data.paciente;
+            $scope.formulario.cita = $routeParams.cita;
+
+            //diagnósticos
+            $scope.tipos_diagnostico = result.data.tipos_diagnostico;
+            $scope.tipos_contingencia = result.data.causas_ext;
+            //IMC
+            $scope.imc_clasificaciones = result.data.imc_clasificaciones;
+        }
+        $scope.datosInicialesPestañas();
+    });
+    /// david hizo esto
+    $scope.formulario = {};
+    $scope.formulario.accion = "ver";
+    $scope.formulario.cita = $routeParams.cita;
+
+    $http({
+        url: 'json/nutricion.php',
+        method: 'POST',
+        data: $scope.formulario,
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    }).then(function(result){
+        $scope.formulario.acompanante = result.data.acompanante;
+        $scope.formulario.ant = result.data.ant;
+
+        $scope.formulario.peso = result.data.peso;
+        $scope.formulario.talla = result.data.talla;
+        $scope.formulario.per_toracico = result.data.per_toracico;
+        $scope.formulario.per_abdomen = result.data.per_abdomen;
+        $scope.formulario.per_cadera = result.data.per_cadera;
+        $scope.formulario.rel_cintura = result.data.rel_cintura;
+        $scope.formulario.creatinina = result.data.creatinina;
+        $scope.formulario.tfg = result.data.tfg;
+        $scope.formulario.imc_clasificacion = result.data.imc_clasificacion;
+        $scope.formulario.imc = result.data.imc;
+
+        $scope.formulario.semanal = result.data.semanal;
+        $scope.formulario.diaria = result.data.diaria;
+        $scope.formulario.habitos = result.data.habitos;
+
+        $scope.diagnostico_cita = result.data.diagnostico_cita;
+
+        $scope.formulario.lactancia = result.data.lactancia;
+        $scope.formulario.hallazgos = result.data.hallazgos;
+    });
+
+    $scope.cerrarSesion = function(){
+        $cookieStore.remove("usuario");
+        $location.path('/ingreso');
+    };
+    if (typeof $scope.usuario === 'undefined') {
+        $location.path('/ingreso');
+    };
 });
-////////
+///////

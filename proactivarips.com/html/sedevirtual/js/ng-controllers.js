@@ -706,7 +706,7 @@ controllers.controller('medicinaCTRL', function($scope, $http, $location, $cooki
     };
 });
 
-controllers.controller('medicinaVerCTRL', function($scope, $http, $cookieStore, $routeParams){
+controllers.controller('medicinaVerCTRL', function($scope, $http, $location, $cookieStore, $routeParams){
 
     $scope.seccion = "Ver Medicina";
     $http.get('json/fecha.php').then(function(result) {
@@ -766,7 +766,7 @@ controllers.controller('medicinaVerCTRL', function($scope, $http, $cookieStore, 
         $scope.formulario.fecha_nac.dia = $scope.paciente.da_nacimiento.dia;
         $scope.formulario.fecha_nac.mes = $scope.paciente.da_nacimiento.mes;
         $scope.formulario.fecha_nac.anio = $scope.paciente.da_nacimiento.anio;
-        $scope.formulario.edad = $scope.paciente.edad;
+        $scope.formulario.edad_actual = $scope.paciente.edad_actual;
         $scope.formulario.estado_civil = $scope.paciente.sl_estado_civil;
         $scope.formulario.sl_departamento = $scope.paciente.sl_departamento;
         $scope.formulario.sl_municipio = $scope.paciente.sl_municipio;
@@ -811,19 +811,7 @@ controllers.controller('medicinaVerCTRL', function($scope, $http, $cookieStore, 
     });
 
     //recuperando datos cita
-    //pestaña basica
-    /*{ asi se envía entonces asi se debe traer para que cargue mas fácil
-        "id_cita":"71",
-        "acompanante":"nombre 71",
-        "cel_acompanante":"celular 71",
-        "acom_parentesco":"parentesco 71",
-        "motivo":"mtivo 71",
-        "enfermedad":"enf 71",
-        "finalidad":"3",
-        "causa_ext":"3",
-        "evento":"0",
-        "pagina":0
-    }:*/
+
     $scope.formulario = {};
     $scope.formulario.accion = "ver";
     $scope.formulario.cita = $routeParams.cita;
@@ -843,7 +831,7 @@ controllers.controller('medicinaVerCTRL', function($scope, $http, $cookieStore, 
         $scope.evoluciones_cita = result.data.evoluciones_cita;
     });
 
-     $scope.cerrarSesion = function(){
+    $scope.cerrarSesion = function(){
         $cookieStore.remove("usuario");
         $location.path('/ingreso');
     };

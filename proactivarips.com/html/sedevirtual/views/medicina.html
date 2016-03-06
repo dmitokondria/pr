@@ -514,8 +514,12 @@
                             </div>
                             <div class="form-group col-md-12">
                                 <label class="col-md-2 no-padding">IMC</label>
-                                <div class="form-group col-md-8">
-                                    <select class="form-control" ng-model="examenfisico.imc_clasificacion" ng-options='imc_clasificacion.id as imc_clasificacion.nombre for imc_clasificacion in imc_clasificaciones' disabled>
+                                <div class="form-group col-md-8" ng-hide="vista">
+                                    <select class="form-control" ng-model="examenfisico.imc_clasificacion" ng-options='imc_clasificacion.id as imc_clasificacion.nombre for imc_clasificacion in imc_clasificaciones' disabled></select>
+                                </div>
+                                <div class="form-group col-md-8" ng-if="vista">
+                                    <select class="form-control" ng-model="examenfisico.imc_clasificacion" disabled>
+                                        <option ng-disabled="vista">{{examenfisico.imc_clasificacion}}</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-md-2 no-padding">
@@ -524,7 +528,7 @@
                             </div>
                         </div>
                         <div class="subtitulo">Examen Físico</div>
-                        <div class="col-md-4">
+                        <div class="col-md-4" ng-hide="vista">
                             <div class="checkbox">
                                 <label>
                                 <input type="checkbox" value="" ng-change="examenFisicoCheck('cabeza')" ng-model="examenfisico.ch_cabeza" ng-disabled="vista">
@@ -592,7 +596,7 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4" ng-hide="vista">
                             <div class="checkbox">
                                 <label>
                                 <input type="checkbox" value="" ng-change="examenFisicoCheck('pulmon')" ng-model="examenfisico.ch_pulmon" ng-disabled="vista">
@@ -654,7 +658,7 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4" ng-hide="vista">
                             <div class="checkbox">
                                 <label>
                                 <input type="checkbox" value="" ng-change="examenFisicoCheck('postura')" ng-model="examenfisico.ch_postura" ng-disabled="vista">
