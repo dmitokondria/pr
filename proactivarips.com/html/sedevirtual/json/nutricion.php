@@ -87,14 +87,29 @@ if ( isset($_GET['listados']) ){
 			insertarTablaArray_v2($verCita, $SQLVerCita, 'ver_cita');
 			$verCita = $verCita[ver_cita][0];
 
-			$SQLInfoDiag = "SELECT hcd.*, descripcion, dt.nombre AS tipo_diag, hcc.nombre AS cont_nombre 
+			$SQLInfoDiag = "SELECT hcd.id as id_diagnostico, hcd.id_cita, hcd.bl_principal AS ppal, hcd.codigo AS codigo, hcd.tipo AS tipo, hcd.contingencia AS contingencia, descripcion, dt.nombre AS tipo_diag, hcc.nombre AS cont_nombre 
 							FROM hc_cita_diagnosticos hcd
 							LEFT JOIN cie ON cie.id = hcd.id 
 							LEFT JOIN diagnostico_tipos dt ON dt.id = hcd.tipo 
 							LEFT JOIN hc_causaext hcc ON hcc.id = hcd.contingencia
 							WHERE hcd.id_cita = $id_cita";
 			insertarTablaArray_v2($info_diag, $SQLInfoDiag, 'info_diag');
-			$info_diag = $info_diag[info_diag];
+			//$info_diag = $info_diag[info_diag];
+
+			$diagnosticos = array();
+			foreach ($info_diag[info_diag] as $diagnostico_cita) {
+				if ( !isset($diagnosticos[ $diagnostico_cita[id_diagnostico] ]) ) {
+				$diagnosticos[ $diagnostico_cita[id_diagnostico] ] = array();
+				$diagnosticos[ $diagnostico_cita[id_diagnostico] ][asignados] = array();
+				/*$diagnosticos[ $diagnostico_cita[id_diagnostico] ][id_cita] = $diagnostico_cita[id_cita];
+				$diagnosticos[ $diagnostico_cita[id_diagnostico] ][ppal] = $diagnostico_cita[ppal];
+				$diagnosticos[ $diagnostico_cita[id_diagnostico] ][codigo] = $diagnostico_cita[codigo];
+				$diagnosticos[ $diagnostico_cita[id_diagnostico] ][descripcion] = $diagnostico_cita[descripcion];
+				$diagnosticos[ $diagnostico_cita[id_diagnostico] ][tipo_diag] = $diagnostico_cita[tipo_diag];
+				$diagnosticos[ $diagnostico_cita[id_diagnostico] ][cont_nombre] = $diagnostico_cita[cont_nombre];
+				*/}
+				array_push($diagnosticos[ $diagnostico_cita[id_diagnostico] ][asignados], $diagnostico_cita);
+			}
 		/*
 			echo "<pre>";
 			print_r ($info_diag);
@@ -184,8 +199,9 @@ if ( isset($_GET['listados']) ){
 			$datos[lactancia][biberon] = $verCita[biberon];
 			$datos[lactancia][bebida_que] = $verCita[bebida_que];
 
-			$datos[diagnostico_cita] = $info_diag;
-			/*$datos[diagnostico_cita][ppal] = $info_diag[0][bl_principal];
+			$datos[diagnosticos] = $diagnosticos;
+			/*$datos[diagnostico_cita] = $info_diag;
+			$datos[diagnostico_cita][ppal] = $info_diag[0][bl_principal];
 			$datos[diagnostico_cita][codigo] = $info_diag[0][codigo];
 			$datos[diagnostico_cita][diagnostico] = $info_diag[0][descripcion];
 			$datos[diagnostico_cita][tipo] = $info_diag[0][tipo_diag];
