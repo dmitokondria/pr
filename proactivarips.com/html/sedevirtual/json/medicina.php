@@ -125,22 +125,59 @@ if ( isset($_GET['listados']) ){
 			insertarTablaArray_v2($info_cita, $SQLInfoCita, 'info_cita');
 			$info_cita = $info_cita[info_cita][0];
 
+			$SQLInfoDiag = "SELECT hcd.id as id_diagnostico, hcd.id_cita, hcd.bl_principal AS ppal, hcd.codigo AS codigo, hcd.tipo AS id_tipo, hcd.contingencia AS contingencia, cie.descripcion AS diagnostico, dt.nombre AS tipo, hcc.nombre AS contingencia 
+							FROM hc_cita_diagnosticos hcd
+							LEFT JOIN cie ON cie.id = hcd.id 
+							LEFT JOIN diagnostico_tipos dt ON dt.id = hcd.tipo 
+							LEFT JOIN hc_causaext hcc ON hcc.id = hcd.contingencia
+							WHERE hcd.id_cita = $id_cita";
+			insertarTablaArray_v2($info_diag, $SQLInfoDiag, 'info_diag');
+
+			$diagnosticos = array();
+			foreach ($info_diag[info_diag] as $diagnostico_cita) {
+				if ( !isset($diagnosticos[ $diagnostico_cita[id_diagnostico] ]) ) {
+				$diagnosticos[ $diagnostico_cita[id_diagnostico] ] = array();
+				$diagnosticos[ $diagnostico_cita[id_diagnostico] ][id_cita] = $diagnostico_cita[id_cita];
+				$diagnosticos[ $diagnostico_cita[id_diagnostico] ][ppal] = $diagnostico_cita[ppal];
+				$diagnosticos[ $diagnostico_cita[id_diagnostico] ][codigo] = $diagnostico_cita[codigo];
+				$diagnosticos[ $diagnostico_cita[id_diagnostico] ][diagnostico] = $diagnostico_cita[diagnostico];
+				$diagnosticos[ $diagnostico_cita[id_diagnostico] ][tipo] = $diagnostico_cita[tipo];
+				$diagnosticos[ $diagnostico_cita[id_diagnostico] ][contingencia] = $diagnostico_cita[contingencia];
+				}
+			}
+
+			$SQLInfoFormula = "SELECT ct.*, fm.id AS id_cita_formula, fm.id_formula, fm.id_medicamento, fm.verificar, fm.cantidad, fm.dosis, fm.salidas, m.pos, m.descripcion AS nombre, m.forma_farmaceutica     
+							   FROM  cita_formula ct 
+							   LEFT JOIN formula_medicamentos fm  ON fm.id_formula = ct.id 
+							   LEFT JOIN hc ON hc.id_cita = ct.id_cita 
+							   LEFT JOIN medicamentos m ON m.id = fm.id_medicamento
+							   WHERE ct.id_cita = $id_cita";
+			insertarTablaArray_v2($info_formula, $SQLInfoFormula, 'info_formula');
+			//$infoFormula = $info_formula[info_formula];
+
+			$formulas = array();
+			foreach ($info_formula[info_formula] as $medicamento_formula) {
+				if ( !isset($formulas[ $medicamento_formula[id_cita_formula] ]) ) {
+					$formulas[ $medicamento_formula[id_cita_formula] ] = array();
+					$formulas[ $medicamento_formula[id_cita_formula] ][id_formula] = $medicamento_formula[id_formula];
+					$formulas[ $medicamento_formula[id_cita_formula] ][nombre] = $medicamento_formula[nombre];
+					$formulas[ $medicamento_formula[id_cita_formula] ][pos] = $medicamento_formula[pos];
+					$formulas[ $medicamento_formula[id_cita_formula] ][verificar] = $medicamento_formula[verificar];
+					$formulas[ $medicamento_formula[id_cita_formula] ][forma_farmaceutica] = $medicamento_formula[forma_farmaceutica];
+					$formulas[ $medicamento_formula[id_cita_formula] ][cantidad] = $medicamento_formula[cantidad];
+					$formulas[ $medicamento_formula[id_cita_formula] ][dosis] = $medicamento_formula[dosis];
+					$formulas[ $medicamento_formula[id_cita_formula] ][salidas] = $medicamento_formula[salidas];
+					
+				}
+			}
+			
+			/*
+			echo "evoluciones<pre>";
+			print_r($info_formula);
+			echo "</pre>";*/
 			$SQLEvoluciones = "SELECT id AS numero, descripcion FROM hc_evoluciones WHERE id_cita = $id_cita";
 			insertarTablaArray_v2($datos, $SQLEvoluciones, 'evoluciones_cita');
-			/*echo "evoluciones<pre>";
-			print_r($info_cita);
-			echo "</pre>";
-			Array
-			(
-			    [anombre] => nombre 71
-			    [acelular] => celular 71
-			    [aparentesco] => parentesco 71
-			    [motivo] => mtivo 71
-			    [enfermedad] => enf 71
-			    [sl_finalidad] => 3
-			    [sl_causaext] => 3
-			    [sl_evento] => 0
-			)*/
+			
 			$datos[motivo] = array();
 			// nombre completo como esta en la vista (ng-model) = nombre de la columna como está en la BD
 				$datos[motivo][acompanante] = $info_cita[anombre];
@@ -184,34 +221,37 @@ if ( isset($_GET['listados']) ){
 			//Examen Físico
 			$datos[examenfisico] = array();
 
-			$datos[examenfisico][est_general] = $info_cita[sl_estadogral];
-			$datos[examenfisico][est_resp] = $info_cita[sl_resp];
-			$datos[examenfisico][est_hidratacion] = $info_cita[sl_hidratacion];
-			$datos[examenfisico][tanner] = $info_cita[sl_tanner];
-			$datos[examenfisico][est_conciencia] = $info_cita[sl_conciencia];
-			$datos[examenfisico][glasgow] = $info_cita[sl_glasgow];
-			$datos[examenfisico][pa_sistolica] = $info_cita[part_senta];
-			$datos[examenfisico][pa_diastolica] = $info_cita[part_sentb];
-			$datos[examenfisico][pa_decubito] = $info_cita[part_decu];
-			$datos[examenfisico][pa_media] = $info_cita[part_media];
-			$datos[examenfisico][fa_cardiaca] = $info_cita[fr_cardiaca];
-			$datos[examenfisico][fa_resp] = $info_cita[fr_resp];
-			$datos[examenfisico][presion] = $info_cita[pr_pulso];
-			$datos[examenfisico][temperatura] = $info_cita[temp];
-			$datos[examenfisico][temperatura_rectal] = $info_cita[temp_rectal];
-			$datos[examenfisico][temperatura_amb] = $info_cita[temp_amb];
-			$datos[examenfisico][peso] = $info_cita[peso];
-			$datos[examenfisico][talla] = $info_cita[talla];
-			$datos[examenfisico][perimetro_tor] = $info_cita[per_toracicoç];
-			$datos[examenfisico][perimetro_abd] = $info_cita[per_abdomen];
-			$datos[examenfisico][perimetro_cadera] = $info_cita[per_cadera];
-			$datos[examenfisico][relacion] = $info_cita[rel_cintura];
-			$datos[examenfisico][creatinina] = $info_cita[creatinina];
-			$datos[examenfisico][tfg] = $info_cita[tfg];
-			$datos[examenfisico][imc_clasificacion] = $info_cita[imc_clasificacion];
-			$datos[examenfisico][imc] = $info_cita[imc];
-			$datos[examenfisico][observaciones_ef] = $info_cita[examen_fisico];
-			$datos[examenfisico][adicionales_ef] = $info_cita[adicionales_examen_fisico];
+				$datos[examenfisico][est_general] = $info_cita[sl_estadogral];
+				$datos[examenfisico][est_resp] = $info_cita[sl_resp];
+				$datos[examenfisico][est_hidratacion] = $info_cita[sl_hidratacion];
+				$datos[examenfisico][tanner] = $info_cita[sl_tanner];
+				$datos[examenfisico][est_conciencia] = $info_cita[sl_conciencia];
+				$datos[examenfisico][glasgow] = $info_cita[sl_glasgow];
+				$datos[examenfisico][pa_sistolica] = $info_cita[part_senta];
+				$datos[examenfisico][pa_diastolica] = $info_cita[part_sentb];
+				$datos[examenfisico][pa_decubito] = $info_cita[part_decu];
+				$datos[examenfisico][pa_media] = $info_cita[part_media];
+				$datos[examenfisico][fa_cardiaca] = $info_cita[fr_cardiaca];
+				$datos[examenfisico][fa_resp] = $info_cita[fr_resp];
+				$datos[examenfisico][presion] = $info_cita[pr_pulso];
+				$datos[examenfisico][temperatura] = $info_cita[temp];
+				$datos[examenfisico][temperatura_rectal] = $info_cita[temp_rectal];
+				$datos[examenfisico][temperatura_amb] = $info_cita[temp_amb];
+				$datos[examenfisico][peso] = $info_cita[peso];
+				$datos[examenfisico][talla] = $info_cita[talla];
+				$datos[examenfisico][perimetro_tor] = $info_cita[per_toracico];	
+				$datos[examenfisico][perimetro_abd] = $info_cita[per_abdomen];
+				$datos[examenfisico][perimetro_cadera] = $info_cita[per_cadera];
+				$datos[examenfisico][relacion] = $info_cita[rel_cintura];
+				$datos[examenfisico][creatinina] = $info_cita[creatinina];
+				$datos[examenfisico][tfg] = $info_cita[tfg];
+				$datos[examenfisico][imc_clasificacion] = $info_cita[imc_clasificacion];
+				$datos[examenfisico][imc] = $info_cita[imc];
+				$datos[examenfisico][observaciones_ef] = $info_cita[examen_fisico];
+				$datos[examenfisico][adicionales_ef] = $info_cita[adicionales_examen_fisico];
+
+			$datos[diagnosticos] = $diagnosticos;
+			$datos[formulas] = $formulas;
 		}
 	}else if ( isset($formulario->pagina) ){
 		$SQLExisteHcCita = "SELECT * FROM hc WHERE id_cita = ".$formulario->id_cita;

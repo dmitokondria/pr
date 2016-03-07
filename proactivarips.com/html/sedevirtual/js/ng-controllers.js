@@ -826,9 +826,12 @@ controllers.controller('medicinaVerCTRL', function($scope, $http, $location, $co
         $scope.motivo = result.data.motivo;
         $scope.antecedentes = result.data.antecedentes;
         $scope.examenfisico = result.data.examenfisico;
-
         //evoluciones
         $scope.evoluciones_cita = result.data.evoluciones_cita;
+        //diagnosticos
+        $scope.diagnosticos = result.data.diagnosticos;
+        //medicamentos
+        $scope.formulas = result.data.formulas;
     });
 
     $scope.cerrarSesion = function(){

@@ -99,17 +99,27 @@ if ( isset($_GET['listados']) ){
 			insertarTablaArray_v2($info_cita, $SQLInfoCita, 'info_cita');
 			$info_cita = $info_cita[info_cita][0];
 
-			$SQLInfoDiag = "SELECT hcd.*, descripcion, dt.nombre AS tipo_diag, hcc.nombre AS cont_nombre 
+			$SQLInfoDiag = "SELECT hcd.id as id_diagnostico, hcd.id_cita, hcd.bl_principal AS ppal, hcd.codigo AS codigo, hcd.tipo AS id_tipo, hcd.contingencia AS contingencia, cie.descripcion AS diagnostico, dt.nombre AS tipo, hcc.nombre AS contingencia 
 							FROM hc_cita_diagnosticos hcd
 							LEFT JOIN cie ON cie.id = hcd.id 
 							LEFT JOIN diagnostico_tipos dt ON dt.id = hcd.tipo 
 							LEFT JOIN hc_causaext hcc ON hcc.id = hcd.contingencia
 							WHERE hcd.id_cita = $id_cita";
 			insertarTablaArray_v2($info_diag, $SQLInfoDiag, 'info_diag');
-			$info_diag = $info_diag[info_diag][0];
 			/*echo "<pre>";
 			print_r($info_diag);
 			echo "</pre>";*/
+
+			$diagnosticos = array();
+			foreach ($info_diag[info_diag] as $diagnostico_cita) {
+				$diagnosticos[ $diagnostico_cita[id_diagnostico] ] = array();
+				$diagnosticos[ $diagnostico_cita[id_diagnostico] ][id_cita] = $diagnostico_cita[id_cita];
+				$diagnosticos[ $diagnostico_cita[id_diagnostico] ][ppal] = $diagnostico_cita[ppal];
+				$diagnosticos[ $diagnostico_cita[id_diagnostico] ][codigo] = $diagnostico_cita[codigo];
+				$diagnosticos[ $diagnostico_cita[id_diagnostico] ][diagnostico] = $diagnostico_cita[diagnostico];
+				$diagnosticos[ $diagnostico_cita[id_diagnostico] ][tipo] = $diagnostico_cita[tipo];
+				$diagnosticos[ $diagnostico_cita[id_diagnostico] ][contingencia] = $diagnostico_cita[contingencia];
+			}
 
 			$datos[acompanante] = array();
 			$datos[acompanante][nombre] = $info_cita[anombre];
@@ -140,12 +150,7 @@ if ( isset($_GET['listados']) ){
 
 			$datos[recomendaciones] = $info_cita[recomendaciones];
 
-			$datos[diagnostico_cita] = array();
-			$datos[diagnostico_cita][ppal] = $info_diag[bl_principal];
-			$datos[diagnostico_cita][codigo] = $info_diag[codigo];
-			$datos[diagnostico_cita][diagnostico] = $info_diag[descripcion];
-			$datos[diagnostico_cita][tipo] = $info_diag[tipo_diag];
-			$datos[diagnostico_cita][contingencia] = $info_diag[cont_nombre];
+			$datos[diagnosticos] = $diagnosticos;
 		}
 	}else{
 		$accion = $paquete->accion;

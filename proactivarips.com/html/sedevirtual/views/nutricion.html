@@ -734,7 +734,7 @@
                                 <td class="centrado_vertical">{{diagnostico_cita.contingencia.nombre}}</td>
                                 <td class="centrado_vertical" ng-hide="vista" ng-disabled="vista"><span class="glyphicon glyphicon-remove suave" ng-click="eliminarDiagnostico($index)"></span></td>
                             </tr>
-                            <tr ng-if="vista"><!--ng-repeat="diagnostico_cita in diagnosticos_cita" -->
+                            <tr ng-if="vista" ng-repeat="diagnostico_cita in diagnosticos">
                                 <td>
                                     <div class="checkbox_table">
                                         <input type="checkbox" ng-click="diagnosticoPrincipal()" ng-checked="diagnostico_cita.ppal == '1'" ng-model="diagnostico_cita.ppal" ng-disabled="vista">

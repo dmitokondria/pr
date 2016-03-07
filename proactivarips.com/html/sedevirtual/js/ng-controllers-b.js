@@ -362,7 +362,7 @@ controllers.controller('psicologiaVerCTRL', function($scope, $http, $location, $
         $scope.formulario.observaciones = result.data.observaciones;
         $scope.formulario.recomendaciones = result.data.recomendaciones;
 
-        $scope.diagnostico_cita = result.data.diagnostico_cita;
+        $scope.diagnosticos = result.data.diagnosticos;
     });
 
     $scope.cerrarSesion = function(){
@@ -665,7 +665,7 @@ controllers.controller('nutricionVerCTRL', function($scope, $http, $location, $c
         $scope.formulario.diaria = result.data.diaria;
         $scope.formulario.habitos = result.data.habitos;
 
-        $scope.diagnostico_cita = result.data.diagnostico_cita;
+        $scope.diagnosticos = result.data.diagnosticos;
 
         $scope.formulario.lactancia = result.data.lactancia;
         $scope.formulario.hallazgos = result.data.hallazgos;

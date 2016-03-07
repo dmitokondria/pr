@@ -803,6 +803,18 @@
                                         <td class="centrado_vertical">{{diagnostico_cita.contingencia.nombre}}</td>
                                         <td class="centrado_vertical" ng-hide="vista"><span class="glyphicon glyphicon-remove suave" ng-click="eliminarDiagnostico($index)"></span></td>
                                     </tr>
+                                    <tr ng-if="vista" ng-repeat="diagnostico_cita in diagnosticos">
+                                        <td>
+                                            <div class="checkbox_table">
+                                                <input type="checkbox" ng-click="diagnosticoPrincipal()" ng-checked="diagnostico_cita.ppal == '1'" ng-model="diagnostico_cita.ppal" ng-disabled="vista">
+                                            </div>
+                                        </td>
+                                        <td class="centrado_vertical">{{diagnostico_cita.codigo}}</td>
+                                        <td class="centrado_vertical">{{diagnostico_cita.diagnostico}}</td>
+                                        <td class="centrado_vertical">{{diagnostico_cita.tipo}}</td>
+                                        <td class="centrado_vertical">{{diagnostico_cita.contingencia}}</td>
+                                        <td class="centrado_vertical" ng-hide="vista" ng-disabled="vista"><span class="glyphicon glyphicon-remove suave" ng-click="eliminarDiagnostico($index)"></span></td>
+                                    </tr>
                                 </table>
                                 <div class="col-md-12">
                                     <div class="alert alert-success" role="alert" type="danger" ng-show="mensaje"><div class="col-sm-1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>{{mensaje}}</div>
@@ -942,6 +954,17 @@
                                         <td class="centrado_vertical">{{medicamento_formula.salidas}}</td>
                                         <td class="centrado_vertical" ng-hide="vista"><span class="glyphicon glyphicon-remove suave"></span></td>
                                     </tr>
+                                    <tr ng-if="vista" ng-repeat="medicamento_formula in formulas">
+                                        <td class="centrado_vertical">{{medicamento_formula.id_formula}}</td>
+                                        <td class="centrado_vertical">{{medicamento_formula.nombre}}</td>
+                                        <td class="centrado_vertical"><span ng-if="medicamento_formula.pos==1">POS</span><span ng-if="medicamento_formula.pos==0">No POS</span></td>
+                                        <td class="centrado_vertical"><span ng-if="medicamento_formula.verificar==1">Si</span><span ng-if="medicamento_formula.verificar==0">No</span></td>
+                                        <td class="centrado_vertical">{{medicamento_formula.forma_farmaceutica}}</td>
+                                        <td class="centrado_vertical">{{medicamento_formula.dosis}}</td>
+                                        <td class="centrado_vertical">{{medicamento_formula.cantidad}}</td>
+                                        <td class="centrado_vertical">{{medicamento_formula.salidas}}</td>
+                                        <td class="centrado_vertical" ng-hide="vista"><span class="glyphicon glyphicon-remove suave"></span></td>
+                                    </tr>
                                 </table>
                             </div>
                             <div class="btn-group col-xs-12 col-md-offset-4 col-md-4">
@@ -981,7 +1004,7 @@
                             <div class="alert alert-danger" role="alert" type="danger" ng-show="mensaje" ng-if="status=='ERROR'"><div class="col-sm-1"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></div>{{mensaje}}</div>
                             <div class="alert alert-success" role="alert" type="danger" ng-show="mensaje" ng-if="status=='OK'"><div class="col-sm-1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>{{mensaje}}</div>
                         </div>
-                        <pre style="float: left; width:100%">{{orden | json}}</pre>
+                        <!--pre style="float: left; width:100%">{{orden | json}}</pre-->
                         <div class="col-md-12">
                             <div class="table-responsive">
                                 <table class="table table-hover">

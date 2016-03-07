@@ -87,7 +87,7 @@ if ( isset($_GET['listados']) ){
 			insertarTablaArray_v2($verCita, $SQLVerCita, 'ver_cita');
 			$verCita = $verCita[ver_cita][0];
 
-			$SQLInfoDiag = "SELECT hcd.id as id_diagnostico, hcd.id_cita, hcd.bl_principal AS ppal, hcd.codigo AS codigo, hcd.tipo AS tipo, hcd.contingencia AS contingencia, descripcion, dt.nombre AS tipo_diag, hcc.nombre AS cont_nombre 
+			$SQLInfoDiag = "SELECT hcd.id as id_diagnostico, hcd.id_cita, hcd.bl_principal AS ppal, hcd.codigo AS codigo, hcd.tipo AS id_tipo, hcd.contingencia AS contingencia, cie.descripcion AS diagnostico, dt.nombre AS tipo, hcc.nombre AS contingencia 
 							FROM hc_cita_diagnosticos hcd
 							LEFT JOIN cie ON cie.id = hcd.id 
 							LEFT JOIN diagnostico_tipos dt ON dt.id = hcd.tipo 
@@ -100,15 +100,13 @@ if ( isset($_GET['listados']) ){
 			foreach ($info_diag[info_diag] as $diagnostico_cita) {
 				if ( !isset($diagnosticos[ $diagnostico_cita[id_diagnostico] ]) ) {
 				$diagnosticos[ $diagnostico_cita[id_diagnostico] ] = array();
-				$diagnosticos[ $diagnostico_cita[id_diagnostico] ][asignados] = array();
-				/*$diagnosticos[ $diagnostico_cita[id_diagnostico] ][id_cita] = $diagnostico_cita[id_cita];
+				$diagnosticos[ $diagnostico_cita[id_diagnostico] ][id_cita] = $diagnostico_cita[id_cita];
 				$diagnosticos[ $diagnostico_cita[id_diagnostico] ][ppal] = $diagnostico_cita[ppal];
 				$diagnosticos[ $diagnostico_cita[id_diagnostico] ][codigo] = $diagnostico_cita[codigo];
-				$diagnosticos[ $diagnostico_cita[id_diagnostico] ][descripcion] = $diagnostico_cita[descripcion];
-				$diagnosticos[ $diagnostico_cita[id_diagnostico] ][tipo_diag] = $diagnostico_cita[tipo_diag];
-				$diagnosticos[ $diagnostico_cita[id_diagnostico] ][cont_nombre] = $diagnostico_cita[cont_nombre];
-				*/}
-				array_push($diagnosticos[ $diagnostico_cita[id_diagnostico] ][asignados], $diagnostico_cita);
+				$diagnosticos[ $diagnostico_cita[id_diagnostico] ][diagnostico] = $diagnostico_cita[diagnostico];
+				$diagnosticos[ $diagnostico_cita[id_diagnostico] ][tipo] = $diagnostico_cita[tipo];
+				$diagnosticos[ $diagnostico_cita[id_diagnostico] ][contingencia] = $diagnostico_cita[contingencia];
+				}
 			}
 		/*
 			echo "<pre>";
@@ -142,7 +140,6 @@ if ( isset($_GET['listados']) ){
 			$datos[creatinina] = $verCita[creatinina];
 			$datos[tfg] = $verCita[tfg];
 			$datos[imc_clasificacion] = $verCita[imc_clasificacion];
-			//$datos[imc_nombre] = $verCita[imc_nombre]; // Pendiente de mostrar el JSON trae la info bien, pero no se muestra.			
 			$datos[imc] = $verCita[imc];
 
 			$datos[semanal] = array();
@@ -169,17 +166,17 @@ if ( isset($_GET['listados']) ){
 			$datos[habitos] = array();
 			$datos[habitos][falto_dinero] = $verCita[falto_dinero];
 			$datos[habitos][menos_comida] = $verCita[menos_comida];
-			$datos[habitos][fuera_desa] = $verCita[fuera_desa]; //Pendiente por misma razon
-			$datos[habitos][fuera_almu] = $verCita[fuera_almu]; //Pendiente por misma razon
-			$datos[habitos][fuera_cena] = $verCita[fuera_cena]; //Pendiente por misma razon
+			$datos[habitos][fuera_desa] = $verCita[fuera_desa]; 
+			$datos[habitos][fuera_almu] = $verCita[fuera_almu]; 
+			$datos[habitos][fuera_cena] = $verCita[fuera_cena]; 
 			$datos[habitos][lugar_consumo] = $verCita[lugar_consumo];
 			$datos[habitos][rd_frecuencia] = $verCita[rd_frecuencia];
-			$datos[habitos][ch_paquete] = $verCita[ch_paquete]; //Pendiente por misma razon
-			$datos[habitos][ch_panaderia] = $verCita[ch_panaderia]; //Pendiente por misma razon
-			$datos[habitos][ch_rapidas] = $verCita[ch_rapidas]; //Pendiente por misma razon
-			$datos[habitos][ch_gaseosas] = $verCita[ch_gaseosas]; //Pendiente por misma razon
-			$datos[habitos][ch_fritos] = $verCita[ch_fritos]; //Pendiente por misma razon
-			$datos[habitos][ch_ffc_otros] = $verCita[ch_ffc_otros]; //Pendiente por misma razon
+			$datos[habitos][ch_paquete] = $verCita[ch_paquete]; 
+			$datos[habitos][ch_panaderia] = $verCita[ch_panaderia]; 
+			$datos[habitos][ch_rapidas] = $verCita[ch_rapidas]; 
+			$datos[habitos][ch_gaseosas] = $verCita[ch_gaseosas]; 
+			$datos[habitos][ch_fritos] = $verCita[ch_fritos]; 
+			$datos[habitos][ch_ffc_otros] = $verCita[ch_ffc_otros]; 
 			$datos[habitos][ffc_cuales] = $verCita[ffc_cuales];
 
 			
@@ -200,13 +197,7 @@ if ( isset($_GET['listados']) ){
 			$datos[lactancia][bebida_que] = $verCita[bebida_que];
 
 			$datos[diagnosticos] = $diagnosticos;
-			/*$datos[diagnostico_cita] = $info_diag;
-			$datos[diagnostico_cita][ppal] = $info_diag[0][bl_principal];
-			$datos[diagnostico_cita][codigo] = $info_diag[0][codigo];
-			$datos[diagnostico_cita][diagnostico] = $info_diag[0][descripcion];
-			$datos[diagnostico_cita][tipo] = $info_diag[0][tipo_diag];
-			$datos[diagnostico_cita][contingencia] = $info_diag[0][cont_nombre];*/
-
+			
 			$datos[hallazgos] = array();
 			$datos[hallazgos][conducta] = $verCita[conducta];
 			$datos[hallazgos][recomendacion] = $verCita[recomendacion];
