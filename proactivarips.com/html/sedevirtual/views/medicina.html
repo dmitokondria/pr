@@ -979,23 +979,31 @@
                         </div>
                     </form>
                 </tab><!--FIN TAB 6 SEIS-->
-                <tab heading="Órdenes" ng-click="reset()">
+                <tab heading="Ordenes" ng-click="reset()">
                     <!--div id="datos_paciente"></div-->
-                    <div ng-hide="vista">
+                    <div class="col-md-12">
                         <form class="col-md-12">
-                            <label class="subrayado">Agregar Orden</label>
-                            <div class="form-group">
-                                <label class="titulo">Buscar Orden</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" my-enter="buscarCUP(orden.buscar)" placeholder="Nombre o código CUP" ng-model="orden.buscar" ng-disabled="vista">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-default" ng-click="buscarCUP(orden.buscar)" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                                    </span>
+                            <label class="subrayado" ng-show="vista">Ordenes Asignadas</label>
+                            <label class="subrayado" ng-hide="vista">Agregar Orden</label>
+                            <div class="form-group" ng-hide="vista">
+                                <div class="form-group col-md-12">
+                                    <label class="titulo">Buscar Orden</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" my-enter="buscarCUP(orden.buscar)" placeholder="Nombre o código CUP" ng-model="orden.buscar" ng-disabled="vista">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" ng-click="buscarCUP(orden.buscar)" type="button" ng-disabled="!orden.buscar"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                                        </span>
+                                    </div>
                                 </div>
-                                <div class="form-group" ng-show="bl_buscado">
+                                <div class="form-group col-md-6" ng-show="bl_buscado">
                                     <label class="titulo">Seleccione la Orden</label>
                                     <select class="form-control" ng-model="orden.seleccionada" ng-options='cup as cup.nombre for cup in cups'></select>
-                                    <br>
+                                </div>
+                                <div class="form-group col-md-6" ng-show="bl_buscado">
+                                    <label class="titulo">Cantidad</label>
+                                    <input class="form-control" ng-model="orden.cantidad">
+                                </div>
+                                <div class="form-group col-md-12 centrado" ng-show="bl_buscado">
                                     <button class="btn btn-default" type="submit" ng-click="agregarOrden()">Agregar Orden</button>
                                 </div>
                             </div>
@@ -1011,11 +1019,13 @@
                                     <tr class="info">
                                         <th class="centrado_vertical">Código CUP</th>
                                         <th class="centrado_vertical">Procedimiento</th>
+                                        <th class="centrado_vertical">Cantidad</th>
                                         <th class="centrado_vertical" ng-hide="vista">Eliminar</th>
                                     </tr>
                                     <tr ng-repeat="orden in ordenes">
                                         <td class="centrado_vertical">{{orden.cups}}</td>
                                         <td class="centrado_vertical">{{orden.procedimiento}}</td>
+                                        <td class="centrado_vertical">{{orden.cantidad}}</td>
                                         <td class="centrado_vertical" ng-hide="vista"><span class="glyphicon glyphicon-remove suave"></span></td>
                                     </tr>
                                 </table>

@@ -171,9 +171,28 @@ if ( isset($_GET['listados']) ){
 				}
 			}
 			
+			$SQLInfoOrdenes = "SELECT co.id AS id_orden, co.id_cita, co.id_cup, co.cantidad, co.fecha, c.cups, c.procedimiento 
+							   FROM citas_ordenes co 
+							   LEFT JOIN cups c ON c.id = co.id_cup 
+							   WHERE id_cita = $id_cita";
+			insertarTablaArray_v2($info_ordenes, $SQLInfoOrdenes, 'info_ordenes');
+			$infoOrdenes = $info_ordenes[info_ordenes];
+			
+			$ordenes = array();
+			foreach ($info_ordenes[info_ordenes] as $ordenes_cita) {
+				if ( !isset($ordenes[ $ordenes_cita[id_orden] ]) ) {
+					$ordenes[ $ordenes_cita[id_orden] ] = array();
+					$ordenes[ $ordenes_cita[id_orden] ][id_cita] = $ordenes_cita[id_cita];
+					$ordenes[ $ordenes_cita[id_orden] ][id_cup] = $ordenes_cita[id_cup];
+					$ordenes[ $ordenes_cita[id_orden] ][cantidad] = $ordenes_cita[cantidad];
+					$ordenes[ $ordenes_cita[id_orden] ][fecha] = $ordenes_cita[fecha];
+					$ordenes[ $ordenes_cita[id_orden] ][cups] = $ordenes_cita[cups];
+					$ordenes[ $ordenes_cita[id_orden] ][procedimiento] = $ordenes_cita[procedimiento];
+				}
+			}
 			/*
 			echo "evoluciones<pre>";
-			print_r($info_formula);
+			print_r($infoOrdenes);
 			echo "</pre>";*/
 			$SQLEvoluciones = "SELECT id AS numero, descripcion FROM hc_evoluciones WHERE id_cita = $id_cita";
 			insertarTablaArray_v2($datos, $SQLEvoluciones, 'evoluciones_cita');
@@ -252,6 +271,7 @@ if ( isset($_GET['listados']) ){
 
 			$datos[diagnosticos] = $diagnosticos;
 			$datos[formulas] = $formulas;
+			$datos[ordenes] = $ordenes;
 		}
 	}else if ( isset($formulario->pagina) ){
 		$SQLExisteHcCita = "SELECT * FROM hc WHERE id_cita = ".$formulario->id_cita;
@@ -433,7 +453,7 @@ if ( isset($_GET['listados']) ){
 				insertarTablaArray_v2($existe, $SQLExisteCitaOrden, 'cita_orden');
 				if ( count($existe[cita_orden]) == 0 ){
 					//INSERT
-					$SQLInsertCitaOrden = "INSERT INTO citas_ordenes(id_cita, id_cup) VALUES(".$formulario->id_cita.", ".$formulario->orden->id.")";
+					$SQLInsertCitaOrden = "INSERT INTO citas_ordenes(id_cita, id_cup, cantidad) VALUES(".$formulario->id_cita.", ".$formulario->orden->id.", ".$formulario->orden->cantidad.")";
 					if (insertarFila($SQLInsertCitaOrden) != 0 ){
 						$datos[status] = "OK";
 						$datos[mensaje] = "La orden ha sido agregada correctamente.";
@@ -446,17 +466,7 @@ if ( isset($_GET['listados']) ){
 					$datos[status] = "ERROR";
 					$datos[mensaje] = "La orden ya ha sido generada previamente.";
 				}
-				/*{
-				    "id_cita": "93",
-				    "pagina": 6,
-				    "accion": "agregar_orden",
-				    "orden": {
-				        "id": "10616",
-				        "nombre": "781601 APLICACION DE TUTOR EXTERNO RODILLA",
-				        "cups": "781601",
-				        "procedimiento": "APLICACION DE TUTOR EXTERNO RODILLA"
-				    }
-				}:*/
+				
 			}
 		}
 	}

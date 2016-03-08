@@ -673,6 +673,7 @@ controllers.controller('medicinaCTRL', function($scope, $http, $location, $cooki
             $scope.formulario.pagina = 6;
             $scope.formulario.accion = "agregar_orden";
             $scope.formulario.orden = $scope.orden.seleccionada;
+            $scope.formulario.orden.cantidad = $scope.orden.cantidad;
             $http({
                 url: 'json/medicina.php',
                 method: 'POST',
@@ -832,6 +833,8 @@ controllers.controller('medicinaVerCTRL', function($scope, $http, $location, $co
         $scope.diagnosticos = result.data.diagnosticos;
         //medicamentos
         $scope.formulas = result.data.formulas;
+        //ordenes
+        $scope.ordenes = result.data.ordenes;
     });
 
     $scope.cerrarSesion = function(){
