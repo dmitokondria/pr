@@ -364,24 +364,24 @@ label.titulo{
 }
 
 .en_sala{
-	background: #5BC0DE;
-	border: 1px solid #11A6D3;
-}
-
+	background: #5BC0DE !important;
+	border: 1px solid #11A6D3 !important;
+}*/
+/*
 .inasistencia{
 	background: #C9302C;
 	border: 1px solid #B12229;
 }
-
+*/
 .pendiente{
 	background: #F0AD4E;
 	border: 1px solid #DF9334;
-}*/
+}
 
-.cita, .disponible{
+.cita, .disponible, .en_sala, .pendiente{
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    background: #4ec2ec;
-    border: 1px solid #11A6D3;
+    /*background: #4ec2ec;
+    border: 1px solid #11A6D3;*/
     color: white;
     border-radius: 4px;
     margin-bottom: 5px;
@@ -389,18 +389,17 @@ label.titulo{
   	padding: 5px 0px !important;
   	font-size: 11pt;
 }
-
-.cita .btn_cambio_estado{
-    background: #4ec2ec;
+/*
+.cita */.btn_cambio_estado{
+    background: none;
     padding: 0px !important;
     border-radius: 3px !important;
     margin: 2px 0px;
 }
-
-.cita .btn_cambio_estado:hover, .cita .btn_cambio_estado:focus{
-    background: #11A6D3;
+/*
+.cita*/ .btn_cambio_estado:hover, /*.cita*/ .btn_cambio_estado:focus{
+    background: rgba(0, 0, 0, 0.2);
     color: #fff;
-    font-weight: 600;
 }
 
 .remove{font-size: 10pt;}

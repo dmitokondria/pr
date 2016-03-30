@@ -1,4 +1,25 @@
 <?php 
+/*///// Funciones *************
+include_once('funcionesBD.php');
+include_once('funcionesProactivar.php');
+
+//traer e interpretar datos POST
+$formulario = json_decode(file_get_contents("php://input"));
+
+$datos = array();
+
+$SQLPruebaCita = "SELECT * FROM hcpsi_ 
+                    WHERE id_cita = 118";
+insertarTablaArray_v2($datos, $SQLPruebaCita, 'prueba_cita');
+
+echo "historial<pre>";
+    print_r($datos);
+echo "</pre>";
+
+echo json_encode($datos);
+
+///////////************************/
+
 require('fpdf.php');
 
 class PDF extends FPDF

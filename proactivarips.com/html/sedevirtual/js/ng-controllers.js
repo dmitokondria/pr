@@ -230,8 +230,10 @@ controllers.controller('agendaCTRL', function($scope, $http, $location, $cookieS
             $location.path('/psicologia/'+_cita);
         }
     };
+
     $scope.enSala = function(_cita){
         console.log(_cita);
+        //alert(_cita.estado);
     };
 
     $scope.atendido = function(_cita){
@@ -1042,8 +1044,18 @@ controllers.controller('consultarpacienteCTRL', function($scope, $http, $locatio
         else if ( _especialidad == 'Psicología') _especialidad = 'psicologia';
         else if ( _especialidad == 'Nutrición') _especialidad = 'nutricion';
 
-        //alert('/ver-'+_especialidad+'/'+_id_atendida);
         $location.path('/ver-'+_especialidad+'/'+_id_atendida);
+    };
+
+    $scope.printHC = function (_especialidad, _id_atendida){
+
+        if ( _especialidad == 'Medicina General' ) _especialidad = 'medicina';
+        else if ( _especialidad == 'Psicología' ) _especialidad = 'psicologia';
+        else if ( _especialidad == 'Nutrición' ) _especialidad = 'nutricion';
+        
+        //alert(_especialidad+_id_atendida);
+        //$location.path('/impr-'+_especialidad+'/'+_id_atendida);
+        //$location.path('json/fpdf');
     };
 
     $scope.cerrarSesion = function(){

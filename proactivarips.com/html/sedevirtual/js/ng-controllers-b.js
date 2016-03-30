@@ -90,6 +90,9 @@ controllers.controller('psicologiaCTRL', function($scope, $http, $location, $coo
 
     $scope.vista = false;
 
+    $scope.semana = moment().week();
+    $scope.anio = moment().year();
+
     $scope.diagnostico = {};
 
     $scope.seccion = "Profesional";
@@ -150,8 +153,11 @@ controllers.controller('psicologiaCTRL', function($scope, $http, $location, $coo
             }).then(function(result){
                 $scope.mensaje = result.data.mensaje;
             });
+            if ($scope.paquete.accion == 'finalizar') {
+                alert("finalizar");
+                $location.path('/profesional/agenda/'+$scope.semana+'/'+$scope.anio);
+            };
         };
-
     });
     
     ///////diagnostico
@@ -271,7 +277,7 @@ controllers.controller('psicologiaCTRL', function($scope, $http, $location, $coo
     };
 });
 ///No tocar el VER
-controllers.controller('psicologiaVerCTRL', function($scope, $http, $location, $cookieStore, $routeParams){
+controllers.controller('psicologiaVerCTRL', function($scope, $http, $location, $cookieStore, $route, $routeParams){
 
     $scope.vista = true;
 
@@ -679,4 +685,10 @@ controllers.controller('nutricionVerCTRL', function($scope, $http, $location, $c
         $location.path('/ingreso');
     };
 });
-///////
+////////
+
+//Controller para Imprimir 
+controllers.controller('impr_psicologiaCTRL', function($scope, $http, $location, $cookieStore, $route, $routeParams){
+    $scope.formulario = {};
+    $scope.formulario.cita = $routeParams.cita;
+});

@@ -15,6 +15,10 @@ app.config(function($routeProvider) {
     	.when('/ver-medicina/:cita', {controller: 'medicinaVerCTRL', templateUrl: 'views/medicina.html'})
         .when('/psicologia/:cita', {controller: 'psicologiaCTRL', templateUrl: 'views/psicologia.html'})
         .when('/ver-psicologia/:cita', {controller: 'psicologiaVerCTRL', templateUrl: 'views/psicologia.html'})
+
+        //.when('/impr-psicologia/:cita', {controller: 'impr_psicologiaCTRL', templateUrl: 'json/fpdf/helloworld.php'})
+        .when('/json/fpdf', {controller: 'impr_psicologiaCTRL', templateUrl: 'json/fpdf/helloworld.php'})
+
         .when('/nutricion/:cita', {controller: 'nutricionCTRL', templateUrl: 'views/nutricion.html'})
         .when('/ver-nutricion/:cita', {controller: 'nutricionVerCTRL', templateUrl: 'views/nutricion.html'})
     	//

@@ -62,10 +62,15 @@
 
             <accordion close-others="true" class="col-xs-12 col-sm-12 col-md-12">
                 <accordion-group ng-repeat="especialidad in especialidades" heading="{{especialidad.nombre}}">
-                    <div class="btn-group cita agenda_profesional col-xs-12 col-md-12" ng-repeat="atendida in especialidad.atendidas" ng-click="verHC(atendida.especialidad, atendida.id)">
-                        <div class="col-md-6 flecha">{{atendida.fecha}}</div>
+                    <div class="btn-group cita agenda_profesional col-xs-12 col-md-12" ng-repeat="atendida in especialidad.atendidas" >
+                        <div class="col-md-5 flecha">{{atendida.fecha}}</div>
                         <div class="col-md-5 flecha">{{atendida.profesional}}</div>
-                        <div class="col-md-1 mano"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></div>
+                        <div class="col-md-1" style="border-left: 1px #fff solid">
+                            <span class="glyphicon glyphicon-eye-open mano" aria-hidden="true" ng-click="verHC(atendida.especialidad, atendida.id)"></span>
+                        </div>
+                        <div class="col-md-1" style="border-left: 1px #fff solid">
+                            <span class="glyphicon glyphicon-print mano" aria-hidden="true" ng-click="printHC(atendida.especialidad, atendida.id)"></span>
+                        </div>
                     </div>
                 </accordion-group>
             </accordion>

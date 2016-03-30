@@ -213,11 +213,20 @@ if ( isset($_GET['listados']) ){
 
 			if (ejecutarQuery_v2($SQLUpdateRecomen) == true ){
 				$datos[estado] = "OK";
-				$datos[mensaje] = "Recomencadiones almacenados correctamente.";
+				$datos[mensaje] = "Recomendaciones almacenadas correctamente.";
 			}else{
 				$datos[estado] = "ERROR";
 				$datos[mensaje] = "Los datos no se pudieron almacenar correctamente.";
 			}
+		} else if ( strcmp ( $accion, 'finalizar' ) == 0 ){
+			$SQLUpdateEstadoCita = "UPDATE r2_pacientes_citas SET rd_estado = 3 WHERE id = '$formulario->cita'";
+			/*if (ejecutarQuery_v2($SQLUpdateEstadoCita) == true ){
+				$datos[estado] = "OK";
+				$datos[mensaje] = "Cita actualizada";
+			}else{
+				$datos[estado] = "ERROR";
+				$datos[mensaje] = "Cita NOOOOOO actualizada";
+			}*/
 		}
 	}
 }
