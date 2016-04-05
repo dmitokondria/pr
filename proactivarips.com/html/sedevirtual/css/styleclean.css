@@ -357,28 +357,28 @@ label.titulo{
 .no_margin{
 	margin-bottom: 0px !important;
 }
-/*
-.atendido{
+
+.Atendido{
 	background: #5CB85C;
 	border: 1px solid #15A44B;
 }
 
-.en_sala{
+.Espera{
 	background: #5BC0DE !important;
 	border: 1px solid #11A6D3 !important;
-}*/
-/*
-.inasistencia{
+}
+
+.Inasistencia{
 	background: #C9302C;
 	border: 1px solid #B12229;
 }
-*/
-.pendiente{
+
+.Pendiente{
 	background: #F0AD4E;
 	border: 1px solid #DF9334;
 }
 
-.cita, .disponible, .en_sala, .pendiente{
+.cita, .disponible, .Espera, .Pendiente, .Atendido, .Inasistencia{
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     /*background: #4ec2ec;
     border: 1px solid #11A6D3;*/

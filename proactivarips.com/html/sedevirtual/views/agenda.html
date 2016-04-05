@@ -67,7 +67,7 @@
             <accordion-group ng-repeat="dia in dias_semana" heading="{{dia.titulo}}">
             <div ng-repeat="profesional in dia.pro | filter:{id:filtro_profesional.id}" class="btn-group col-md-12">
                 <strong>{{profesional.nombre}} - {{profesional.especialidad}}</strong>
-                <div class="btn-group pendiente agenda_profesional col-xs-12 col-md-12" ng-repeat="cita in profesional.citas" ng-class="" >
+                <div class="btn-group agenda_profesional col-xs-12 col-md-12" ng-repeat="cita in profesional.citas" ng-class="cita.estado" >
                     <div class="btn-group col-xs-12 col-md-2" ng-click="irHistoriaClinica(cita.id, profesional.especialidad)">{{cita.dt_fecha}}</div>
                     <div class="btn-group col-xs-12 col-md-3" ng-click="irHistoriaClinica(cita.id, profesional.especialidad)">{{cita.identificacion}}</div>
                     <div class="btn-group col-xs-12 col-md-4" ng-click="irHistoriaClinica(cita.id, profesional.especialidad)">{{cita.paciente}}</div>
